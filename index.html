@@ -212,10 +212,20 @@ section{padding:110px 0}
   transition:background .2s,color .2s;
 }
 .btn-ghost:hover{background:var(--ink);color:var(--cream)}
-.hero-trust{display:flex;flex-wrap:wrap;gap:28px 32px}
-.trust-i{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--muted);max-width:200px;line-height:1.45}
-.trust-i svg{width:18px;height:18px;color:var(--amber);flex-shrink:0;margin-top:1px}
-.trust-i b{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
+.hero-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+.trust-i{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:16px 18px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  font-size:14px;color:var(--muted);line-height:1.45;
+  transition:border-color .2s,transform .2s;
+}
+.trust-i:hover{border-color:var(--amber);transform:translateY(-2px)}
+.trust-i svg{width:20px;height:20px;color:var(--amber);flex-shrink:0;margin-top:1px}
+.trust-i b{display:block;color:var(--ink);font-weight:600;margin-bottom:3px;font-size:14px}
+.trust-i span > span{font-size:13px;color:var(--muted);display:block}
 /* hero right - photo placeholder for professional credibility */
 .hero-art{display:flex;align-items:center;justify-content:center;position:relative}
 .hero-frame{
@@ -269,7 +279,8 @@ section{padding:110px 0}
   .hero-status{margin-left:auto;margin-right:auto}
   .hero-desc{margin-left:auto;margin-right:auto}
   .hero-ctas,.hero-trust{justify-content:center}
-  .trust-i{text-align:left}
+  .hero-trust{grid-template-columns:1fr}
+  .trust-i{text-align:left;max-width:380px;margin-left:auto;margin-right:auto;width:100%}
   .hero-art{order:-1}
   .hero-frame{max-width:340px}
 }
@@ -663,6 +674,85 @@ section{padding:110px 0}
 @media(max-width:768px){.ftr-g{grid-template-columns:1fr 1fr;gap:32px}}
 @media(max-width:480px){.ftr-g{grid-template-columns:1fr}}
 
+/* ════════════════════════════════════════
+   GALLERY
+════════════════════════════════════════ */
+.gallery{background:var(--cream-2)}
+.gal-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  grid-auto-rows:220px;
+  gap:14px;
+}
+.gal-item{
+  position:relative;
+  overflow:hidden;
+  border-radius:var(--r);
+  background:var(--ink);
+  cursor:pointer;
+  transition:transform .25s ease;
+}
+.gal-item:hover{transform:translateY(-3px)}
+.gal-item img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform .4s ease,filter .25s ease;
+  display:block;
+}
+.gal-item:hover img{transform:scale(1.06);filter:brightness(1.08)}
+/* Asymmetric layout - some items span more */
+.gal-item.tall{grid-row:span 2}
+.gal-item.wide{grid-column:span 2}
+/* Photo caption overlay */
+.gal-cap{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  background:linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  padding:36px 18px 16px;
+  color:var(--cream);
+  font-size:13px;font-weight:500;
+  opacity:0;transition:opacity .25s ease;
+  pointer-events:none;
+}
+.gal-item:hover .gal-cap{opacity:1}
+.gal-cap-type{
+  display:inline-block;
+  font-family:'Inter',sans-serif;
+  font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.12em;
+  color:var(--amber-bright);
+  margin-bottom:4px;
+}
+/* Placeholder content */
+.gal-ph{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  color:rgba(250,246,238,0.25);
+  text-align:center;padding:20px;
+}
+.gal-ph svg{width:36px;height:36px;margin-bottom:10px;opacity:0.6}
+.gal-ph-label{
+  font-family:'Fraunces',serif;font-style:italic;
+  font-size:14px;line-height:1.4;
+}
+.gal-ph-sub{
+  font-family:'Inter',sans-serif;font-style:normal;
+  font-size:11px;margin-top:6px;
+  color:rgba(250,246,238,0.18);
+}
+.gal-note{
+  margin-top:32px;text-align:center;
+  font-size:14px;color:var(--muted);font-style:italic;
+}
+@media(max-width:920px){
+  .gal-grid{grid-template-columns:repeat(3, 1fr);grid-auto-rows:180px}
+}
+@media(max-width:620px){
+  .gal-grid{grid-template-columns:repeat(2, 1fr);grid-auto-rows:160px;gap:10px}
+  .gal-item.wide{grid-column:span 2}
+}
+
 /* Reveal */
 :focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 @media(prefers-reduced-motion:no-preference){
@@ -682,6 +772,7 @@ section{padding:110px 0}
       <a href="#tarifs">Tarifs</a>
       <a href="#pourquoi">Pourquoi nous</a>
       <a href="#zone">Zone</a>
+      <a href="#galerie">Galerie</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="hdr-actions">
@@ -705,7 +796,7 @@ section{padding:110px 0}
           <span class="dot"></span>
           <span>Disponibles · Canton de Vaud</span>
         </div>
-        <h1>Un nid près de chez vous ?<br><span class="keep-calm">Pas de panique.</span><span class="brand-line">Appelez Allô ça pique.</span></h1>
+        <h1>Un nid près de chez vous&nbsp;?<br><span class="keep-calm">Pas de panique.</span><span class="brand-line">Appelez Allô ça pique.</span></h1>
         <p class="hero-desc">Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques), bourdons et chenilles processionnaires du pin. Récupération d'essaims d'abeilles. Intervention 24-48h, SAV inclus, devis gratuit.</p>
         <div class="hero-ctas">
           <a href="tel:+41XXXXXXXXX" class="btn-primary">
@@ -717,15 +808,15 @@ section{padding:110px 0}
         <div class="hero-trust">
           <div class="trust-i">
             <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span><b>Intervention rapide</b>Sous 24 à 48h</span>
+            <span><b>Intervention rapide</b><span>Sous 24 à 48h</span></span>
           </div>
           <div class="trust-i">
             <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2 L20 5 V11 C20 16 16 20 12 22 C8 20 4 16 4 11 V5 Z"/></svg>
-            <span><b>SAV inclus</b>10 jours après passage</span>
+            <span><b>SAV inclus</b><span>10 jours après passage</span></span>
           </div>
           <div class="trust-i">
             <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 11 11 13 16 8"/></svg>
-            <span><b>Devis gratuit</b>Tarifs transparents</span>
+            <span><b>Devis gratuit</b><span>Tarifs transparents</span></span>
           </div>
         </div>
       </div>
@@ -900,7 +991,7 @@ section{padding:110px 0}
     <div class="s-head rv">
       <div class="eyebrow">Zone d'intervention</div>
       <h2>Tout le canton, <em>vraiment.</em></h2>
-      <p>De Lausanne à Aigle, de Morges à Yverdon — nous couvrons l'ensemble du canton de Vaud. Si votre commune n'est pas listée, appelez-nous : nous nous arrangeons.</p>
+      <p>De Lausanne à Aigle, de Morges à Yverdon — nous couvrons l'ensemble du canton de Vaud. Si votre commune n'est pas listée, appelez-nous : nous nous arrangeons. <strong>Interventions dans les autres cantons possibles sur devis.</strong></p>
     </div>
     <div class="zone-g">
       <div class="cities rv">
@@ -922,6 +1013,76 @@ section{padding:110px 0}
         </a>
       </aside>
     </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="galerie">
+  <div class="wrap">
+    <div class="s-head rv">
+      <div class="eyebrow">Nos interventions</div>
+      <h2>Quelques exemples <em>de notre travail.</em></h2>
+      <p>Photos prises sur le terrain au fil des saisons. Du nid de guêpes sous tuile au frelon asiatique en hauteur — chaque intervention raconte une situation différente.</p>
+    </div>
+    <div class="gal-grid rv">
+      <div class="gal-item tall">
+        <div class="gal-ph">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <div class="gal-ph-label">Photo 1</div>
+          <div class="gal-ph-sub">Format vertical · 800×1100px</div>
+        </div>
+        <div class="gal-cap"><span class="gal-cap-type">Frelon asiatique</span><div>Intervention en hauteur — perche 30 m</div></div>
+      </div>
+      <div class="gal-item">
+        <div class="gal-ph">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <div class="gal-ph-label">Photo 2</div>
+          <div class="gal-ph-sub">Format carré · 800×800px</div>
+        </div>
+        <div class="gal-cap"><span class="gal-cap-type">Guêpes</span><div>Nid sous tuiles — accès toit</div></div>
+      </div>
+      <div class="gal-item wide">
+        <div class="gal-ph">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <div class="gal-ph-label">Photo 3</div>
+          <div class="gal-ph-sub">Format paysage · 1200×800px</div>
+        </div>
+        <div class="gal-cap"><span class="gal-cap-type">Équipement</span><div>Camion équipé · perche & compresseur</div></div>
+      </div>
+      <div class="gal-item">
+        <div class="gal-ph">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <div class="gal-ph-label">Photo 4</div>
+          <div class="gal-ph-sub">Format carré · 800×800px</div>
+        </div>
+        <div class="gal-cap"><span class="gal-cap-type">Chenilles processionnaires</span><div>Pose d'écopiège sur pin</div></div>
+      </div>
+      <div class="gal-item">
+        <div class="gal-ph">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <div class="gal-ph-label">Photo 5</div>
+          <div class="gal-ph-sub">Format carré · 800×800px</div>
+        </div>
+        <div class="gal-cap"><span class="gal-cap-type">Frelon européen</span><div>Nid dans cabanon de jardin</div></div>
+      </div>
+      <div class="gal-item">
+        <div class="gal-ph">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <div class="gal-ph-label">Photo 6</div>
+          <div class="gal-ph-sub">Format carré · 800×800px</div>
+        </div>
+        <div class="gal-cap"><span class="gal-cap-type">Essaim d'abeilles</span><div>Récupération vivante</div></div>
+      </div>
+      <div class="gal-item tall">
+        <div class="gal-ph">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <div class="gal-ph-label">Photo 7</div>
+          <div class="gal-ph-sub">Format vertical · 800×1100px</div>
+        </div>
+        <div class="gal-cap"><span class="gal-cap-type">Équipement</span><div>Combinaison renforcée frelon</div></div>
+      </div>
+    </div>
+    <p class="gal-note">Photos prises avec l'accord de nos clients.</p>
   </div>
 </section>
 
@@ -961,21 +1122,21 @@ section{padding:110px 0}
       <div class="con-l rv">
         <div class="eyebrow" style="margin-bottom:14px">Contact</div>
         <h2>Une question, <em>un nid ?</em></h2>
-        <p class="con-lead">En haute saison, nous répondons au téléphone 7 jours sur 7. Pour les demandes moins urgentes, le formulaire fonctionne très bien — nous revenons vers vous dans la journée.</p>
+        <p class="con-lead">Nous sommes disponibles toute l'année. En haute saison (guêpes et frelons), nous répondons au téléphone 7 jours sur 7. Pour les demandes moins urgentes, le formulaire fonctionne très bien — nous revenons vers vous dans la journée.</p>
         <div class="cbs">
           <a href="tel:+41XXXXXXXXX" class="cb">
             <div class="cb-ico"><svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72l.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45l2.81.7A2 2 0 0 1 21 16.92z"/></svg></div>
             <div>
-              <div class="cb-lbl">Téléphone · 7j/7 saison</div>
+              <div class="cb-lbl">Téléphone · disponible toute l'année</div>
               <div class="cb-val">+41 XX XXX XX XX</div>
-              <div class="cb-sub">Priorité urgences — avril à novembre</div>
+              <div class="cb-sub">7j/7 en haute saison (guêpes & frelons)</div>
             </div>
           </a>
-          <a href="mailto:contact@alloicapique.ch" class="cb">
+          <a href="mailto:contact@allocapique.ch" class="cb">
             <div class="cb-ico"><svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
             <div>
               <div class="cb-lbl">Email</div>
-              <div class="cb-val">contact@alloicapique.ch</div>
+              <div class="cb-val">contact@allocapique.ch</div>
               <div class="cb-sub">Réponse sous 24h ouvrées</div>
             </div>
           </a>
@@ -984,7 +1145,7 @@ section{padding:110px 0}
             <div>
               <div class="cb-lbl">Zone</div>
               <div class="cb-val">Tout le canton de Vaud</div>
-              <div class="cb-sub">Dépôt basé près de Lausanne</div>
+              <div class="cb-sub">Autres cantons sur devis · Dépôt près de Lausanne</div>
             </div>
           </div>
         </div>
@@ -1062,9 +1223,9 @@ section{padding:110px 0}
         <h4>Contact</h4>
         <ul>
           <li><a href="tel:+41XXXXXXXXX">+41 XX XXX XX XX</a></li>
-          <li><a href="mailto:contact@alloicapique.ch">contact@alloicapique.ch</a></li>
+          <li><a href="mailto:contact@allocapique.ch">contact@allocapique.ch</a></li>
           <li>Canton de Vaud</li>
-          <li>7j/7 en haute saison</li>
+          <li>Disponible toute l'année</li>
         </ul>
       </div>
     </div>
