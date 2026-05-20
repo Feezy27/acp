@@ -87,7 +87,9 @@ section{padding:110px 0}
 }
 @media(max-width:768px){.hdr-in{padding:10px 24px}}
 .brand{display:flex;align-items:center;flex-shrink:0}
-.brand img{height:92px;width:auto}
+.brand-logo{height:92px;width:auto;display:block}
+.brand-favicon{display:none;height:52px;width:auto}
+.brand-mobile-text{display:none}
 .nav{
   display:flex;gap:44px;align-items:center;
   flex:1;justify-content:center;
@@ -120,7 +122,16 @@ section{padding:110px 0}
 .mb-tog span::before,.mb-tog span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--cream)}
 .mb-tog span::before{top:-6px}.mb-tog span::after{top:6px}
 @media(max-width:980px){
-  .brand img{height:64px}
+  .brand-logo{display:none}
+  .brand-favicon{display:block;height:52px}
+  .brand-mobile-text{
+    display:block;
+    height:32px;width:auto;
+    position:absolute;left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+  }
+  .hdr-in{position:relative}
   .nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--cream);flex-direction:column;align-items:stretch;padding:18px 24px;gap:0;border-bottom:1px solid var(--line);margin:0}
   .nav.open{display:flex}
   .nav a{padding:14px 0;border-bottom:1px solid var(--line);font-size:16px}
@@ -138,7 +149,8 @@ section{padding:110px 0}
   .cta-call svg{width:18px;height:18px}
 }
 @media(max-width:480px){
-  .brand img{height:56px}
+  .brand-favicon{height:44px}
+  .brand-mobile-text{height:24px}
   .hdr-in{padding:10px 18px}
 }
 
@@ -766,7 +778,11 @@ section{padding:110px 0}
 <!-- HEADER -->
 <header class="hdr">
   <div class="hdr-in">
-    <a href="#" class="brand" aria-label="Allô ça pique"><img src="logo.png" alt="Allô ça pique"></a>
+    <a href="#" class="brand" aria-label="Allô ça pique">
+      <img class="brand-logo" src="logo.png" alt="Allô ça pique">
+      <img class="brand-favicon" src="favicon.png" alt="" aria-hidden="true">
+    </a>
+    <img class="brand-mobile-text" src="header.png" alt="Allô ça pique" aria-hidden="true">
     <nav class="nav" id="nav">
       <a href="#services">Services</a>
       <a href="#tarifs">Tarifs</a>
