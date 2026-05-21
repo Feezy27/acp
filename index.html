@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Allô ça pique — Destruction de nids de guêpes, frelons et chenilles | Canton de Vaud</title>
-<meta name="description" content="Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques), bourdons et chenilles processionnaires du pin. Récupération d'essaims d'abeilles. Intervention 24-48h, SAV inclus, devis gratuit.">
+<meta name="description" content="Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques), bourdons et chenilles processionnaires du pin. Récupération d'essaims d'abeilles. Intervention 24-48h, garantie 10 jours, devis gratuit.">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
@@ -124,14 +124,11 @@ section{padding:110px 0}
 @media(max-width:980px){
   .brand-logo{display:none}
   .brand-favicon{display:block;height:64px}
+  .brand{gap:10px}
   .brand-mobile-text{
     display:block;
-    height:90px;width:auto;
-    position:absolute;left:50%;top:50%;
-    transform:translate(-50%,-50%);
-    pointer-events:none;
+    height:50px;width:auto;
   }
-  .hdr-in{position:relative}
   .nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--cream);flex-direction:column;align-items:stretch;padding:18px 24px;gap:0;border-bottom:1px solid var(--line);margin:0}
   .nav.open{display:flex}
   .nav a{padding:14px 0;border-bottom:1px solid var(--line);font-size:16px}
@@ -150,7 +147,7 @@ section{padding:110px 0}
 }
 @media(max-width:480px){
   .brand-favicon{height:54px}
-  .brand-mobile-text{height:70px}
+  .brand-mobile-text{height:42px}
   .hdr-in{padding:10px 18px}
 }
 
@@ -403,7 +400,7 @@ section{padding:110px 0}
 ════════════════════════════════════════ */
 .pricing{background:var(--paper)}
 .pri-crit{
-  display:grid;grid-template-columns:1fr 1fr;gap:18px;
+  display:grid;grid-template-columns:repeat(3, 1fr);gap:18px;
   margin-bottom:36px;
 }
 .crit-box{
@@ -412,15 +409,17 @@ section{padding:110px 0}
   border-left:3px solid var(--amber);
 }
 .crit-box.alt{border-left-color:var(--ink-soft)}
+.crit-box.special{border-left-color:#B5651D}
 .crit-label{
   font-family:'Inter',sans-serif;font-size:12px;font-weight:700;
   text-transform:uppercase;letter-spacing:0.12em;
   color:var(--amber);margin-bottom:8px;
 }
 .crit-box.alt .crit-label{color:var(--ink)}
+.crit-box.special .crit-label{color:#B5651D}
 .crit-box p{font-size:15px;color:var(--text);line-height:1.6}
 .crit-box strong{color:var(--ink);font-weight:600}
-@media(max-width:600px){.pri-crit{grid-template-columns:1fr}}
+@media(max-width:860px){.pri-crit{grid-template-columns:1fr}}
 
 .ptbl-wrap{
   background:var(--cream);border-radius:var(--r-lg);
@@ -441,6 +440,13 @@ section{padding:110px 0}
 .ptbl tbody tr:last-child{border-bottom:none}
 .ptbl td{padding:22px 26px;vertical-align:middle}
 .ptbl td:not(:first-child){text-align:right}
+@media(max-width:980px) and (min-width:681px){
+  .ptbl thead th,.ptbl td{padding:16px 14px}
+  .ptbl th{font-size:11px;letter-spacing:0.08em}
+  .t-price{font-size:22px}
+  .t-name{font-size:18px}
+  .t-desc{font-size:12px}
+}
 .t-name{
   font-family:'Fraunces',serif;font-size:20px;font-weight:500;
   color:var(--ink);display:block;margin-bottom:3px;
@@ -454,6 +460,8 @@ section{padding:110px 0}
 .t-price.free{color:var(--ok)}
 .t-price.empty{color:var(--muted-2);font-weight:400}
 .t-price.devis{font-size:18px;color:var(--muted);font-style:italic}
+.t-price.special{color:#B5651D}
+.t-price.special small{color:#B5651D;font-style:italic}
 .p-note{
   margin-top:24px;
   padding:18px 22px;background:var(--cream);
@@ -479,7 +487,7 @@ section{padding:110px 0}
     border:none;
   }
   .ptbl td:first-child{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--line)}
-  .ptbl td:nth-child(2),.ptbl td:nth-child(3){
+  .ptbl td:nth-child(2),.ptbl td:nth-child(3),.ptbl td:nth-child(4){
     display:flex !important;
     justify-content:space-between;
     align-items:center;
@@ -499,7 +507,14 @@ section{padding:110px 0}
     text-transform:uppercase;letter-spacing:0.1em;
     color:var(--muted);
   }
-  .ptbl td[colspan="2"]{
+  .ptbl td:nth-child(4)::before{
+    content:"Accès spécial";
+    font-family:'Inter',sans-serif;
+    font-size:12px;font-weight:600;
+    text-transform:uppercase;letter-spacing:0.1em;
+    color:var(--muted);
+  }
+  .ptbl td[colspan="3"]{
     display:flex !important;
     justify-content:flex-end;
     padding:6px 0;
@@ -781,8 +796,8 @@ section{padding:110px 0}
     <a href="#" class="brand" aria-label="Allô ça pique">
       <img class="brand-logo" src="logo.png" alt="Allô ça pique">
       <img class="brand-favicon" src="favicon.png" alt="" aria-hidden="true">
+      <img class="brand-mobile-text" src="header.png" alt="Allô ça pique" aria-hidden="true">
     </a>
-    <img class="brand-mobile-text" src="header.png" alt="Allô ça pique" aria-hidden="true">
     <nav class="nav" id="nav">
       <a href="#services">Services</a>
       <a href="#tarifs">Tarifs</a>
@@ -813,7 +828,7 @@ section{padding:110px 0}
           <span>Disponibles · Canton de Vaud</span>
         </div>
         <h1>Un nid près de chez vous&nbsp;?<br><span class="keep-calm">Pas de panique.</span><span class="brand-line">Appelez Allô ça pique.</span></h1>
-        <p class="hero-desc">Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques), bourdons et chenilles processionnaires du pin. Récupération d'essaims d'abeilles. Intervention 24-48h, SAV inclus, devis gratuit.</p>
+        <p class="hero-desc">Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques), bourdons et chenilles processionnaires du pin. Récupération d'essaims d'abeilles. Intervention 24-48h, garantie 10 jours, devis gratuit.</p>
         <div class="hero-ctas">
           <a href="tel:+41XXXXXXXXX" class="btn-primary">
             <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72l.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45l2.81.7A2 2 0 0 1 21 16.92z"/></svg>
@@ -828,7 +843,7 @@ section{padding:110px 0}
           </div>
           <div class="trust-i">
             <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2 L20 5 V11 C20 16 16 20 12 22 C8 20 4 16 4 11 V5 Z"/></svg>
-            <span><b>SAV inclus</b><span>10 jours après passage</span></span>
+            <span><b>Garantie 10 jours</b><span>Repassage gratuit si besoin</span></span>
           </div>
           <div class="trust-i">
             <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 11 11 13 16 8"/></svg>
@@ -856,34 +871,34 @@ section{padding:110px 0}
   <div class="wrap">
     <div class="s-head rv">
       <div class="eyebrow">Nos services</div>
-      <h2>Toutes les nuisances <em>volantes ou rampantes.</em></h2>
-      <p>Du nid de guêpes dans la haie au frelon asiatique en hauteur, en passant par les chenilles processionnaires du pin. Une équipe, un canton, une seule promesse : c'est réglé proprement.</p>
+      <h2>Services <em>proposés</em></h2>
+      <p>Destruction de nids et récupération d'essaims dans tout le canton de Vaud.</p>
     </div>
     <div class="svc-grid rv">
       <article class="svc featured">
-        <span class="svc-tag">Spécialité</span>
+        <span class="svc-tag">Espèce invasive</span>
         <div class="svc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 44 44"><ellipse cx="22" cy="27" rx="7" ry="11"/><line x1="15" y1="23" x2="29" y2="23"/><line x1="15" y1="29" x2="29" y2="29"/><line x1="15" y1="35" x2="29" y2="35"/><ellipse cx="12" cy="18" rx="6" ry="3" transform="rotate(-20 12 18)"/><ellipse cx="32" cy="18" rx="6" ry="3" transform="rotate(20 32 18)"/><circle cx="22" cy="13" r="3"/><line x1="19" y1="11" x2="16" y2="7"/><line x1="25" y1="11" x2="28" y2="7"/></svg></div>
         <h3>Frelon asiatique</h3>
         <div class="svc-from">Dès 230 CHF</div>
-        <p class="svc-desc">Équipement certifié, perche 30 m, combinaison renforcée. On traite ce que les autres refusent.</p>
+        <p class="svc-desc">Équipement certifié, perche 30 m, combinaison renforcée. Intervention adaptée aux nids en hauteur.</p>
       </article>
       <article class="svc">
         <div class="svc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 44 44"><ellipse cx="22" cy="27" rx="7" ry="11"/><line x1="15" y1="23" x2="29" y2="23"/><line x1="15" y1="29" x2="29" y2="29"/><ellipse cx="12" cy="18" rx="6" ry="3" transform="rotate(-20 12 18)"/><ellipse cx="32" cy="18" rx="6" ry="3" transform="rotate(20 32 18)"/><circle cx="22" cy="13" r="3"/></svg></div>
         <h3>Frelon européen</h3>
         <div class="svc-from">Dès 230 CHF</div>
-        <p class="svc-desc">Gros nids sous les toits, dans les arbres ou les cabanons. Traitement rapide et sans risque.</p>
+        <p class="svc-desc">Nids sous les toits, dans les arbres ou les cabanons. Traitement par neutralisation.</p>
       </article>
       <article class="svc">
         <div class="svc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 44 44"><path d="M22 7 L32 17 Q36 24 32 32 Q27 37 22 37 Q17 37 12 32 Q8 24 12 17 Z"/><path d="M16 18 Q22 23 28 18"/><path d="M16 26 Q22 31 28 26"/></svg></div>
         <h3>Guêpes & bourdons</h3>
         <div class="svc-from">Dès 200 CHF</div>
-        <p class="svc-desc">Haies, volets, sous les tuiles, cheminées. Tarif transparent, zéro surprise.</p>
+        <p class="svc-desc">Haies, volets, sous les tuiles, cheminées. Traitement de jour ou de nuit selon l'accès.</p>
       </article>
       <article class="svc">
         <div class="svc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 44 44"><path d="M22 5 L30 16 H14 Z"/><path d="M22 13 L32 26 H12 Z"/><path d="M22 22 L34 36 H10 Z"/><line x1="22" y1="36" x2="22" y2="40"/></svg></div>
         <h3>Chenilles processionnaires</h3>
         <div class="svc-from">Sur devis</div>
-        <p class="svc-desc">Échenillage et pose d'écopiège pour pins infestés. Espèce dangereuse pour les enfants et animaux.</p>
+        <p class="svc-desc">Échenillage et pose d'écopiège pour pins infestés. Espèce urticante, traitement à privilégier en hiver.</p>
       </article>
       <article class="svc">
         <div class="svc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 44 44"><circle cx="22" cy="18" r="9"/><path d="M13 27 Q9 36 22 39 Q35 36 31 27"/><line x1="17" y1="15" x2="27" y2="15"/><line x1="17" y1="20" x2="27" y2="20"/></svg></div>
@@ -900,8 +915,8 @@ section{padding:110px 0}
   <div class="wrap">
     <div class="s-head rv">
       <div class="eyebrow">Tarifs</div>
-      <h2>Des prix <em>clairs,</em> définis à l'avance.</h2>
-      <p>Les critères distinguant un nid "simple" d'un nid "complexe" sont définis ci-dessous. Aucune marge d'interprétation à notre avantage.</p>
+      <h2>Grille <em>tarifaire</em></h2>
+      <p>Les critères distinguant un nid "simple" d'un nid "complexe" sont définis ci-dessous.</p>
     </div>
     <div class="pri-crit rv">
       <div class="crit-box">
@@ -912,6 +927,10 @@ section{padding:110px 0}
         <div class="crit-label">Nid complexe</div>
         <p>Hauteur <strong>supérieure à 20 m</strong> ou nécessitant une <strong>progression sur toiture</strong>.</p>
       </div>
+      <div class="crit-box special">
+        <div class="crit-label">Accès spécial</div>
+        <p>Intervention nécessitant un <strong>équipement supplémentaire</strong> (nacelle) ou un <strong>intervenant externe</strong> (couvreur, cordiste). Tarif de base majoré d'un devis technique.</p>
+      </div>
     </div>
     <div class="ptbl-wrap rv">
       <table class="ptbl">
@@ -920,6 +939,7 @@ section{padding:110px 0}
             <th>Type d'intervention</th>
             <th>Nid simple</th>
             <th>Nid complexe</th>
+            <th>Accès spécial</th>
           </tr>
         </thead>
         <tbody>
@@ -930,6 +950,7 @@ section{padding:110px 0}
             </td>
             <td><span class="t-price">200<small>CHF</small></span></td>
             <td><span class="t-price">290<small>CHF</small></span></td>
+            <td><span class="t-price special">290<small>+ devis</small></span></td>
           </tr>
           <tr>
             <td>
@@ -938,6 +959,7 @@ section{padding:110px 0}
             </td>
             <td><span class="t-price">230<small>CHF</small></span></td>
             <td><span class="t-price">350<small>CHF</small></span></td>
+            <td><span class="t-price special">350<small>+ devis</small></span></td>
           </tr>
           <tr>
             <td>
@@ -946,25 +968,26 @@ section{padding:110px 0}
             </td>
             <td><span class="t-price empty">—</span></td>
             <td><span class="t-price">400<small>CHF</small></span></td>
+            <td><span class="t-price special">400<small>+ devis</small></span></td>
           </tr>
           <tr>
             <td>
               <span class="t-name">Chenilles processionnaires du pin</span>
               <span class="t-desc">Échenillage et/ou pose d'écopiège</span>
             </td>
-            <td colspan="2" style="text-align:right"><span class="t-price devis">Sur devis</span></td>
+            <td colspan="3" style="text-align:right"><span class="t-price devis">Sur devis</span></td>
           </tr>
           <tr>
             <td>
               <span class="t-name">Essaims d'abeilles</span>
               <span class="t-desc">Récupération vivante, remise à un apiculteur</span>
             </td>
-            <td colspan="2" style="text-align:right"><span class="t-price free">Gratuit</span></td>
+            <td colspan="3" style="text-align:right"><span class="t-price free">Gratuit</span></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="p-note">Frais de déplacement de 60 CHF au-delà de 30 km du dépôt. Enlèvement du nid traité en option : 150 CHF. SAV de 10 jours toujours inclus sans supplément.</p>
+    <p class="p-note">Le devis technique en "accès spécial" couvre la location de nacelle ou la prestation d'un intervenant externe (couvreur, cordiste) lorsque la sécurité l'impose. Frais de déplacement de 60 CHF au-delà de 30 km du dépôt. Enlèvement du nid traité en option : 150 CHF. Garantie de 10 jours incluse dans chaque intervention.</p>
   </div>
 </section>
 
@@ -973,29 +996,29 @@ section{padding:110px 0}
   <div class="wrap">
     <div class="s-head rv">
       <div class="eyebrow">Pourquoi nous</div>
-      <h2>Une intervention <em>sérieuse,</em> sans détour.</h2>
-      <p>On fait ce métier parce qu'il sert directement les gens. Voici ce qui nous distingue concrètement.</p>
+      <h2>Nos <em>engagements</em></h2>
+      <p>Ce qui distingue notre intervention.</p>
     </div>
     <div class="why-g rv">
       <div class="wn">
         <div class="wn-ico"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-        <h3>Réactivité garantie</h3>
-        <p>Intervention sous 24 à 48 heures, haute saison comprise. Un nid dangereux n'attend pas.</p>
+        <h3>Délai d'intervention</h3>
+        <p>Nous intervenons sous 24 à 48 heures, haute saison comprise.</p>
       </div>
       <div class="wn">
         <div class="wn-ico"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2 L20 5 V11 C20 16 16 20 12 22 C8 20 4 16 4 11 V5 Z"/><polyline points="9 12 11 14 15 10"/></svg></div>
-        <h3>SAV de 10 jours inclus</h3>
-        <p>Si le nid est encore actif 10 jours après notre passage, on revient sans frais. Engagement écrit.</p>
+        <h3>Garantie 10 jours</h3>
+        <p>Si le nid reste actif 10 jours après notre passage, nous repassons sans frais supplémentaires.</p>
       </div>
       <div class="wn">
         <div class="wn-ico"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2 L14 7 L20 7"/><path d="M18 22H6c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h8l6 6v12c0 1.1-.9 2-2 2z"/></svg></div>
-        <h3>Tarification transparente</h3>
-        <p>Critères "simple" et "complexe" définis par écrit, vérifiables par le client. Prix annoncé = prix facturé.</p>
+        <h3>Tarifs définis à l'avance</h3>
+        <p>Critères "simple" et "complexe" précisés sur le site. Le tarif annoncé est celui qui sera facturé.</p>
       </div>
       <div class="wn">
         <div class="wn-ico"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 21h18 M5 21V11 M19 21V11 M9 21V14 H15 V21 M12 3 L4 9 H20 Z"/></svg></div>
         <h3>Entreprise familiale vaudoise</h3>
-        <p>Pas une franchise, pas un sous-traitant. Une équipe locale, responsable de chaque intervention.</p>
+        <p>Structure indépendante basée près de Lausanne. Vous êtes en contact direct avec l'intervenant.</p>
       </div>
     </div>
   </div>
@@ -1006,8 +1029,8 @@ section{padding:110px 0}
   <div class="wrap">
     <div class="s-head rv">
       <div class="eyebrow">Zone d'intervention</div>
-      <h2>Tout le canton, <em>vraiment.</em></h2>
-      <p>De Lausanne à Aigle, de Morges à Yverdon — nous couvrons l'ensemble du canton de Vaud. Si votre commune n'est pas listée, appelez-nous : nous nous arrangeons. <strong>Interventions dans les autres cantons possibles sur devis.</strong></p>
+      <h2>Zone <em>d'intervention</em></h2>
+      <p>Nous couvrons l'ensemble du canton de Vaud, de Lausanne à Aigle, de Morges à Yverdon. <strong>Interventions dans les autres cantons sur devis.</strong></p>
     </div>
     <div class="zone-g">
       <div class="cities rv">
@@ -1021,8 +1044,8 @@ section{padding:110px 0}
         <div class="city">Jura vaudois</div><div class="city">Chablais vaudois</div>
       </div>
       <aside class="zone-card rv">
-        <h3>Communes & régies : parlons partenariat.</h3>
-        <p>Nous proposons des contrats annuels avec tarifs préférentiels et priorité d'intervention pour les mairies, agences immobilières et régies. Espaces publics, écoles, parcs et copropriétés.</p>
+        <h3>Communes, régies et agences</h3>
+        <p>Nous proposons des contrats annuels avec tarifs négociés pour les mairies, agences immobilières et régies : espaces publics, écoles, parcs et copropriétés.</p>
         <a href="#contact" class="btn-ink">
           Discuter d'un contrat
           <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -1037,8 +1060,8 @@ section{padding:110px 0}
   <div class="wrap">
     <div class="s-head rv">
       <div class="eyebrow">Nos interventions</div>
-      <h2>Quelques exemples <em>de notre travail.</em></h2>
-      <p>Photos prises sur le terrain au fil des saisons. Du nid de guêpes sous tuile au frelon asiatique en hauteur — chaque intervention raconte une situation différente.</p>
+      <h2>Exemples d'<em>interventions</em></h2>
+      <p>Photos prises sur le terrain au cours de nos interventions.</p>
     </div>
     <div class="gal-grid rv">
       <div class="gal-item tall">
@@ -1098,7 +1121,7 @@ section{padding:110px 0}
         <div class="gal-cap"><span class="gal-cap-type">Équipement</span><div>Combinaison renforcée frelon</div></div>
       </div>
     </div>
-    <p class="gal-note">Photos prises avec l'accord de nos clients.</p>
+    <p class="gal-note">Photos publiées avec l'accord des clients concernés.</p>
   </div>
 </section>
 
@@ -1116,10 +1139,9 @@ section{padding:110px 0}
       </div>
       <div class="rv">
         <div class="eyebrow" style="margin-bottom:16px">À propos</div>
-        <h2>Une affaire <em>de famille.</em></h2>
-        <p class="about-quote">"Le travail bien fait, ça se voit. Et nous, on le fait avec rigueur — même au bout d'une perche de 30 mètres."</p>
-        <p>Allô ça pique est une Sàrl familiale vaudoise. Nous avons choisi ce métier parce qu'il sert directement les gens : un nid de frelons à proximité d'une chambre d'enfant, ce n'est pas un dossier, c'est une urgence.</p>
-        <p>Nos engagements sont simples. Nous intervenons rapidement. Nous expliquons ce que nous faisons. Nous garantissons notre travail 10 jours. Et nous facturons le tarif annoncé — sans suppléments cachés.</p>
+        <h2>L'<em>entreprise</em></h2>
+        <p>Allô ça pique est une Sàrl familiale vaudoise basée à proximité de Lausanne. Nous intervenons sur l'ensemble du canton de Vaud pour la destruction de nids et la récupération d'essaims.</p>
+        <p>L'entreprise est dirigée par une équipe formée et certifiée. Chaque intervention est suivie personnellement, du premier appel à la facturation.</p>
         <div class="about-sig">
           <div>
             <div class="sig-name">L'équipe Allô ça pique</div>
@@ -1137,8 +1159,8 @@ section{padding:110px 0}
     <div class="con-g">
       <div class="con-l rv">
         <div class="eyebrow" style="margin-bottom:14px">Contact</div>
-        <h2>Une question, <em>un nid ?</em></h2>
-        <p class="con-lead">Nous sommes disponibles toute l'année. En haute saison (guêpes et frelons), nous répondons au téléphone 7 jours sur 7. Pour les demandes moins urgentes, le formulaire fonctionne très bien — nous revenons vers vous dans la journée.</p>
+        <h2>Nous <em>contacter</em></h2>
+        <p class="con-lead">Disponibles toute l'année. En haute saison (guêpes et frelons), nous répondons au téléphone 7 jours sur 7. Les demandes envoyées via le formulaire sont traitées dans la journée.</p>
         <div class="cbs">
           <a href="tel:+41XXXXXXXXX" class="cb">
             <div class="cb-ico"><svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72l.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45l2.81.7A2 2 0 0 1 21 16.92z"/></svg></div>
@@ -1200,7 +1222,7 @@ section{padding:110px 0}
           Envoyer la demande
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </button>
-        <p class="fnote">Urgence ? Appelez-nous directement. Formulaire traité dans la journée.</p>
+        <p class="fnote">Pour une urgence, privilégiez l'appel téléphonique.</p>
       </form>
     </div>
   </div>
@@ -1214,7 +1236,7 @@ section{padding:110px 0}
     <div class="ftr-g">
       <div class="fb">
         <img src="logo.png" alt="Allô ça pique">
-        <p>Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons, bourdons et chenilles processionnaires. Récupération d'essaims d'abeilles. Intervention 24-48h, SAV inclus.</p>
+        <p>Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons, bourdons et chenilles processionnaires. Récupération d'essaims d'abeilles. Intervention 24-48h, garantie 10 jours.</p>
       </div>
       <div class="fc-col">
         <h4>Services</h4>
