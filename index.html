@@ -127,7 +127,7 @@ section{padding:110px 0}
   .brand{gap:10px}
   .brand-mobile-text{
     display:block;
-    height:50px;width:auto;
+    height:60px;width:auto;
   }
   .nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--cream);flex-direction:column;align-items:stretch;padding:18px 24px;gap:0;border-bottom:1px solid var(--line);margin:0}
   .nav.open{display:flex}
@@ -147,7 +147,7 @@ section{padding:110px 0}
 }
 @media(max-width:480px){
   .brand-favicon{height:54px}
-  .brand-mobile-text{height:42px}
+  .brand-mobile-text{height:50px}
   .hdr-in{padding:10px 18px}
 }
 
@@ -877,34 +877,116 @@ section{padding:110px 0}
     <div class="svc-grid rv">
       <article class="svc featured">
         <span class="svc-tag">Espèce invasive</span>
-        <div class="svc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 44 44"><ellipse cx="22" cy="27" rx="7" ry="11"/><line x1="15" y1="23" x2="29" y2="23"/><line x1="15" y1="29" x2="29" y2="29"/><line x1="15" y1="35" x2="29" y2="35"/><ellipse cx="12" cy="18" rx="6" ry="3" transform="rotate(-20 12 18)"/><ellipse cx="32" cy="18" rx="6" ry="3" transform="rotate(20 32 18)"/><circle cx="22" cy="13" r="3"/><line x1="19" y1="11" x2="16" y2="7"/><line x1="25" y1="11" x2="28" y2="7"/></svg></div>
-        <h3>Frelon asiatique</h3>
-        <div class="svc-from">Dès 230 CHF</div>
-        <p class="svc-desc">Équipement certifié, perche 30 m, combinaison renforcée. Intervention adaptée aux nids en hauteur.</p>
+        <div class="svc-ico">
+          <!-- Frelon : grand insecte avec corps allongé, dard et ailes -->
+          <svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64">
+            <!-- antennes -->
+            <path d="M28 10 Q24 6 22 4"/>
+            <path d="M36 10 Q40 6 42 4"/>
+            <!-- tête -->
+            <ellipse cx="32" cy="14" rx="6" ry="5"/>
+            <!-- yeux -->
+            <circle cx="29" cy="13" r="1" fill="currentColor"/>
+            <circle cx="35" cy="13" r="1" fill="currentColor"/>
+            <!-- thorax -->
+            <ellipse cx="32" cy="24" rx="7" ry="6"/>
+            <!-- ailes (grandes, caractéristique du frelon) -->
+            <ellipse cx="20" cy="22" rx="10" ry="5" transform="rotate(-20 20 22)"/>
+            <ellipse cx="44" cy="22" rx="10" ry="5" transform="rotate(20 44 22)"/>
+            <!-- abdomen segmenté -->
+            <ellipse cx="32" cy="42" rx="8" ry="14"/>
+            <line x1="26" y1="34" x2="38" y2="34"/>
+            <line x1="25" y1="40" x2="39" y2="40"/>
+            <line x1="25" y1="46" x2="39" y2="46"/>
+            <line x1="26" y1="52" x2="38" y2="52"/>
+            <!-- dard -->
+            <path d="M32 56 L32 60 M30 58 L34 58"/>
+            <!-- pattes -->
+            <path d="M26 28 L20 32"/>
+            <path d="M38 28 L44 32"/>
+            <path d="M27 32 L22 38"/>
+            <path d="M37 32 L42 38"/>
+          </svg>
+        </div>
+        <h3>Frelons</h3>
+        <p class="svc-desc">Frelon européen et frelon asiatique (espèce invasive). Équipement certifié, perche 30 m, combinaison renforcée. Intervention adaptée aux nids en hauteur.</p>
       </article>
       <article class="svc">
-        <div class="svc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 44 44"><ellipse cx="22" cy="27" rx="7" ry="11"/><line x1="15" y1="23" x2="29" y2="23"/><line x1="15" y1="29" x2="29" y2="29"/><ellipse cx="12" cy="18" rx="6" ry="3" transform="rotate(-20 12 18)"/><ellipse cx="32" cy="18" rx="6" ry="3" transform="rotate(20 32 18)"/><circle cx="22" cy="13" r="3"/></svg></div>
-        <h3>Frelon européen</h3>
-        <div class="svc-from">Dès 230 CHF</div>
-        <p class="svc-desc">Nids sous les toits, dans les arbres ou les cabanons. Traitement par neutralisation.</p>
-      </article>
-      <article class="svc">
-        <div class="svc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 44 44"><path d="M22 7 L32 17 Q36 24 32 32 Q27 37 22 37 Q17 37 12 32 Q8 24 12 17 Z"/><path d="M16 18 Q22 23 28 18"/><path d="M16 26 Q22 31 28 26"/></svg></div>
+        <div class="svc-ico">
+          <!-- Guêpe : insecte plus fin, taille marquée, rayures -->
+          <svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64">
+            <!-- antennes -->
+            <path d="M29 11 Q26 7 24 5"/>
+            <path d="M35 11 Q38 7 40 5"/>
+            <!-- tête plus petite -->
+            <circle cx="32" cy="15" r="4.5"/>
+            <circle cx="30" cy="14" r="0.8" fill="currentColor"/>
+            <circle cx="34" cy="14" r="0.8" fill="currentColor"/>
+            <!-- thorax -->
+            <ellipse cx="32" cy="24" rx="5.5" ry="5"/>
+            <!-- ailes fines transparentes -->
+            <ellipse cx="22" cy="22" rx="9" ry="3.5" transform="rotate(-25 22 22)"/>
+            <ellipse cx="42" cy="22" rx="9" ry="3.5" transform="rotate(25 42 22)"/>
+            <!-- TAILLE DE GUÊPE : étranglement net -->
+            <path d="M29 29 Q31 31 32 31 Q33 31 35 29"/>
+            <line x1="30" y1="30" x2="34" y2="30"/>
+            <!-- abdomen pointu avec rayures (caractéristique guêpe) -->
+            <path d="M32 32 Q24 36 24 45 Q24 54 32 58 Q40 54 40 45 Q40 36 32 32 Z"/>
+            <line x1="26" y1="40" x2="38" y2="40"/>
+            <line x1="25" y1="46" x2="39" y2="46"/>
+            <line x1="27" y1="52" x2="37" y2="52"/>
+            <!-- dard pointu -->
+            <path d="M32 58 L32 62"/>
+            <!-- pattes -->
+            <path d="M27 28 L22 32"/>
+            <path d="M37 28 L42 32"/>
+          </svg>
+        </div>
         <h3>Guêpes & bourdons</h3>
-        <div class="svc-from">Dès 200 CHF</div>
         <p class="svc-desc">Haies, volets, sous les tuiles, cheminées. Traitement de jour ou de nuit selon l'accès.</p>
       </article>
       <article class="svc">
-        <div class="svc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 44 44"><path d="M22 5 L30 16 H14 Z"/><path d="M22 13 L32 26 H12 Z"/><path d="M22 22 L34 36 H10 Z"/><line x1="22" y1="36" x2="22" y2="40"/></svg></div>
+        <div class="svc-ico">
+          <!-- Pin avec chenilles : on garde l'icône qui plaisait -->
+          <svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64">
+            <path d="M32 8 L42 22 H22 Z"/>
+            <path d="M32 18 L46 36 H18 Z"/>
+            <path d="M32 30 L50 50 H14 Z"/>
+            <line x1="32" y1="50" x2="32" y2="56"/>
+            <line x1="28" y1="56" x2="36" y2="56"/>
+          </svg>
+        </div>
         <h3>Chenilles processionnaires</h3>
-        <div class="svc-from">Sur devis</div>
         <p class="svc-desc">Échenillage et pose d'écopiège pour pins infestés. Espèce urticante, traitement à privilégier en hiver.</p>
       </article>
       <article class="svc">
-        <div class="svc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 44 44"><circle cx="22" cy="18" r="9"/><path d="M13 27 Q9 36 22 39 Q35 36 31 27"/><line x1="17" y1="15" x2="27" y2="15"/><line x1="17" y1="20" x2="27" y2="20"/></svg></div>
+        <div class="svc-ico">
+          <!-- Abeille avec rayon de miel en arrière-plan : icône claire d'apiculture -->
+          <svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64">
+            <!-- Hexagones du rayon de miel en bas -->
+            <path d="M14 50 L18 47 L22 50 L22 56 L18 59 L14 56 Z"/>
+            <path d="M22 50 L26 47 L30 50 L30 56 L26 59 L22 56 Z"/>
+            <path d="M30 50 L34 47 L38 50 L38 56 L34 59 L30 56 Z"/>
+            <path d="M38 50 L42 47 L46 50 L46 56 L42 59 L38 56 Z"/>
+            <!-- Abeille au-dessus, plus ronde et trapue qu'une guêpe -->
+            <!-- antennes -->
+            <path d="M30 11 Q28 8 27 6"/>
+            <path d="M34 11 Q36 8 37 6"/>
+            <!-- tête -->
+            <circle cx="32" cy="14" r="4"/>
+            <!-- ailes plus petites -->
+            <ellipse cx="24" cy="22" rx="7" ry="4" transform="rotate(-25 24 22)"/>
+            <ellipse cx="40" cy="22" rx="7" ry="4" transform="rotate(25 40 22)"/>
+            <!-- corps trapu et arrondi (abeille) -->
+            <ellipse cx="32" cy="30" rx="8" ry="11"/>
+            <!-- rayures arrondies -->
+            <path d="M25 27 Q32 24 39 27"/>
+            <path d="M24 33 Q32 30 40 33"/>
+            <path d="M25 39 Q32 36 39 39"/>
+          </svg>
+        </div>
         <h3>Essaims d'abeilles</h3>
-        <div class="svc-from free">Gratuit</div>
-        <p class="svc-desc">Récupération vivante, remise à un apiculteur partenaire. Gratuit sauf situation complexe (hauteur, toiture).</p>
+        <p class="svc-desc">Récupération vivante, remise à un apiculteur partenaire. Service gratuit sauf situation complexe (hauteur, toiture).</p>
       </article>
     </div>
   </div>
@@ -1241,8 +1323,7 @@ section{padding:110px 0}
       <div class="fc-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="#services">Frelon asiatique</a></li>
-          <li><a href="#services">Frelon européen</a></li>
+          <li><a href="#services">Frelons (européen & asiatique)</a></li>
           <li><a href="#services">Guêpes & bourdons</a></li>
           <li><a href="#services">Chenilles processionnaires</a></li>
           <li><a href="#services">Essaims d'abeilles</a></li>
