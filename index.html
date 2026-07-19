@@ -5,6 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Allô ça pique — Destruction de nids de guêpes, frelons et chenilles | Canton de Vaud</title>
 <meta name="description" content="Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques), bourdons et chenilles processionnaires du pin. Récupération d'essaims d'abeilles. Intervention 24-48h, garantie 10 jours, devis gratuit.">
+<meta name="robots" content="index, follow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="canonical" href="https://allocapique.ch/">
+<meta name="theme-color" content="#FAF6EE">
+<!-- Open Graph (aperçu lors de partages WhatsApp, Facebook, LinkedIn...) -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:url" content="https://allocapique.ch/">
+<meta property="og:title" content="Allô ça pique — Destruction de nids de guêpes et frelons | Vaud">
+<meta property="og:description" content="Entreprise familiale vaudoise. Guêpes, frelons, bourdons, chenilles processionnaires. Intervention 24-48h, garantie 10 jours, tarifs transparents.">
+<meta property="og:image" content="https://allocapique.ch/logo.png">
+<meta property="og:site_name" content="Allô ça pique">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Données structurées pour Google (référencement local) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PestControlService",
+  "name": "Allô ça pique",
+  "legalName": "Allô ça pique Sàrl",
+  "url": "https://allocapique.ch",
+  "logo": "https://allocapique.ch/logo.png",
+  "image": "https://allocapique.ch/logo.png",
+  "email": "contact@allocapique.ch",
+  "description": "Destruction de nids de guêpes, frelons européens et asiatiques, bourdons et chenilles processionnaires du pin. Récupération d'essaims d'abeilles.",
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "Canton de Vaud, Suisse"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "VD",
+    "addressCountry": "CH"
+  },
+  "priceRange": "200-400 CHF",
+  "openingHours": "Mo-Su 07:00-20:00",
+  "knowsAbout": ["Frelon asiatique", "Frelon européen", "Guêpes", "Bourdons", "Chenilles processionnaires du pin", "Essaims d'abeilles"]
+}
+</script>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
@@ -1359,7 +1398,7 @@ section{padding:110px 0}
     </div>
     <div class="ftr-b">
       <span>© 2026 Allô ça pique Sàrl · Tous droits réservés</span>
-      <span>Vaud, Suisse · <a href="#">Mentions légales</a></span>
+      <span>Vaud, Suisse · <a href="mentions-legales.html">Mentions légales</a></span>
     </div>
   </div>
 </footer>
@@ -1380,7 +1419,11 @@ document.querySelectorAll('.nav a').forEach(a => {
 
 function doSubmit(e) {
   e.preventDefault();
-  alert("Pour activer ce formulaire, connectez-le à Formspree (formspree.io) — gratuit jusqu'à 50 envois/mois.");
+  var form = document.getElementById('cForm');
+  var btn = form.querySelector('.fsub');
+  var note = form.querySelector('.fnote');
+  btn.style.display = 'none';
+  note.innerHTML = '<strong style="color:var(--ok)">Le formulaire sera bientôt activé.</strong><br>En attendant, contactez-nous directement par téléphone ou par email à contact@allocapique.ch.';
 }
 
 if ('IntersectionObserver' in window) {
