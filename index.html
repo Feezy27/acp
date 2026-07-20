@@ -583,12 +583,66 @@ section{padding:110px 0}
   padding:12px 0;
   border-bottom:1px solid rgba(250,246,238,0.08);
   font-size:15px;font-weight:500;color:var(--cream);
+  background:none;border-left:none;border-right:none;border-top:none;
+  font-family:'Inter',sans-serif;
+  cursor:pointer;text-align:left;width:100%;
   transition:color .15s,padding-left .2s;
 }
-.city:hover{color:var(--amber-bright);padding-left:6px}
+.city:hover,.city.active{color:var(--amber-bright);padding-left:6px}
 .city::before{
   content:"";width:6px;height:6px;border-radius:50%;
   background:var(--amber);flex-shrink:0;
+}
+.city::after{
+  content:"›";margin-left:auto;
+  color:rgba(250,246,238,0.3);font-size:16px;
+  transition:color .15s;
+}
+.city:hover::after,.city.active::after{color:var(--amber-bright)}
+/* Route panel */
+.route-panel{
+  grid-column:1 / -1;
+  margin-top:28px;
+  background:var(--paper);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  border-top:4px solid var(--amber);
+}
+.route-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;padding:20px 24px;
+}
+.route-title{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:20px;color:var(--ink);
+}
+.route-meta{font-size:15px;color:var(--muted);margin-top:2px}
+.route-fee{
+  display:inline-block;
+  background:var(--amber-light);color:var(--amber);
+  font-weight:700;font-size:14px;
+  padding:2px 10px;border-radius:6px;
+}
+.route-fee.free{background:rgba(43,168,74,0.12);color:var(--ok)}
+.route-close{
+  width:38px;height:38px;flex-shrink:0;
+  border-radius:8px;background:var(--cream);
+  color:var(--ink);font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s;
+}
+.route-close:hover{background:var(--ink);color:var(--cream)}
+.route-map{position:relative;width:100%;height:340px;background:var(--cream)}
+.route-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.route-note{
+  padding:14px 24px;
+  font-size:13px;color:var(--muted);
+  border-top:1px solid var(--line);
+}
+@media(max-width:680px){
+  .route-map{height:280px}
+  .route-head{padding:16px 18px}
+  .route-title{font-size:18px}
 }
 .zone-card{
   background:var(--paper);color:var(--ink);
@@ -1159,14 +1213,33 @@ section{padding:110px 0}
     </div>
     <div class="zone-g">
       <div class="cities rv">
-        <div class="city">Lausanne</div><div class="city">Morges</div>
-        <div class="city">Nyon</div><div class="city">Vevey</div>
-        <div class="city">Yverdon-les-Bains</div><div class="city">Aigle</div>
-        <div class="city">Renens</div><div class="city">Pully</div>
-        <div class="city">Gland</div><div class="city">Rolle</div>
-        <div class="city">Échallens</div><div class="city">Lavaux</div>
-        <div class="city">La Côte</div><div class="city">Riviera vaudoise</div>
-        <div class="city">Jura vaudois</div><div class="city">Chablais vaudois</div>
+        <button class="city" data-city="Échallens" data-km="7">Échallens</button>
+        <button class="city" data-city="Cossonay" data-km="8">Cossonay</button>
+        <button class="city" data-city="Renens" data-km="16">Renens</button>
+        <button class="city" data-city="Orbe" data-km="19">Orbe</button>
+        <button class="city" data-city="Morges" data-km="19">Morges</button>
+        <button class="city" data-city="Lausanne" data-km="20">Lausanne</button>
+        <button class="city" data-city="Pully" data-km="23">Pully</button>
+        <button class="city" data-city="Moudon" data-km="26">Moudon</button>
+        <button class="city" data-city="Yverdon-les-Bains" data-km="27">Yverdon-les-Bains</button>
+        <button class="city" data-city="Rolle" data-km="28">Rolle</button>
+        <button class="city" data-city="Vallorbe" data-km="31">Vallorbe</button>
+        <button class="city" data-city="Gland" data-km="35">Gland</button>
+        <button class="city" data-city="Vevey" data-km="39">Vevey</button>
+        <button class="city" data-city="Nyon" data-km="42">Nyon</button>
+        <button class="city" data-city="Montreux" data-km="44">Montreux</button>
+        <button class="city" data-city="Aigle" data-km="57">Aigle</button>
+      </div>
+      <div class="route-panel" id="routePanel" hidden>
+        <div class="route-head">
+          <div class="route-info">
+            <div class="route-title">Bettens → <span id="routeCity"></span></div>
+            <div class="route-meta"><span id="routeKm"></span> km par la route · <span class="route-fee" id="routeFee"></span></div>
+          </div>
+          <button class="route-close" id="routeClose" aria-label="Fermer la carte">✕</button>
+        </div>
+        <div class="route-map"><iframe id="routeFrame" title="Itinéraire depuis Bettens" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+        <p class="route-note">Distance indicative par la route. Frais de déplacement : inclus jusqu'à 30 km, 50 CHF au-delà de 30 km, 100 CHF au-delà de 60 km.</p>
       </div>
       <aside class="zone-card rv">
         <h3>Communes, régies et agences</h3>
@@ -1426,6 +1499,54 @@ function doSubmit(e) {
   var note = form.querySelector('.fnote');
   btn.style.display = 'none';
   note.innerHTML = '<strong style="color:var(--ok)">Le formulaire sera bientôt activé.</strong><br>En attendant, contactez-nous directement par téléphone ou par email à contact@allocapique.ch.';
+}
+
+// Zone : mini-carte itinéraire + frais de déplacement
+const routePanel = document.getElementById('routePanel');
+if (routePanel) {
+  const routeCity = document.getElementById('routeCity');
+  const routeKm = document.getElementById('routeKm');
+  const routeFee = document.getElementById('routeFee');
+  const routeFrame = document.getElementById('routeFrame');
+  const routeClose = document.getElementById('routeClose');
+  const cityButtons = document.querySelectorAll('.city[data-city]');
+
+  function feeFor(km) {
+    if (km > 60) return { label: 'Frais de déplacement : 100 CHF', free: false };
+    if (km > 30) return { label: 'Frais de déplacement : 50 CHF', free: false };
+    return { label: 'Déplacement inclus', free: true };
+  }
+
+  cityButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const city = btn.dataset.city;
+      const km = parseInt(btn.dataset.km, 10);
+      const fee = feeFor(km);
+
+      cityButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      routeCity.textContent = city;
+      routeKm.textContent = '~' + km;
+      routeFee.textContent = fee.label;
+      routeFee.classList.toggle('free', fee.free);
+
+      const url = 'https://maps.google.com/maps?saddr=' +
+        encodeURIComponent('Bettens, Vaud, Suisse') +
+        '&daddr=' + encodeURIComponent(city + ', Vaud, Suisse') +
+        '&output=embed&hl=fr';
+      if (routeFrame.src !== url) routeFrame.src = url;
+
+      routePanel.hidden = false;
+      routePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+
+  routeClose.addEventListener('click', () => {
+    routePanel.hidden = true;
+    routeFrame.src = '';
+    cityButtons.forEach(b => b.classList.remove('active'));
+  });
 }
 
 if ('IntersectionObserver' in window) {
