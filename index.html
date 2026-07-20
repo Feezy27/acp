@@ -655,6 +655,11 @@ section{padding:110px 0}
   padding:2px 10px;border-radius:6px;
 }
 .route-fee.free{background:rgba(43,168,74,0.12);color:var(--ok)}
+.fee-tiers{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-top:10px;
+}
+.fee-tiers .route-fee{padding:5px 12px;font-size:13px}
 .route-close{
   width:38px;height:38px;flex-shrink:0;
   border-radius:8px;background:var(--cream);
@@ -1234,7 +1239,7 @@ section{padding:110px 0}
 <section class="zone" id="zone">
   <div class="wrap">
     <div class="s-head rv">
-      <div class="eyebrow">Zone d'intervention</div>
+      <div class="eyebrow">Où intervenons-nous ?</div>
       <h2>Zone <em>d'intervention</em></h2>
       <p>Basés à Bettens, au cœur du Gros-de-Vaud, nous couvrons l'ensemble du canton, de Lausanne à Aigle, de Morges à Yverdon. Les frais de déplacement sont calculés depuis Bettens. <strong>Interventions dans les autres cantons sur devis.</strong></p>
     </div>
@@ -1560,7 +1565,12 @@ if (routePanel) {
       const fee = feeFor(km);
       routeMetaEl.innerHTML = '<span id="routeKm">~' + km + '</span> km par la route · <span class="route-fee' + (fee.free ? ' free' : '') + '">' + fee.label + '</span>';
     } else {
-      routeMetaEl.innerHTML = 'Distance affichée sur la carte · <span class="route-fee">Inclus ≤ 30 km · 50 CHF > 30 km · 100 CHF > 60 km</span>';
+      routeMetaEl.innerHTML = 'Distance affichée sur la carte · frais de déplacement :' +
+        '<span class="fee-tiers">' +
+        '<span class="route-fee free">Jusqu\'à 30 km : inclus</span>' +
+        '<span class="route-fee">De 30 à 60 km : 50 CHF</span>' +
+        '<span class="route-fee">Plus de 60 km : 100 CHF</span>' +
+        '</span>';
     }
     const url = 'https://maps.google.com/maps?saddr=' +
       encodeURIComponent('Bettens, Vaud, Suisse') +
