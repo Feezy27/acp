@@ -706,6 +706,7 @@ section{padding:110px 0}
   padding:2px 10px;border-radius:6px;
 }
 .route-fee.free{background:rgba(43,168,74,0.12);color:var(--ok)}
+.route-approx{display:block;font-size:12px;color:var(--muted-2);margin-top:4px;font-style:italic}
 .fee-tiers{
   display:flex;flex-wrap:wrap;gap:10px;
   margin-top:10px;
@@ -1610,6 +1611,17 @@ if (routePanel) {
   const geoCache = {};
   let busy = false;
 
+  /* ---------- utilitaires ---------- */
+
+  function fetchJSON(url, options, ms) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), ms || 8000);
+    const opts = Object.assign({ signal: ctrl.signal }, options || {});
+    return fetch(url, opts)
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .finally(() => clearTimeout(timer));
+  }
+
   function feeFor(km) {
     if (km > 50) return { label: 'Frais de déplacement : 100 CHF', free: false };
     if (km > 20) return { label: 'Frais de déplacement : 50 CHF',  free: false };
@@ -1620,9 +1632,10 @@ if (routePanel) {
     if (!msg) { statusEl.hidden = true; statusEl.innerHTML = ''; return; }
     statusEl.hidden = false;
     statusEl.className = 'addr-status' + (isError ? ' err' : '');
-    statusEl.innerHTML = (isError ? '' : '<span class="addr-spin"></span>') +
-      '<span></span>';
-    statusEl.lastElementChild.textContent = msg;
+    statusEl.innerHTML = isError ? '' : '<span class="addr-spin"></span>';
+    const span = document.createElement('span');
+    span.textContent = msg;
+    statusEl.appendChild(span);
   }
 
   function setBusy(state) {
@@ -1633,39 +1646,99 @@ if (routePanel) {
 
   function clearSuggestions() { suggestEl.hidden = true; suggestEl.innerHTML = ''; }
 
-  // Libellé court à la suisse : "Rue du Lac 12, 1007 Lausanne"
-  function shortLabel(item) {
+  /* ---------- géocodage : Photon puis Nominatim ---------- */
+
+  function fromPhoton(f) {
+    const p = f.properties || {};
+    const co = f.geometry.coordinates;
+    const line1 = [p.street, p.housenumber].filter(Boolean).join(' ') || p.name || '';
+    const line2 = [p.postcode, p.city || p.county || p.state].filter(Boolean).join(' ');
+    const label = [line1, line2].filter(Boolean).join(', ') || p.name || 'Adresse';
+    return { lat: co[1], lon: co[0], label: label, mapQuery: label + ', Suisse' };
+  }
+
+  function fromNominatim(item) {
     const a = item.address || {};
     const road = a.road || a.pedestrian || a.footway || a.hamlet || '';
     const num  = a.house_number ? ' ' + a.house_number : '';
     const city = a.city || a.town || a.village || a.municipality || a.county || '';
     const line1 = road ? road + num : '';
     const line2 = [a.postcode, city].filter(Boolean).join(' ');
-    const out = [line1, line2].filter(Boolean).join(', ');
-    return out || item.display_name.split(',').slice(0, 3).join(',').trim();
+    const label = [line1, line2].filter(Boolean).join(', ') ||
+                  item.display_name.split(',').slice(0, 3).join(',').trim();
+    return { lat: parseFloat(item.lat), lon: parseFloat(item.lon),
+             label: label, mapQuery: item.display_name };
   }
 
   async function geocode(query) {
     if (geoCache[query]) return geoCache[query];
-    const url = 'https://nominatim.openstreetmap.org/search' +
-      '?format=jsonv2&addressdetails=1&limit=5&countrycodes=ch&q=' + encodeURIComponent(query);
-    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
-    if (!res.ok) throw new Error('geocode');
-    const data = await res.json();
-    geoCache[query] = data;
-    return data;
+    let out = [];
+    try {
+      const url = 'https://photon.komoot.io/api/?lang=fr&limit=6&lat=46.67&lon=6.54&q=' +
+        encodeURIComponent(query);
+      const d = await fetchJSON(url);
+      out = (d.features || [])
+        .filter(f => !f.properties || !f.properties.countrycode || f.properties.countrycode === 'CH')
+        .map(fromPhoton);
+    } catch (e) { console.warn('[zone] Photon indisponible', e); }
+
+    if (!out.length) {
+      try {
+        const url = 'https://nominatim.openstreetmap.org/search' +
+          '?format=jsonv2&addressdetails=1&limit=6&countrycodes=ch&q=' + encodeURIComponent(query);
+        const d = await fetchJSON(url, { headers: { 'Accept': 'application/json' } });
+        out = (d || []).map(fromNominatim);
+      } catch (e) { console.warn('[zone] Nominatim indisponible', e); }
+    }
+
+    // Doublons de libellé
+    const seen = {};
+    out = out.filter(p => { if (seen[p.label]) return false; seen[p.label] = 1; return true; });
+
+    geoCache[query] = out;
+    return out;
+  }
+
+  /* ---------- itinéraire : OSRM, puis Valhalla, puis estimation ---------- */
+
+  async function osrmKm(lat, lon) {
+    const url = 'https://router.project-osrm.org/route/v1/driving/' +
+      BETTENS.lon + ',' + BETTENS.lat + ';' + lon + ',' + lat + '?overview=false';
+    const d = await fetchJSON(url);
+    if (!d.routes || !d.routes.length) throw new Error('OSRM sans itinéraire');
+    return { km: d.routes[0].distance / 1000, exact: true };
+  }
+
+  async function valhallaKm(lat, lon) {
+    const body = {
+      locations: [{ lat: BETTENS.lat, lon: BETTENS.lon }, { lat: Number(lat), lon: Number(lon) }],
+      costing: 'auto', units: 'kilometers'
+    };
+    const url = 'https://valhalla1.openstreetmap.de/route?json=' +
+      encodeURIComponent(JSON.stringify(body));
+    const d = await fetchJSON(url);
+    if (!d.trip || !d.trip.summary) throw new Error('Valhalla sans itinéraire');
+    return { km: d.trip.summary.length, exact: true };
+  }
+
+  function estimateKm(lat, lon) {
+    const R = 6371, toRad = x => x * Math.PI / 180;
+    const dLat = toRad(lat - BETTENS.lat), dLon = toRad(lon - BETTENS.lon);
+    const a = Math.sin(dLat / 2) ** 2 +
+      Math.cos(toRad(BETTENS.lat)) * Math.cos(toRad(lat)) * Math.sin(dLon / 2) ** 2;
+    const vol = 2 * R * Math.asin(Math.sqrt(a));
+    return { km: vol * 1.3, exact: false };  // facteur route/vol d'oiseau
   }
 
   async function drivingKm(lat, lon) {
-    const url = 'https://router.project-osrm.org/route/v1/driving/' +
-      BETTENS.lon + ',' + BETTENS.lat + ';' + lon + ',' + lat +
-      '?overview=false&alternatives=false';
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('route');
-    const data = await res.json();
-    if (!data.routes || !data.routes.length) throw new Error('noroute');
-    return data.routes[0].distance / 1000;
+    try { return await osrmKm(lat, lon); }
+    catch (e) { console.warn('[zone] OSRM indisponible', e); }
+    try { return await valhallaKm(lat, lon); }
+    catch (e) { console.warn('[zone] Valhalla indisponible', e); }
+    return estimateKm(lat, lon);
   }
+
+  /* ---------- affichage ---------- */
 
   function openPanel(label, mapQuery) {
     routeCity.textContent = label;
@@ -1675,50 +1748,47 @@ if (routePanel) {
     routePanel.hidden = false;
   }
 
-  function showKm(km) {
-    const rounded = Math.round(km);
-    const fee = feeFor(rounded);
-    routeMetaEl.innerHTML = '<strong>' + rounded + ' km</strong> par la route · ' +
-      '<span class="route-fee' + (fee.free ? ' free' : '') + '"></span>';
-    routeMetaEl.querySelector('.route-fee').textContent = fee.label;
-  }
-
-  function showTiers() {
-    routeMetaEl.innerHTML = 'Distance affichée sur la carte · frais de déplacement :' +
-      '<span class="fee-tiers">' +
-      '<span class="route-fee free">Jusqu\'à 20 km : inclus</span>' +
-      '<span class="route-fee">De 20 à 50 km : 50 CHF</span>' +
-      '<span class="route-fee">Plus de 50 km : 100 CHF</span>' +
-      '</span>';
-  }
-
-  // Résout un résultat de géocodage : trajet + affichage
-  async function resolvePlace(item, fallbackKm) {
-    const label = shortLabel(item);
-    openPanel(label, item.display_name);
-    setStatus('Calcul du trajet…');
-    try {
-      const km = await drivingKm(item.lat, item.lon);
-      showKm(km);
-      setStatus(null);
-    } catch (e) {
-      if (fallbackKm) { showKm(fallbackKm); setStatus(null); }
-      else { showTiers(); setStatus(null); }
+  function showKm(km, exact) {
+    const r = Math.round(km);
+    const fee = feeFor(r);
+    routeMetaEl.innerHTML = '';
+    const strong = document.createElement('strong');
+    strong.textContent = (exact ? '' : '≈ ') + r + ' km';
+    const chip = document.createElement('span');
+    chip.className = 'route-fee' + (fee.free ? ' free' : '');
+    chip.textContent = fee.label;
+    routeMetaEl.appendChild(strong);
+    routeMetaEl.appendChild(document.createTextNode(' par la route · '));
+    routeMetaEl.appendChild(chip);
+    if (!exact) {
+      const note = document.createElement('span');
+      note.className = 'route-approx';
+      note.textContent = 'distance estimée, à confirmer lors de l\'appel';
+      routeMetaEl.appendChild(note);
     }
+  }
+
+  async function resolvePlace(place, fallbackKm) {
+    openPanel(place.label, place.mapQuery);
+    setStatus('Calcul du trajet…');
+    const res = await drivingKm(place.lat, place.lon);
+    if (res.exact || !fallbackKm) showKm(res.km, res.exact);
+    else showKm(fallbackKm, true);
+    setStatus(null);
     routePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   function renderSuggestions(results) {
     suggestEl.innerHTML = '';
-    results.forEach(item => {
+    results.forEach(place => {
       const li = document.createElement('li');
       const b = document.createElement('button');
       b.type = 'button';
-      b.textContent = shortLabel(item);
+      b.textContent = place.label;
       b.addEventListener('click', async () => {
         clearSuggestions();
         setBusy(true);
-        await resolvePlace(item, null);
+        await resolvePlace(place, null);
         setBusy(false);
       });
       li.appendChild(b);
@@ -1727,10 +1797,12 @@ if (routePanel) {
     suggestEl.hidden = false;
   }
 
-  // --- Recherche par adresse libre ---
+  /* ---------- interactions ---------- */
+
   async function doAddressSearch() {
     const q = searchInput.value.trim();
-    if (!q || busy) { if (!q) searchInput.focus(); return; }
+    if (busy) return;
+    if (!q) { searchInput.focus(); return; }
     cityButtons.forEach(b => b.classList.remove('active'));
     clearSuggestions();
     setBusy(true);
@@ -1738,31 +1810,21 @@ if (routePanel) {
     try {
       const results = await geocode(q);
       if (!results.length) {
-        setStatus('Adresse introuvable. Précisez la rue, le NPA et la localité.', true);
-        setBusy(false);
-        return;
-      }
-      if (results.length > 1) {
-        setStatus('Plusieurs adresses correspondent, sélectionnez la vôtre :');
-        statusEl.className = 'addr-status';
-        statusEl.innerHTML = '';
-        statusEl.textContent = 'Plusieurs adresses correspondent, sélectionnez la vôtre :';
+        setStatus('Adresse introuvable. Indiquez la rue, le NPA et la localité.', true);
+      } else if (results.length > 1) {
+        setStatus(null);
+        setStatus('Sélectionnez votre adresse :', true);
         renderSuggestions(results);
-        setBusy(false);
-        return;
+      } else {
+        await resolvePlace(results[0], null);
       }
-      await resolvePlace(results[0], null);
     } catch (e) {
-      // Service indisponible : on affiche quand même la carte et le barème
-      openPanel(q, q + ', Suisse');
-      showTiers();
-      setStatus('Distance automatique indisponible, lisez-la sur la carte.', true);
-      routePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      console.error('[zone] échec recherche', e);
+      setStatus('Recherche momentanément indisponible. Appelez-nous, nous vous dirons le tarif exact.', true);
     }
     setBusy(false);
   }
 
-  // --- Clic sur une commune de la liste ---
   cityButtons.forEach(btn => {
     btn.addEventListener('click', async () => {
       if (busy) return;
@@ -1776,11 +1838,18 @@ if (routePanel) {
       setStatus('Calcul du trajet…');
       try {
         const results = await geocode(city + ', Vaud, Suisse');
-        if (results.length) { await resolvePlace(results[0], fallback); }
-        else { openPanel(city, city + ', Vaud, Suisse'); showKm(fallback); setStatus(null); }
+        if (results.length) {
+          await resolvePlace(results[0], fallback);
+        } else {
+          openPanel(city, city + ', Vaud, Suisse');
+          showKm(fallback, true);
+          setStatus(null);
+          routePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
       } catch (e) {
+        console.error('[zone] échec commune', e);
         openPanel(city, city + ', Vaud, Suisse');
-        showKm(fallback);
+        showKm(fallback, true);
         setStatus(null);
         routePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
