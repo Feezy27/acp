@@ -1596,9 +1596,8 @@ function doSubmit(e) {
 // Zone : itinéraire depuis Bettens + distance réelle + frais de déplacement
 const routePanel = document.getElementById('routePanel');
 if (routePanel) {
-  // Point de départ. Les coordonnées sont résolues automatiquement au premier
-  // calcul (voir ensureOrigin) ; les valeurs ci-dessous ne servent que de secours.
-  const BETTENS = { lat: 46.6444, lon: 6.5528, label: 'Bettens, 1042, Vaud, Suisse', resolved: false };
+  // Point de départ : coordonnées GPS exactes du dépôt à Bettens (1042 VD).
+  const BETTENS = { lat: 46.6293039, lon: 6.5787691, label: 'Bettens, 1042, Vaud, Suisse', resolved: true };
   const DEBUG = /[?&]debug=1/.test(location.search);
 
   const routeCity   = document.getElementById('routeCity');
@@ -1707,15 +1706,8 @@ if (routePanel) {
     return out;
   }
 
-  // Résout une fois pour toutes les coordonnées exactes de Bettens (1042 VD)
+  // Le point de départ est fixé manuellement : rien à résoudre.
   async function ensureOrigin() {
-    if (BETTENS.resolved) return;
-    try {
-      const r = await geocode('Bettens 1042 Vaud Suisse');
-      const hit = r.find(p => /bettens/i.test(p.label)) || r[0];
-      if (hit) { BETTENS.lat = hit.lat; BETTENS.lon = hit.lon; }
-    } catch (e) { console.warn('[zone] géocodage de Bettens impossible, valeurs de secours', e); }
-    BETTENS.resolved = true;
     if (DEBUG) console.info('[zone] départ :', BETTENS.lat, BETTENS.lon);
   }
 
