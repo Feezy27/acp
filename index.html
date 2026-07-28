@@ -1597,6 +1597,7 @@ function doSubmit(e) {
 const routePanel = document.getElementById('routePanel');
 if (routePanel) {
   const BETTENS = { lat: 46.67056, lon: 6.53722, label: 'Bettens, Vaud, Suisse' };
+  const DEBUG = /[?&]debug=1/.test(location.search);
 
   const routeCity   = document.getElementById('routeCity');
   const routeFrame  = document.getElementById('routeFrame');
@@ -1608,8 +1609,13 @@ if (routePanel) {
   const statusEl    = document.getElementById('addrStatus');
   const suggestEl   = document.getElementById('addrSuggest');
 
+  // Clé OpenRouteService (gratuite, 2000 requêtes/jour) pour des distances exactes.
+  // Laisser vide pour utiliser les moteurs publics sans clé.
+  const ORS_KEY = '';
+
   const geoCache = {};
   let busy = false;
+  let lastEngine = '';
 
   /* ---------- utilitaires ---------- */
 
@@ -1701,12 +1707,23 @@ if (routePanel) {
 
   /* ---------- itinéraire : OSRM, puis Valhalla, puis estimation ---------- */
 
+  async function orsKm(lat, lon) {
+    const url = 'https://api.openrouteservice.org/v2/directions/driving-car' +
+      '?api_key=' + encodeURIComponent(ORS_KEY) +
+      '&start=' + BETTENS.lon + ',' + BETTENS.lat +
+      '&end=' + lon + ',' + lat;
+    const d = await fetchJSON(url);
+    const f = d.features && d.features[0];
+    if (!f || !f.properties || !f.properties.summary) throw new Error('ORS sans itinéraire');
+    return { km: f.properties.summary.distance / 1000, exact: true, engine: 'OpenRouteService' };
+  }
+
   async function osrmKm(lat, lon) {
     const url = 'https://router.project-osrm.org/route/v1/driving/' +
       BETTENS.lon + ',' + BETTENS.lat + ';' + lon + ',' + lat + '?overview=false';
     const d = await fetchJSON(url);
     if (!d.routes || !d.routes.length) throw new Error('OSRM sans itinéraire');
-    return { km: d.routes[0].distance / 1000, exact: true };
+    return { km: d.routes[0].distance / 1000, exact: true, engine: 'OSRM' };
   }
 
   async function valhallaKm(lat, lon) {
@@ -1718,7 +1735,7 @@ if (routePanel) {
       encodeURIComponent(JSON.stringify(body));
     const d = await fetchJSON(url);
     if (!d.trip || !d.trip.summary) throw new Error('Valhalla sans itinéraire');
-    return { km: d.trip.summary.length, exact: true };
+    return { km: d.trip.summary.length, exact: true, engine: 'Valhalla' };
   }
 
   function estimateKm(lat, lon) {
@@ -1727,10 +1744,14 @@ if (routePanel) {
     const a = Math.sin(dLat / 2) ** 2 +
       Math.cos(toRad(BETTENS.lat)) * Math.cos(toRad(lat)) * Math.sin(dLon / 2) ** 2;
     const vol = 2 * R * Math.asin(Math.sqrt(a));
-    return { km: vol * 1.3, exact: false };  // facteur route/vol d'oiseau
+    return { km: vol * 1.4, exact: false, engine: 'estimation locale' };
   }
 
   async function drivingKm(lat, lon) {
+    if (ORS_KEY) {
+      try { return await orsKm(lat, lon); }
+      catch (e) { console.warn('[zone] OpenRouteService indisponible', e); }
+    }
     try { return await osrmKm(lat, lon); }
     catch (e) { console.warn('[zone] OSRM indisponible', e); }
     try { return await valhallaKm(lat, lon); }
@@ -1740,10 +1761,16 @@ if (routePanel) {
 
   /* ---------- affichage ---------- */
 
-  function openPanel(label, mapQuery) {
+  function openPanel(label, place) {
     routeCity.textContent = label;
-    const url = 'https://maps.google.com/maps?saddr=' + encodeURIComponent(BETTENS.label) +
-      '&daddr=' + encodeURIComponent(mapQuery) + '&output=embed&hl=fr';
+    // Destination donnée en coordonnées : la carte et le calcul portent
+    // ainsi exactement sur le même point.
+    const dest = (place && place.lat != null)
+      ? place.lat + ',' + place.lon
+      : String(place || label);
+    const url = 'https://maps.google.com/maps?saddr=' +
+      BETTENS.lat + ',' + BETTENS.lon +
+      '&daddr=' + encodeURIComponent(dest) + '&output=embed&hl=fr';
     if (routeFrame.src !== url) routeFrame.src = url;
     routePanel.hidden = false;
   }
@@ -1766,14 +1793,21 @@ if (routePanel) {
       note.textContent = 'distance estimée, à confirmer lors de l\'appel';
       routeMetaEl.appendChild(note);
     }
+    if (DEBUG) {
+      const dbg = document.createElement('span');
+      dbg.className = 'route-approx';
+      dbg.textContent = 'moteur : ' + (lastEngine || '?');
+      routeMetaEl.appendChild(dbg);
+    }
   }
 
   async function resolvePlace(place, fallbackKm) {
-    openPanel(place.label, place.mapQuery);
+    openPanel(place.label, place);
     setStatus('Calcul du trajet…');
     const res = await drivingKm(place.lat, place.lon);
+    lastEngine = res.engine;
     if (res.exact || !fallbackKm) showKm(res.km, res.exact);
-    else showKm(fallbackKm, true);
+    else { lastEngine = 'distance de référence'; showKm(fallbackKm, true); }
     setStatus(null);
     routePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
