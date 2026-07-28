@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Allô ça pique — Destruction de nids de guêpes, frelons et chenilles | Canton de Vaud</title>
-<meta name="description" content="Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques), bourdons et chenilles processionnaires du pin. Récupération d'essaims d'abeilles. Intervention 24-48h, garantie 10 jours, devis gratuit.">
+<meta name="description" content="Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques) et chenilles processionnaires du pin. Récupération d'essaims d'abeilles. Intervention 24-48h, garantie 10 jours, devis gratuit.">
 <meta name="robots" content="index, follow">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="canonical" href="https://allocapique.ch/">
@@ -14,7 +14,7 @@
 <meta property="og:locale" content="fr_CH">
 <meta property="og:url" content="https://allocapique.ch/">
 <meta property="og:title" content="Allô ça pique — Destruction de nids de guêpes et frelons | Vaud">
-<meta property="og:description" content="Entreprise familiale vaudoise. Guêpes, frelons, bourdons, chenilles processionnaires. Intervention 24-48h, garantie 10 jours, tarifs transparents.">
+<meta property="og:description" content="Entreprise familiale vaudoise. Guêpes, frelons, chenilles processionnaires. Intervention 24-48h, garantie 10 jours, tarifs transparents.">
 <meta property="og:image" content="https://allocapique.ch/logo.png">
 <meta property="og:site_name" content="Allô ça pique">
 <meta name="twitter:card" content="summary_large_image">
@@ -29,7 +29,7 @@
   "logo": "https://allocapique.ch/logo.png",
   "image": "https://allocapique.ch/logo.png",
   "email": "contact@allocapique.ch",
-  "description": "Destruction de nids de guêpes, frelons européens et asiatiques, bourdons et chenilles processionnaires du pin. Récupération d'essaims d'abeilles.",
+  "description": "Destruction de nids de guêpes, frelons européens et asiatiques et de chenilles processionnaires du pin. Récupération d'essaims d'abeilles.",
   "areaServed": {
     "@type": "AdministrativeArea",
     "name": "Canton de Vaud, Suisse"
@@ -41,7 +41,7 @@
   },
   "priceRange": "200-400 CHF",
   "openingHours": "Mo-Su 07:00-20:00",
-  "knowsAbout": ["Frelon asiatique", "Frelon européen", "Guêpes", "Bourdons", "Chenilles processionnaires du pin", "Essaims d'abeilles"]
+  "knowsAbout": ["Frelon asiatique", "Frelon européen", "Guêpes", "Chenilles processionnaires du pin", "Essaims d'abeilles"]
 }
 </script>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
@@ -227,12 +227,12 @@ section{padding:110px 0}
 }
 .hero h1 .keep-calm{
   color:var(--amber);
-  font-style:italic;
-  font-weight:600;
+  font-style:normal;
+  font-weight:500;
 }
 .hero h1 .brand-line{
   display:block;
-  font-weight:600;
+  font-weight:500;
   color:var(--ink);
   margin-top:4px;
 }
@@ -345,7 +345,7 @@ section{padding:110px 0}
   margin-bottom:18px;
   font-weight:500;
 }
-.s-head h2 em{font-style:italic;color:var(--amber);font-weight:600}
+.s-head h2 em{font-style:normal;color:var(--amber);font-weight:500}
 .s-head p{
   font-size:17px;
   color:var(--muted);
@@ -511,8 +511,30 @@ section{padding:110px 0}
   border-radius:6px;
   font-size:14px;color:var(--muted);line-height:1.7;
 }
+/* Tableau prestations complémentaires */
+.ptbl-extra-wrap{margin-top:18px}
+.ptbl-extra td{padding:18px 26px}
+.ptbl-extra .t-name{font-size:18px;margin-bottom:0}
+.ptbl-extra .t-price{font-size:22px}
 @media(max-width:680px){
   .ptbl-wrap{background:transparent;border:none;padding:0}
+  /* Le tableau des prestations complémentaires reste en 2 colonnes */
+  .ptbl-extra-wrap{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-lg);padding:4px 0}
+  .ptbl-extra tbody tr{
+    display:flex !important;
+    align-items:center;justify-content:space-between;gap:14px;
+    background:transparent !important;border:none !important;
+    border-bottom:1px solid var(--line) !important;
+    border-radius:0 !important;
+    padding:14px 18px !important;margin-bottom:0 !important;
+  }
+  .ptbl-extra tbody tr:last-child{border-bottom:none !important}
+  .ptbl-extra td{display:block !important;padding:0 !important;border:none !important;margin:0 !important}
+  .ptbl-extra td:first-child{margin-bottom:0 !important;padding-bottom:0 !important;border-bottom:none !important}
+  .ptbl-extra td:nth-child(2){text-align:right !important;flex-shrink:0}
+  .ptbl-extra td::before{content:none !important}
+  .ptbl-extra .t-name{font-size:15px}
+  .ptbl-extra .t-price{font-size:20px}
   .ptbl,.ptbl thead,.ptbl tbody,.ptbl tr,.ptbl td{display:block;width:100%}
   .ptbl thead{display:none}
   .ptbl tbody tr{
@@ -627,6 +649,35 @@ section{padding:110px 0}
   transition:background .2s;
 }
 .city-search button:hover{background:var(--amber-bright)}
+.city-search button[disabled]{opacity:.55;cursor:default}
+.addr-status{
+  font-size:14px;color:rgba(250,246,238,0.75);
+  margin:-8px 0 18px;display:flex;align-items:center;gap:9px;
+}
+.addr-status.err{color:#F2A08F}
+.addr-spin{
+  width:14px;height:14px;flex-shrink:0;
+  border:2px solid rgba(250,246,238,0.25);
+  border-top-color:var(--amber-bright);
+  border-radius:50%;
+  animation:addrspin .7s linear infinite;
+}
+@keyframes addrspin{to{transform:rotate(360deg)}}
+.addr-suggest{
+  list-style:none;margin:-8px 0 18px;
+  background:rgba(250,246,238,0.06);
+  border:1px solid rgba(250,246,238,0.16);
+  border-radius:10px;overflow:hidden;
+}
+.addr-suggest li + li{border-top:1px solid rgba(250,246,238,0.10)}
+.addr-suggest button{
+  width:100%;text-align:left;
+  padding:12px 16px;
+  font-family:'Inter',sans-serif;font-size:14px;
+  color:var(--cream);background:none;
+  transition:background .15s,color .15s;
+}
+.addr-suggest button:hover{background:rgba(245,166,35,0.14);color:var(--amber-bright)}
 @media(max-width:480px){
   .city-search{flex-direction:column}
   .city-search button{width:100%}
@@ -721,7 +772,7 @@ section{padding:110px 0}
 }
 .about-img-ph small{display:block;font-family:'Inter',sans-serif;font-size:12px;margin-top:10px;color:rgba(250,246,238,0.2);font-style:normal}
 .about h2{font-size:clamp(36px,4.2vw,54px);margin-bottom:24px;font-weight:500}
-.about h2 em{font-style:italic;color:var(--amber);font-weight:600}
+.about h2 em{font-style:normal;color:var(--amber);font-weight:500}
 .about-quote{
   font-family:'Fraunces',serif;font-style:italic;
   font-size:22px;color:var(--ink);font-weight:400;
@@ -745,7 +796,7 @@ section{padding:110px 0}
 .contact{background:var(--cream-2)}
 .con-g{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:start}
 .con-l h2{font-size:clamp(36px,4.2vw,54px);margin-bottom:18px;font-weight:500}
-.con-l h2 em{font-style:italic;color:var(--amber);font-weight:600}
+.con-l h2 em{font-style:normal;color:var(--amber);font-weight:500}
 .con-lead{font-size:17px;color:var(--muted);line-height:1.7;margin-bottom:32px}
 .cbs{display:flex;flex-direction:column;gap:12px}
 .cb{
@@ -959,7 +1010,7 @@ section{padding:110px 0}
     <div class="hero-g">
       <div class="hero-left">
         <h1>Un nid près de chez vous&nbsp;?<br><span class="keep-calm">Pas de panique.</span><span class="brand-line">Appelez Allô ça pique.</span></h1>
-        <p class="hero-desc">Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques), bourdons et chenilles processionnaires du pin. Également apiculteurs, nous récupérons gratuitement les essaims d'abeilles.</p>
+        <p class="hero-desc">Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques) et chenilles processionnaires du pin. Également apiculteurs, nous récupérons gratuitement les essaims d'abeilles.</p>
         <div class="hero-ctas">
           <a href="tel:+41XXXXXXXXX" class="btn-primary">
             <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72l.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45l2.81.7A2 2 0 0 1 21 16.92z"/></svg>
@@ -1006,7 +1057,6 @@ section{padding:110px 0}
     </div>
     <div class="svc-grid rv">
       <article class="svc featured">
-        <span class="svc-tag">Espèce invasive</span>
         <div class="svc-ico">
           <!-- Frelon : grand insecte avec corps allongé, dard et ailes -->
           <svg fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 64 64">
@@ -1038,8 +1088,8 @@ section{padding:110px 0}
             <path d="M37 32 L42 38"/>
           </svg>
         </div>
-        <h3>Frelons</h3>
-        <p class="svc-desc">Frelon européen et asiatique. Équipement certifié, perche 30 m pour les nids en hauteur.</p>
+        <h3>Frelon asiatique</h3>
+        <p class="svc-desc">Espèce invasive arrivée récemment en Suisse, elle menace les colonies d'abeilles et fait l'objet d'un signalement officiel. Sa destruction limite sa propagation.</p>
       </article>
       <article class="svc">
         <div class="svc-ico">
@@ -1072,7 +1122,7 @@ section{padding:110px 0}
             <path d="M37 28 L42 32"/>
           </svg>
         </div>
-        <h3>Guêpes & bourdons</h3>
+        <h3>Guêpes & frelons européens</h3>
         <p class="svc-desc">Tous types de nids, quel que soit leur emplacement. Traitement au pyrèthre végétal.</p>
       </article>
       <article class="svc">
@@ -1087,7 +1137,7 @@ section{padding:110px 0}
           </svg>
         </div>
         <h3>Chenilles processionnaires</h3>
-        <p class="svc-desc">Échenillage et pose d'écopiège pour pins infestés. Espèce urticante, traitée en hiver.</p>
+        <p class="svc-desc">Échenillage et pose d'écopièges pour pins infestés. Espèce urticante, traitée en hiver.</p>
       </article>
       <article class="svc">
         <div class="svc-ico">
@@ -1116,7 +1166,7 @@ section{padding:110px 0}
           </svg>
         </div>
         <h3>Essaims d'abeilles</h3>
-        <p class="svc-desc">Récupération des abeilles vivantes. Gratuit sauf en cas d'accès complexe.</p>
+        <p class="svc-desc">Récupération des abeilles vivantes. Gratuit, sauf en cas d'accès complexe.</p>
       </article>
     </div>
   </div>
@@ -1132,11 +1182,11 @@ section{padding:110px 0}
     <div class="pri-crit rv">
       <div class="crit-box">
         <div class="crit-label">Nid simple</div>
-        <p>Accessible avec échelle ou perche standard. Hauteur <strong>jusqu'à 20 m</strong>. <strong>Pas</strong> de progression sur toiture.</p>
+        <p>Accessible avec échelle ou perche standard. Hauteur <strong>jusqu'à 15 m</strong>.</p>
       </div>
       <div class="crit-box alt">
         <div class="crit-label">Nid complexe</div>
-        <p>Hauteur <strong>supérieure à 20 m</strong> ou nécessitant une <strong>progression sur toiture</strong>.</p>
+        <p>Hauteur <strong>supérieure à 15 m</strong>.</p>
       </div>
       <div class="crit-box special">
         <div class="crit-label">Accès spécial</div>
@@ -1156,7 +1206,7 @@ section{padding:110px 0}
         <tbody>
           <tr>
             <td>
-              <span class="t-name">Guêpes & bourdons</span>
+              <span class="t-name">Guêpes et frelons</span>
             </td>
             <td><span class="t-price">200<small>CHF</small></span></td>
             <td><span class="t-price">290<small>CHF</small></span></td>
@@ -1164,15 +1214,7 @@ section{padding:110px 0}
           </tr>
           <tr>
             <td>
-              <span class="t-name">Frelons (européen + asiatique)</span>
-            </td>
-            <td><span class="t-price">230<small>CHF</small></span></td>
-            <td><span class="t-price">350<small>CHF</small></span></td>
-            <td><span class="t-price special">350<small>+ devis</small></span></td>
-          </tr>
-          <tr>
-            <td>
-              <span class="t-name">Nid en cheminée</span>
+              <span class="t-name">Nid nécessitant progression sur toiture</span>
             </td>
             <td><span class="t-price empty">—</span></td>
             <td><span class="t-price">400<small>CHF</small></span></td>
@@ -1193,7 +1235,35 @@ section{padding:110px 0}
         </tbody>
       </table>
     </div>
-    <p class="p-note">Le devis technique en "accès spécial" couvre la location de nacelle ou la prestation d'un intervenant externe (couvreur, cordiste) lorsque la sécurité l'impose. Frais de déplacement depuis Bettens (VD) : 50 CHF au-delà de 30 km, 100 CHF au-delà de 60 km. Enlèvement du nid traité en option : 150 CHF. Garantie de 10 jours incluse dans chaque intervention.</p>
+    <div class="ptbl-wrap ptbl-extra-wrap rv">
+      <table class="ptbl ptbl-extra">
+        <thead>
+          <tr>
+            <th>Prestations complémentaires</th>
+            <th>Tarif</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="t-name">Enlèvement du nid traité</span></td>
+            <td><span class="t-price">150<small>CHF</small></span></td>
+          </tr>
+          <tr>
+            <td><span class="t-name">Déplacement jusqu'à 20 km</span></td>
+            <td><span class="t-price free">Inclus</span></td>
+          </tr>
+          <tr>
+            <td><span class="t-name">Déplacement de 20 à 50 km</span></td>
+            <td><span class="t-price">50<small>CHF</small></span></td>
+          </tr>
+          <tr>
+            <td><span class="t-name">Déplacement au-delà de 50 km</span></td>
+            <td><span class="t-price">100<small>CHF</small></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="p-note">Distances calculées depuis Bettens (VD). Le devis technique en "accès spécial" couvre la location de nacelle ou la prestation d'un intervenant externe (couvreur, cordiste) lorsque la sécurité l'impose. Garantie de 10 jours incluse dans chaque intervention.</p>
   </div>
 </section>
 
@@ -1201,15 +1271,13 @@ section{padding:110px 0}
 <section class="why" id="pourquoi">
   <div class="wrap">
     <div class="s-head rv">
-      <div class="eyebrow">Pourquoi nous</div>
       <h2>Nos <em>engagements</em></h2>
-      <p>Ce qui distingue notre intervention.</p>
     </div>
     <div class="why-g rv">
       <div class="wn">
         <div class="wn-ico"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         <h3>Délai d'intervention</h3>
-        <p>Nous intervenons sous 24 à 48 heures ouvrables, haute saison comprise.</p>
+        <p>Nous intervenons sous 24 à 48 heures ouvrables.</p>
       </div>
       <div class="wn">
         <div class="wn-ico"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2 L20 5 V11 C20 16 16 20 12 22 C8 20 4 16 4 11 V5 Z"/><polyline points="9 12 11 14 15 10"/></svg></div>
@@ -1246,9 +1314,11 @@ section{padding:110px 0}
     <div class="zone-g">
       <div class="zone-left">
       <div class="city-search rv">
-        <input type="text" id="citySearchInput" placeholder="Votre commune n'est pas listée ? Cherchez-la ici…" autocomplete="address-level2" aria-label="Rechercher une commune">
-        <button type="button" id="citySearchBtn" aria-label="Afficher l'itinéraire">Voir le trajet</button>
+        <input type="text" id="citySearchInput" placeholder="Votre adresse : rue, NPA et localité" autocomplete="street-address" aria-label="Rechercher une adresse">
+        <button type="button" id="citySearchBtn" aria-label="Calculer la distance">Calculer</button>
       </div>
+      <p class="addr-status" id="addrStatus" hidden></p>
+      <ul class="addr-suggest" id="addrSuggest" hidden></ul>
       <div class="cities rv">
         <button class="city" data-city="Échallens" data-km="7">Échallens</button>
         <button class="city" data-city="Cossonay" data-km="8">Cossonay</button>
@@ -1276,7 +1346,7 @@ section{padding:110px 0}
           <button class="route-close" id="routeClose" aria-label="Fermer la carte">✕</button>
         </div>
         <div class="route-map"><iframe id="routeFrame" title="Itinéraire depuis Bettens" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
-        <p class="route-note">Distance indicative par la route. Frais de déplacement : inclus jusqu'à 30 km, 50 CHF au-delà de 30 km, 100 CHF au-delà de 60 km.</p>
+        <p class="route-note">Distance routière calculée depuis Bettens (VD), à titre indicatif. Frais de déplacement : inclus jusqu'à 20 km, 50 CHF au-delà de 20 km, 100 CHF au-delà de 50 km.</p>
       </div>
       </div>
       <aside class="zone-card rv">
@@ -1429,7 +1499,7 @@ section{padding:110px 0}
             <label for="ft">Type d'intervention</label>
             <select id="ft" required>
               <option value="">— Sélectionnez —</option>
-              <option>Guêpes / bourdons</option>
+              <option>Guêpes</option>
               <option>Frelon européen</option>
               <option>Frelon asiatique</option>
               <option>Chenilles processionnaires</option>
@@ -1462,13 +1532,13 @@ section{padding:110px 0}
     <div class="ftr-g">
       <div class="fb">
         <img src="logo.png" alt="Allô ça pique">
-        <p>Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons, bourdons et chenilles processionnaires. Récupération d'essaims d'abeilles. Intervention 24-48h, garantie 10 jours.</p>
+        <p>Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons et chenilles processionnaires. Récupération d'essaims d'abeilles. Intervention 24-48h, garantie 10 jours.</p>
       </div>
       <div class="fc-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="#services">Frelons (européen & asiatique)</a></li>
-          <li><a href="#services">Guêpes & bourdons</a></li>
+          <li><a href="#services">Frelon asiatique</a></li>
+          <li><a href="#services">Guêpes &amp; frelons européens</a></li>
           <li><a href="#services">Chenilles processionnaires</a></li>
           <li><a href="#services">Essaims d'abeilles</a></li>
         </ul>
@@ -1522,69 +1592,212 @@ function doSubmit(e) {
   note.innerHTML = '<strong style="color:var(--ok)">Le formulaire sera bientôt activé.</strong><br>En attendant, contactez-nous directement par téléphone ou par email à contact@allocapique.ch.';
 }
 
-// Zone : mini-carte itinéraire + frais de déplacement
+// Zone : itinéraire depuis Bettens + distance réelle + frais de déplacement
 const routePanel = document.getElementById('routePanel');
 if (routePanel) {
-  const routeCity = document.getElementById('routeCity');
-  const routeKm = document.getElementById('routeKm');
-  const routeFee = document.getElementById('routeFee');
-  const routeFrame = document.getElementById('routeFrame');
-  const routeClose = document.getElementById('routeClose');
+  const BETTENS = { lat: 46.67056, lon: 6.53722, label: 'Bettens, Vaud, Suisse' };
+
+  const routeCity   = document.getElementById('routeCity');
+  const routeFrame  = document.getElementById('routeFrame');
+  const routeClose  = document.getElementById('routeClose');
+  const routeMetaEl = document.querySelector('.route-meta');
   const cityButtons = document.querySelectorAll('.city[data-city]');
   const searchInput = document.getElementById('citySearchInput');
-  const searchBtn = document.getElementById('citySearchBtn');
-  const routeMetaEl = document.querySelector('.route-meta');
+  const searchBtn   = document.getElementById('citySearchBtn');
+  const statusEl    = document.getElementById('addrStatus');
+  const suggestEl   = document.getElementById('addrSuggest');
+
+  const geoCache = {};
+  let busy = false;
 
   function feeFor(km) {
-    if (km > 60) return { label: 'Frais de déplacement : 100 CHF', free: false };
-    if (km > 30) return { label: 'Frais de déplacement : 50 CHF', free: false };
+    if (km > 50) return { label: 'Frais de déplacement : 100 CHF', free: false };
+    if (km > 20) return { label: 'Frais de déplacement : 50 CHF',  free: false };
     return { label: 'Déplacement inclus', free: true };
   }
 
-  function showRoute(city, km) {
-    routeCity.textContent = city;
-    if (km !== null) {
-      const fee = feeFor(km);
-      routeMetaEl.innerHTML = '<span id="routeKm">~' + km + '</span> km par la route · <span class="route-fee' + (fee.free ? ' free' : '') + '">' + fee.label + '</span>';
-    } else {
-      routeMetaEl.innerHTML = 'Distance affichée sur la carte · frais de déplacement :' +
-        '<span class="fee-tiers">' +
-        '<span class="route-fee free">Jusqu\'à 30 km : inclus</span>' +
-        '<span class="route-fee">De 30 à 60 km : 50 CHF</span>' +
-        '<span class="route-fee">Plus de 60 km : 100 CHF</span>' +
-        '</span>';
-    }
-    const url = 'https://maps.google.com/maps?saddr=' +
-      encodeURIComponent('Bettens, Vaud, Suisse') +
-      '&daddr=' + encodeURIComponent(city + ', Vaud, Suisse') +
-      '&output=embed&hl=fr';
+  function setStatus(msg, isError) {
+    if (!msg) { statusEl.hidden = true; statusEl.innerHTML = ''; return; }
+    statusEl.hidden = false;
+    statusEl.className = 'addr-status' + (isError ? ' err' : '');
+    statusEl.innerHTML = (isError ? '' : '<span class="addr-spin"></span>') +
+      '<span></span>';
+    statusEl.lastElementChild.textContent = msg;
+  }
+
+  function setBusy(state) {
+    busy = state;
+    searchBtn.disabled = state;
+    searchBtn.textContent = state ? 'Calcul…' : 'Calculer';
+  }
+
+  function clearSuggestions() { suggestEl.hidden = true; suggestEl.innerHTML = ''; }
+
+  // Libellé court à la suisse : "Rue du Lac 12, 1007 Lausanne"
+  function shortLabel(item) {
+    const a = item.address || {};
+    const road = a.road || a.pedestrian || a.footway || a.hamlet || '';
+    const num  = a.house_number ? ' ' + a.house_number : '';
+    const city = a.city || a.town || a.village || a.municipality || a.county || '';
+    const line1 = road ? road + num : '';
+    const line2 = [a.postcode, city].filter(Boolean).join(' ');
+    const out = [line1, line2].filter(Boolean).join(', ');
+    return out || item.display_name.split(',').slice(0, 3).join(',').trim();
+  }
+
+  async function geocode(query) {
+    if (geoCache[query]) return geoCache[query];
+    const url = 'https://nominatim.openstreetmap.org/search' +
+      '?format=jsonv2&addressdetails=1&limit=5&countrycodes=ch&q=' + encodeURIComponent(query);
+    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+    if (!res.ok) throw new Error('geocode');
+    const data = await res.json();
+    geoCache[query] = data;
+    return data;
+  }
+
+  async function drivingKm(lat, lon) {
+    const url = 'https://router.project-osrm.org/route/v1/driving/' +
+      BETTENS.lon + ',' + BETTENS.lat + ';' + lon + ',' + lat +
+      '?overview=false&alternatives=false';
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('route');
+    const data = await res.json();
+    if (!data.routes || !data.routes.length) throw new Error('noroute');
+    return data.routes[0].distance / 1000;
+  }
+
+  function openPanel(label, mapQuery) {
+    routeCity.textContent = label;
+    const url = 'https://maps.google.com/maps?saddr=' + encodeURIComponent(BETTENS.label) +
+      '&daddr=' + encodeURIComponent(mapQuery) + '&output=embed&hl=fr';
     if (routeFrame.src !== url) routeFrame.src = url;
     routePanel.hidden = false;
+  }
+
+  function showKm(km) {
+    const rounded = Math.round(km);
+    const fee = feeFor(rounded);
+    routeMetaEl.innerHTML = '<strong>' + rounded + ' km</strong> par la route · ' +
+      '<span class="route-fee' + (fee.free ? ' free' : '') + '"></span>';
+    routeMetaEl.querySelector('.route-fee').textContent = fee.label;
+  }
+
+  function showTiers() {
+    routeMetaEl.innerHTML = 'Distance affichée sur la carte · frais de déplacement :' +
+      '<span class="fee-tiers">' +
+      '<span class="route-fee free">Jusqu\'à 20 km : inclus</span>' +
+      '<span class="route-fee">De 20 à 50 km : 50 CHF</span>' +
+      '<span class="route-fee">Plus de 50 km : 100 CHF</span>' +
+      '</span>';
+  }
+
+  // Résout un résultat de géocodage : trajet + affichage
+  async function resolvePlace(item, fallbackKm) {
+    const label = shortLabel(item);
+    openPanel(label, item.display_name);
+    setStatus('Calcul du trajet…');
+    try {
+      const km = await drivingKm(item.lat, item.lon);
+      showKm(km);
+      setStatus(null);
+    } catch (e) {
+      if (fallbackKm) { showKm(fallbackKm); setStatus(null); }
+      else { showTiers(); setStatus(null); }
+    }
     routePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
+  function renderSuggestions(results) {
+    suggestEl.innerHTML = '';
+    results.forEach(item => {
+      const li = document.createElement('li');
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = shortLabel(item);
+      b.addEventListener('click', async () => {
+        clearSuggestions();
+        setBusy(true);
+        await resolvePlace(item, null);
+        setBusy(false);
+      });
+      li.appendChild(b);
+      suggestEl.appendChild(li);
+    });
+    suggestEl.hidden = false;
+  }
+
+  // --- Recherche par adresse libre ---
+  async function doAddressSearch() {
+    const q = searchInput.value.trim();
+    if (!q || busy) { if (!q) searchInput.focus(); return; }
+    cityButtons.forEach(b => b.classList.remove('active'));
+    clearSuggestions();
+    setBusy(true);
+    setStatus('Recherche de l\'adresse…');
+    try {
+      const results = await geocode(q);
+      if (!results.length) {
+        setStatus('Adresse introuvable. Précisez la rue, le NPA et la localité.', true);
+        setBusy(false);
+        return;
+      }
+      if (results.length > 1) {
+        setStatus('Plusieurs adresses correspondent, sélectionnez la vôtre :');
+        statusEl.className = 'addr-status';
+        statusEl.innerHTML = '';
+        statusEl.textContent = 'Plusieurs adresses correspondent, sélectionnez la vôtre :';
+        renderSuggestions(results);
+        setBusy(false);
+        return;
+      }
+      await resolvePlace(results[0], null);
+    } catch (e) {
+      // Service indisponible : on affiche quand même la carte et le barème
+      openPanel(q, q + ', Suisse');
+      showTiers();
+      setStatus('Distance automatique indisponible, lisez-la sur la carte.', true);
+      routePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    setBusy(false);
+  }
+
+  // --- Clic sur une commune de la liste ---
   cityButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
+      if (busy) return;
       cityButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      showRoute(btn.dataset.city, parseInt(btn.dataset.km, 10));
+      clearSuggestions();
+      searchInput.value = '';
+      const city = btn.dataset.city;
+      const fallback = parseInt(btn.dataset.km, 10);
+      setBusy(true);
+      setStatus('Calcul du trajet…');
+      try {
+        const results = await geocode(city + ', Vaud, Suisse');
+        if (results.length) { await resolvePlace(results[0], fallback); }
+        else { openPanel(city, city + ', Vaud, Suisse'); showKm(fallback); setStatus(null); }
+      } catch (e) {
+        openPanel(city, city + ', Vaud, Suisse');
+        showKm(fallback);
+        setStatus(null);
+        routePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      setBusy(false);
     });
   });
 
-  function doCitySearch() {
-    const q = searchInput.value.trim();
-    if (!q) { searchInput.focus(); return; }
-    cityButtons.forEach(b => b.classList.remove('active'));
-    showRoute(q, null);
-  }
-  searchBtn.addEventListener('click', doCitySearch);
+  searchBtn.addEventListener('click', doAddressSearch);
   searchInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { e.preventDefault(); doCitySearch(); }
+    if (e.key === 'Enter') { e.preventDefault(); doAddressSearch(); }
   });
 
   routeClose.addEventListener('click', () => {
     routePanel.hidden = true;
     routeFrame.src = '';
+    clearSuggestions();
+    setStatus(null);
     cityButtons.forEach(b => b.classList.remove('active'));
   });
 }
