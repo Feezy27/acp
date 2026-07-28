@@ -1596,7 +1596,9 @@ function doSubmit(e) {
 // Zone : itinéraire depuis Bettens + distance réelle + frais de déplacement
 const routePanel = document.getElementById('routePanel');
 if (routePanel) {
-  const BETTENS = { lat: 46.67056, lon: 6.53722, label: 'Bettens, Vaud, Suisse' };
+  // Point de départ. Les coordonnées sont résolues automatiquement au premier
+  // calcul (voir ensureOrigin) ; les valeurs ci-dessous ne servent que de secours.
+  const BETTENS = { lat: 46.6444, lon: 6.5528, label: 'Bettens, 1042, Vaud, Suisse', resolved: false };
   const DEBUG = /[?&]debug=1/.test(location.search);
 
   const routeCity   = document.getElementById('routeCity');
@@ -1705,6 +1707,18 @@ if (routePanel) {
     return out;
   }
 
+  // Résout une fois pour toutes les coordonnées exactes de Bettens (1042 VD)
+  async function ensureOrigin() {
+    if (BETTENS.resolved) return;
+    try {
+      const r = await geocode('Bettens 1042 Vaud Suisse');
+      const hit = r.find(p => /bettens/i.test(p.label)) || r[0];
+      if (hit) { BETTENS.lat = hit.lat; BETTENS.lon = hit.lon; }
+    } catch (e) { console.warn('[zone] géocodage de Bettens impossible, valeurs de secours', e); }
+    BETTENS.resolved = true;
+    if (DEBUG) console.info('[zone] départ :', BETTENS.lat, BETTENS.lon);
+  }
+
   /* ---------- itinéraire : OSRM, puis Valhalla, puis estimation ---------- */
 
   async function orsKm(lat, lon) {
@@ -1796,12 +1810,14 @@ if (routePanel) {
     if (DEBUG) {
       const dbg = document.createElement('span');
       dbg.className = 'route-approx';
-      dbg.textContent = 'moteur : ' + (lastEngine || '?');
+      dbg.textContent = 'moteur : ' + (lastEngine || '?') +
+        ' · départ ' + BETTENS.lat.toFixed(4) + ', ' + BETTENS.lon.toFixed(4);
       routeMetaEl.appendChild(dbg);
     }
   }
 
   async function resolvePlace(place, fallbackKm) {
+    await ensureOrigin();
     openPanel(place.label, place);
     setStatus('Calcul du trajet…');
     const res = await drivingKm(place.lat, place.lon);
@@ -1842,6 +1858,7 @@ if (routePanel) {
     setBusy(true);
     setStatus('Recherche de l\'adresse…');
     try {
+      await ensureOrigin();
       const results = await geocode(q);
       if (!results.length) {
         setStatus('Adresse introuvable. Indiquez la rue, le NPA et la localité.', true);
@@ -1871,6 +1888,7 @@ if (routePanel) {
       setBusy(true);
       setStatus('Calcul du trajet…');
       try {
+        await ensureOrigin();
         const results = await geocode(city + ', Vaud, Suisse');
         if (results.length) {
           await resolvePlace(results[0], fallback);
