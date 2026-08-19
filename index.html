@@ -36,11 +36,16 @@
   },
   "address": {
     "@type": "PostalAddress",
+    "streetAddress": "En Bocherens 14",
+    "postalCode": "1042",
+    "addressLocality": "Bettens",
     "addressRegion": "VD",
     "addressCountry": "CH"
   },
-  "priceRange": "200-400 CHF",
-  "openingHours": "Mo-Su 07:00-20:00",
+  "geo": { "@type": "GeoCoordinates", "latitude": 46.6293039, "longitude": 6.5787691 },
+  "telephone": "+41792353972",
+  "email": "contact@allocapique.ch",
+  "priceRange": "100-450 CHF",
   "knowsAbout": ["Frelon asiatique", "Frelon européen", "Guêpes", "Chenilles processionnaires du pin", "Essaims d'abeilles"]
 }
 </script>
@@ -517,77 +522,24 @@ section{padding:110px 0}
 .ptbl-extra .t-name{font-size:18px;margin-bottom:0}
 .ptbl-extra .t-price{font-size:22px}
 @media(max-width:680px){
-  .ptbl-wrap{background:transparent;border:none;padding:0}
-  /* Le tableau des prestations complémentaires reste en 2 colonnes */
-  .ptbl-extra-wrap{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-lg);padding:4px 0}
-  .ptbl-extra tbody tr{
-    display:flex !important;
-    align-items:center;justify-content:space-between;gap:14px;
-    background:transparent !important;border:none !important;
-    border-bottom:1px solid var(--line) !important;
-    border-radius:0 !important;
-    padding:14px 18px !important;margin-bottom:0 !important;
-  }
-  .ptbl-extra tbody tr:last-child{border-bottom:none !important}
-  .ptbl-extra td{display:block !important;padding:0 !important;border:none !important;margin:0 !important}
-  .ptbl-extra td:first-child{margin-bottom:0 !important;padding-bottom:0 !important;border-bottom:none !important}
-  .ptbl-extra td:nth-child(2){text-align:right !important;flex-shrink:0}
-  .ptbl-extra td::before{content:none !important}
-  .ptbl-extra .t-name{font-size:15px}
-  .ptbl-extra .t-price{font-size:20px}
+  /* Les deux tableaux gardent 2 colonnes : libellé à gauche, tarif à droite */
   .ptbl,.ptbl thead,.ptbl tbody,.ptbl tr,.ptbl td{display:block;width:100%}
   .ptbl thead{display:none}
+  .ptbl-wrap{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-lg);padding:4px 0}
   .ptbl tbody tr{
-    background:var(--cream);
-    border:1px solid var(--line);
-    border-radius:var(--r);
-    padding:20px;
-    margin-bottom:14px;
-  }
-  .ptbl tbody tr:hover{background:var(--cream)}
-  .ptbl td{
-    padding:0;
-    text-align:left !important;
-    border:none;
-  }
-  .ptbl td:first-child{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--line)}
-  .ptbl td:nth-child(2),.ptbl td:nth-child(3),.ptbl td:nth-child(4){
     display:flex !important;
-    justify-content:space-between;
-    align-items:center;
-    padding:6px 0;
+    align-items:center;justify-content:space-between;gap:14px;
+    background:transparent;border:none;
+    border-bottom:1px solid var(--line);
+    padding:14px 18px;margin-bottom:0;
   }
-  .ptbl td:nth-child(2)::before{
-    content:"Nid simple";
-    font-family:'Inter',sans-serif;
-    font-size:12px;font-weight:600;
-    text-transform:uppercase;letter-spacing:0.1em;
-    color:var(--muted);
-  }
-  .ptbl td:nth-child(3)::before{
-    content:"Nid complexe";
-    font-family:'Inter',sans-serif;
-    font-size:12px;font-weight:600;
-    text-transform:uppercase;letter-spacing:0.1em;
-    color:var(--muted);
-  }
-  .ptbl td:nth-child(4)::before{
-    content:"Accès spécial";
-    font-family:'Inter',sans-serif;
-    font-size:12px;font-weight:600;
-    text-transform:uppercase;letter-spacing:0.1em;
-    color:var(--muted);
-  }
-  .ptbl td[colspan="3"]{
-    display:flex !important;
-    justify-content:flex-end;
-    padding:6px 0;
-  }
-  .ptbl td[colspan="3"]::before{
-    content:none !important;
-  }
-  .t-price{font-size:22px}
-  .t-name{font-size:19px}
+  .ptbl tbody tr:last-child{border-bottom:none}
+  .ptbl tbody tr:hover{background:transparent}
+  .ptbl td{padding:0;border:none;text-align:left !important}
+  .ptbl td:nth-child(2){text-align:right !important;flex-shrink:0}
+  .ptbl td::before{content:none !important}
+  .t-price{font-size:21px}
+  .t-name{font-size:15px}
 }
 
 /* ════════════════════════════════════════
@@ -854,6 +806,12 @@ section{padding:110px 0}
 }
 .fsub:hover{background:var(--amber)}
 .fnote{font-size:13px;color:var(--muted);margin-top:14px;text-align:center;line-height:1.5}
+.fmsg{
+  margin-top:14px;padding:14px 16px;border-radius:8px;
+  font-size:14px;line-height:1.55;text-align:center;
+}
+.fmsg.ok{background:rgba(43,168,74,0.10);color:#1E7A38;border:1px solid rgba(43,168,74,0.30)}
+.fmsg.err{background:rgba(231,76,60,0.08);color:#B03A2E;border:1px solid rgba(231,76,60,0.28)}
 @media(max-width:860px){
   .con-g{grid-template-columns:1fr;gap:48px}
   .frow{grid-template-columns:1fr}
@@ -994,7 +952,7 @@ section{padding:110px 0}
       <a href="#contact">Contact</a>
     </nav>
     <div class="hdr-actions">
-      <a href="tel:+41XXXXXXXXX" class="cta-call">
+      <a href="tel:+41792353972" class="cta-call">
         <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72l.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45l2.81.7A2 2 0 0 1 21 16.92z"/></svg>
         <span class="cta-call-txt">Appeler</span>
       </a>
@@ -1013,7 +971,7 @@ section{padding:110px 0}
         <h1>Un nid près de chez vous&nbsp;?<br><span class="keep-calm">Pas de panique.</span><span class="brand-line">Appelez Allô ça pique.</span></h1>
         <p class="hero-desc">Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques) et chenilles processionnaires du pin. Également apiculteurs, nous récupérons gratuitement les essaims d'abeilles.</p>
         <div class="hero-ctas">
-          <a href="tel:+41XXXXXXXXX" class="btn-primary">
+          <a href="tel:+41792353972" class="btn-primary">
             <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72l.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45l2.81.7A2 2 0 0 1 21 16.92z"/></svg>
             Nous appeler
           </a>
@@ -1180,58 +1138,42 @@ section{padding:110px 0}
       <div class="eyebrow">Tarifs</div>
       <h2>Grille <em>tarifaire</em></h2>
     </div>
-    <div class="pri-crit rv">
-      <div class="crit-box">
-        <div class="crit-label">Nid simple</div>
-        <p>Accessible avec échelle ou perche standard. Hauteur <strong>jusqu'à 15 m</strong>.</p>
-      </div>
-      <div class="crit-box alt">
-        <div class="crit-label">Nid complexe</div>
-        <p>Hauteur <strong>supérieure à 15 m</strong>.</p>
-      </div>
-      <div class="crit-box special">
-        <div class="crit-label">Accès spécial</div>
-        <p>Intervention nécessitant un <strong>équipement supplémentaire</strong> (nacelle) ou un <strong>intervenant externe</strong> (couvreur, cordiste). Tarif de base majoré d'un devis technique.</p>
-      </div>
-    </div>
     <div class="ptbl-wrap rv">
       <table class="ptbl">
         <thead>
           <tr>
             <th>Type d'intervention</th>
-            <th>Nid simple</th>
-            <th>Nid complexe</th>
-            <th>Accès spécial</th>
+            <th>Tarif</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>
-              <span class="t-name">Guêpes et frelons</span>
-            </td>
-            <td><span class="t-price">200<small>CHF</small></span></td>
-            <td><span class="t-price">290<small>CHF</small></span></td>
-            <td><span class="t-price special">290<small>+ devis</small></span></td>
+            <td><span class="t-name">Nid de fondation, de la taille d'une balle de golf</span></td>
+            <td><span class="t-price">100<small>CHF</small></span></td>
           </tr>
           <tr>
-            <td>
-              <span class="t-name">Nid nécessitant progression sur toiture</span>
-            </td>
-            <td><span class="t-price empty">—</span></td>
-            <td><span class="t-price">400<small>CHF</small></span></td>
-            <td><span class="t-price special">400<small>+ devis</small></span></td>
+            <td><span class="t-name">Nid accessible à hauteur d'homme</span></td>
+            <td><span class="t-price">150<small>CHF</small></span></td>
           </tr>
           <tr>
-            <td>
-              <span class="t-name">Chenilles processionnaires du pin</span>
-            </td>
-            <td colspan="3" style="text-align:right"><span class="t-price devis">Sur devis</span></td>
+            <td><span class="t-name">Nid traité à la perche, jusqu'à 15 m</span></td>
+            <td><span class="t-price">250<small>CHF</small></span></td>
           </tr>
           <tr>
-            <td>
-              <span class="t-name">Essaims d'abeilles</span>
-            </td>
-            <td colspan="3" style="text-align:right"><span class="t-price free">Gratuit</span></td>
+            <td><span class="t-name">Nid en hauteur, au-delà de 15 m</span></td>
+            <td><span class="t-price">350<small>CHF</small></span></td>
+          </tr>
+          <tr>
+            <td><span class="t-name">Nid nécessitant une progression sur toiture</span></td>
+            <td><span class="t-price">450<small>CHF</small></span></td>
+          </tr>
+          <tr>
+            <td><span class="t-name">Chenilles processionnaires du pin</span></td>
+            <td><span class="t-price devis">Sur devis</span></td>
+          </tr>
+          <tr>
+            <td><span class="t-name">Essaims d'abeilles</span></td>
+            <td><span class="t-price free">Gratuit</span></td>
           </tr>
         </tbody>
       </table>
@@ -1246,8 +1188,12 @@ section{padding:110px 0}
         </thead>
         <tbody>
           <tr>
-            <td><span class="t-name">Enlèvement du nid traité</span></td>
+            <td><span class="t-name">Enlèvement du nid après traitement</span></td>
             <td><span class="t-price">150<small>CHF</small></span></td>
+          </tr>
+          <tr>
+            <td><span class="t-name">Second passage si le nid est encore actif à 10 jours</span></td>
+            <td><span class="t-price free">Inclus</span></td>
           </tr>
           <tr>
             <td><span class="t-name">Déplacement jusqu'à 20 km</span></td>
@@ -1264,7 +1210,7 @@ section{padding:110px 0}
         </tbody>
       </table>
     </div>
-    <p class="p-note">Distances calculées depuis Bettens (VD). Le devis technique en "accès spécial" couvre la location de nacelle ou la prestation d'un intervenant externe (couvreur, cordiste) lorsque la sécurité l'impose. Garantie de 10 jours incluse dans chaque intervention.</p>
+    <p class="p-note">Distances calculées depuis Bettens (VD). Le tarif dépend uniquement des conditions d'accès au nid, quelle que soit l'espèce. Si la sécurité impose une nacelle ou l'intervention d'un tiers (couvreur, cordiste), un devis complémentaire est établi avant toute intervention.</p>
   </div>
 </section>
 
@@ -1457,14 +1403,22 @@ section{padding:110px 0}
       <div class="con-l rv">
         <div class="eyebrow" style="margin-bottom:14px">Contact</div>
         <h2>Nous <em>contacter</em></h2>
-        <p class="con-lead">Disponibles toute l'année. En haute saison (guêpes et frelons), nous répondons au téléphone 7 jours sur 7. Les demandes envoyées via le formulaire sont traitées dans la journée.</p>
+        <p class="con-lead">En haute saison (guêpes et frelons), nous répondons au téléphone 7 jours sur 7. Les demandes envoyées via le formulaire sont traitées dans la journée.</p>
         <div class="cbs">
-          <a href="tel:+41XXXXXXXXX" class="cb">
+          <a href="tel:+41792353972" class="cb">
             <div class="cb-ico"><svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72l.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45l2.81.7A2 2 0 0 1 21 16.92z"/></svg></div>
             <div>
-              <div class="cb-lbl">Téléphone · disponible toute l'année</div>
-              <div class="cb-val">+41 XX XXX XX XX</div>
+              <div class="cb-lbl">Téléphone</div>
+              <div class="cb-val">+41 79 235 39 72</div>
               <div class="cb-sub">7j/7 en haute saison (guêpes & frelons)</div>
+            </div>
+          </a>
+          <a href="tel:+41768285966" class="cb">
+            <div class="cb-ico"><svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72l.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45l2.81.7A2 2 0 0 1 21 16.92z"/></svg></div>
+            <div>
+              <div class="cb-lbl">Second numéro</div>
+              <div class="cb-val">+41 76 828 59 66</div>
+              <div class="cb-sub">Si la première ligne ne répond pas</div>
             </div>
           </a>
           <a href="mailto:contact@allocapique.ch" class="cb">
@@ -1475,30 +1429,23 @@ section{padding:110px 0}
               <div class="cb-sub">Réponse sous 24h ouvrées</div>
             </div>
           </a>
-          <div class="cb" style="cursor:default">
-            <div class="cb-ico"><svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-            <div>
-              <div class="cb-lbl">Zone</div>
-              <div class="cb-val">Tout le canton de Vaud</div>
-              <div class="cb-sub">Autres cantons sur devis · Dépôt à Bettens (VD)</div>
-            </div>
-          </div>
         </div>
       </div>
-      <form class="cform rv" id="cForm" onsubmit="doSubmit(event)">
+      <form class="cform rv" id="cForm">
         <div class="cform-head">Décrivez votre situation</div>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
         <div class="frow">
-          <div class="fd"><label for="fn">Nom complet</label><input type="text" id="fn" required autocomplete="name"></div>
-          <div class="fd"><label for="fp">Téléphone</label><input type="tel" id="fp" required autocomplete="tel"></div>
+          <div class="fd"><label for="fn">Nom complet</label><input type="text" id="fn" name="Nom" required autocomplete="name"></div>
+          <div class="fd"><label for="fp">Téléphone</label><input type="tel" id="fp" name="Téléphone" required autocomplete="tel"></div>
         </div>
         <div class="frow">
-          <div class="fd"><label for="fe">Email</label><input type="email" id="fe" autocomplete="email"></div>
-          <div class="fd"><label for="fci">Localité</label><input type="text" id="fci" placeholder="Ex. Pully" required></div>
+          <div class="fd"><label for="fe">Email</label><input type="email" id="fe" name="email" autocomplete="email"></div>
+          <div class="fd"><label for="fci">Localité</label><input type="text" id="fci" name="Localité" placeholder="Ex. Pully" required></div>
         </div>
         <div class="frow one">
           <div class="fd">
             <label for="ft">Type d'intervention</label>
-            <select id="ft" required>
+            <select id="ft" name="Type d\'intervention" required>
               <option value="">— Sélectionnez —</option>
               <option>Guêpes</option>
               <option>Frelon européen</option>
@@ -1512,7 +1459,7 @@ section{padding:110px 0}
         <div class="frow one">
           <div class="fd">
             <label for="fm">Décrivez la situation</label>
-            <textarea id="fm" placeholder="Localisation, hauteur approximative, urgence, conditions d'accès..." required></textarea>
+            <textarea id="fm" name="Description" placeholder="Localisation, hauteur approximative, urgence, conditions d'accès..." required></textarea>
           </div>
         </div>
         <button type="submit" class="fsub">
@@ -1520,6 +1467,7 @@ section{padding:110px 0}
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </button>
         <p class="fnote">Pour une urgence, privilégiez l'appel téléphonique.</p>
+        <p class="fmsg" id="fMsg" hidden></p>
       </form>
     </div>
   </div>
@@ -1556,10 +1504,9 @@ section{padding:110px 0}
       <div class="fc-col">
         <h4>Contact</h4>
         <ul>
-          <li><a href="tel:+41XXXXXXXXX">+41 XX XXX XX XX</a></li>
+          <li><a href="tel:+41792353972">+41 79 235 39 72</a></li>
+          <li><a href="tel:+41768285966">+41 76 828 59 66</a></li>
           <li><a href="mailto:contact@allocapique.ch">contact@allocapique.ch</a></li>
-          <li>Canton de Vaud</li>
-          <li>Disponible toute l'année</li>
         </ul>
       </div>
     </div>
@@ -1584,13 +1531,58 @@ document.querySelectorAll('.nav a').forEach(a => {
   });
 });
 
-function doSubmit(e) {
-  e.preventDefault();
-  var form = document.getElementById('cForm');
-  var btn = form.querySelector('.fsub');
-  var note = form.querySelector('.fnote');
-  btn.style.display = 'none';
-  note.innerHTML = '<strong style="color:var(--ok)">Le formulaire sera bientôt activé.</strong><br>En attendant, contactez-nous directement par téléphone ou par email à contact@allocapique.ch.';
+/* ---------- Formulaire de contact (Formspree) ----------
+   Coller ci-dessous l'identifiant du formulaire Formspree.
+   Il se trouve dans l'URL fournie par Formspree :
+   https://formspree.io/f/XXXXXXXX  →  ne garder que XXXXXXXX          */
+const FORMSPREE_ID = 'mkjwkvgd';
+
+const cForm = document.getElementById('cForm');
+const fMsg  = document.getElementById('fMsg');
+
+function showFormMsg(text, ok) {
+  fMsg.hidden = false;
+  fMsg.className = 'fmsg ' + (ok ? 'ok' : 'err');
+  fMsg.textContent = text;
+}
+
+if (cForm) {
+  cForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    if (!FORMSPREE_ID) {
+      showFormMsg("Le formulaire n'est pas encore activé. Merci de nous appeler ou de nous écrire à contact@allocapique.ch.", false);
+      return;
+    }
+
+    const btn = cForm.querySelector('.fsub');
+    const btnHTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours…';
+    fMsg.hidden = true;
+
+    try {
+      const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+        method: 'POST',
+        body: new FormData(cForm),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        cForm.reset();
+        showFormMsg('Votre demande nous est bien parvenue. Nous vous rappelons dans les meilleurs délais.', true);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        const detail = data.errors ? data.errors.map(x => x.message).join(', ') : '';
+        showFormMsg("L'envoi a échoué" + (detail ? ' : ' + detail : '') + ". Appelez-nous au +41 79 235 39 72.", false);
+      }
+    } catch (err) {
+      console.error('[formulaire]', err);
+      showFormMsg("L'envoi a échoué. Appelez-nous au +41 79 235 39 72 ou écrivez à contact@allocapique.ch.", false);
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = btnHTML;
+  });
 }
 
 // Zone : itinéraire depuis Bettens + distance réelle + frais de déplacement
