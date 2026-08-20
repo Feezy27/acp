@@ -913,6 +913,65 @@ section{padding:110px 0}
   font-size:11px;margin-top:6px;
   color:rgba(250,246,238,0.18);
 }
+/* ---------- Visionneuse plein écran ---------- */
+.lb{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(12,15,24,0.94);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s ease;
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+}
+.lb.open{opacity:1;pointer-events:auto}
+.lb-stage{
+  position:relative;
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  padding:64px 24px;
+}
+.lb-img{
+  max-width:100%;max-height:100%;
+  object-fit:contain;
+  border-radius:6px;
+  box-shadow:0 24px 60px rgba(0,0,0,0.5);
+  transition:transform .3s cubic-bezier(.22,.61,.36,1);
+  transform-origin:center center;
+  cursor:zoom-in;
+  user-select:none;-webkit-user-drag:none;
+}
+.lb-img.zoomed{cursor:zoom-out}
+.lb-btn{
+  position:absolute;z-index:2;
+  width:48px;height:48px;
+  border-radius:50%;
+  background:rgba(250,246,238,0.12);
+  color:var(--cream);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,transform .15s;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+}
+.lb-btn:hover{background:var(--amber);color:var(--ink)}
+.lb-btn:active{transform:scale(.94)}
+.lb-btn svg{width:20px;height:20px}
+.lb-close{top:18px;right:18px}
+.lb-prev{left:18px;top:50%;transform:translateY(-50%)}
+.lb-next{right:18px;top:50%;transform:translateY(-50%)}
+.lb-prev:active,.lb-next:active{transform:translateY(-50%) scale(.94)}
+.lb-count{
+  position:absolute;bottom:20px;left:50%;
+  transform:translateX(-50%);
+  font-size:13px;font-weight:600;letter-spacing:.06em;
+  color:rgba(250,246,238,0.75);
+  background:rgba(12,15,24,0.6);
+  padding:7px 16px;border-radius:999px;
+}
+.gal-item img{cursor:zoom-in}
+@media(max-width:680px){
+  .lb-stage{padding:56px 10px}
+  .lb-btn{width:42px;height:42px}
+  .lb-prev{left:8px}.lb-next{right:8px}
+}
 .gal-note{
   margin-top:32px;text-align:center;
   font-size:14px;color:var(--muted);font-style:italic;
@@ -1473,6 +1532,22 @@ section{padding:110px 0}
   </div>
 </section>
 
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo en plein écran">
+  <div class="lb-stage">
+    <img class="lb-img" id="lbImg" src="" alt="">
+    <button class="lb-btn lb-close" id="lbClose" aria-label="Fermer">
+      <svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Photo précédente">
+      <svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="lb-btn lb-next" id="lbNext" aria-label="Photo suivante">
+      <svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <div class="lb-count" id="lbCount"></div>
+  </div>
+</div>
+
 </main>
 
 <!-- FOOTER -->
@@ -1480,7 +1555,7 @@ section{padding:110px 0}
   <div class="wrap">
     <div class="ftr-g">
       <div class="fb">
-        <img src="logo-clair.png" alt="Allô ça pique">
+        <img src="logo-clair.png?v=2" alt="Allô ça pique">
         <p>Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons et chenilles processionnaires. Récupération d'essaims d'abeilles. Intervention 24-48h, garantie 10 jours.</p>
       </div>
       <div class="fc-col">
@@ -1906,6 +1981,97 @@ if (routePanel) {
     cityButtons.forEach(b => b.classList.remove('active'));
   });
 }
+
+
+/* ---------- Visionneuse plein écran de la galerie ---------- */
+(function () {
+  const lb    = document.getElementById('lightbox');
+  if (!lb) return;
+  const lbImg   = document.getElementById('lbImg');
+  const lbCount = document.getElementById('lbCount');
+  const btnClose= document.getElementById('lbClose');
+  const btnPrev = document.getElementById('lbPrev');
+  const btnNext = document.getElementById('lbNext');
+
+  // Ne retient que les photos réellement chargées (les emplacements
+  // vides masqués par onerror sont ignorés)
+  function available() {
+    return Array.from(document.querySelectorAll('.gal-item img'))
+      .filter(img => img.style.display !== 'none' && img.complete && img.naturalWidth > 0);
+  }
+
+  let list = [], index = 0, zoomed = false;
+
+  function setZoom(on) {
+    zoomed = on;
+    lbImg.classList.toggle('zoomed', on);
+    lbImg.style.transform = on ? 'scale(2)' : 'scale(1)';
+  }
+
+  function render() {
+    const img = list[index];
+    if (!img) return;
+    setZoom(false);
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt || '';
+    const multi = list.length > 1;
+    btnPrev.style.display = multi ? 'flex' : 'none';
+    btnNext.style.display = multi ? 'flex' : 'none';
+    lbCount.style.display = multi ? 'block' : 'none';
+    lbCount.textContent = (index + 1) + ' / ' + list.length;
+  }
+
+  function open(startImg) {
+    list = available();
+    index = Math.max(0, list.indexOf(startImg));
+    render();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    btnClose.focus();
+  }
+
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { lbImg.src = ''; }, 250);
+  }
+
+  function step(dir) {
+    if (!list.length) return;
+    index = (index + dir + list.length) % list.length;
+    render();
+  }
+
+  document.querySelectorAll('.gal-item img').forEach(img => {
+    img.addEventListener('click', () => open(img));
+  });
+
+  btnClose.addEventListener('click', close);
+  btnPrev.addEventListener('click', e => { e.stopPropagation(); step(-1); });
+  btnNext.addEventListener('click', e => { e.stopPropagation(); step(1); });
+
+  // Clic sur l'image : zoom / dézoom
+  lbImg.addEventListener('click', e => { e.stopPropagation(); setZoom(!zoomed); });
+  // Clic sur le fond : fermeture
+  lb.addEventListener('click', close);
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')     close();
+    if (e.key === 'ArrowLeft')  step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+
+  // Balayage horizontal sur mobile
+  let x0 = null;
+  lb.addEventListener('touchstart', e => { x0 = e.changedTouches[0].clientX; }, {passive:true});
+  lb.addEventListener('touchend', e => {
+    if (x0 === null || zoomed) { x0 = null; return; }
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) step(dx < 0 ? 1 : -1);
+    x0 = null;
+  }, {passive:true});
+})();
 
 if ('IntersectionObserver' in window) {
   const io = new IntersectionObserver(entries => {
