@@ -305,6 +305,7 @@ section{padding:110px 0}
   box-shadow:0 20px 40px rgba(0,0,0,0.12);
   display:flex;align-items:center;justify-content:center;
 }
+.hero-photo-img{width:100%;height:100%;object-fit:cover;display:block}
 .hero-photo-ph{
   color:rgba(250,246,238,0.35);
   font-family:'Fraunces',serif;font-style:italic;
@@ -847,72 +848,67 @@ section{padding:110px 0}
 @media(max-width:480px){.ftr-g{grid-template-columns:1fr}}
 
 /* ════════════════════════════════════════
-   GALLERY
+   GALLERY — carrousel de photos portrait
 ════════════════════════════════════════ */
 .gallery{background:var(--cream-2)}
-.gal-grid{
-  display:grid;
-  grid-template-columns:repeat(4, 1fr);
-  grid-auto-rows:220px;
-  gap:14px;
+.gal-carousel{position:relative}
+.gal-viewport{
+  display:flex;gap:16px;
+  overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding:4px 0 12px;
 }
+.gal-viewport::-webkit-scrollbar{display:none}
 .gal-item{
-  position:relative;
-  overflow:hidden;
+  flex:0 0 auto;
+  width:clamp(210px, 23vw, 290px);
+  aspect-ratio:3/4;
+  margin:0;
   border-radius:var(--r);
+  overflow:hidden;
   background:var(--ink);
-  cursor:pointer;
-  transition:transform .25s ease;
+  scroll-snap-align:center;
+  box-shadow:0 6px 18px rgba(0,0,0,0.10);
+  transition:transform .3s ease, box-shadow .3s ease;
 }
-.gal-item:hover{transform:translateY(-3px)}
+.gal-item:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,0.16)}
 .gal-item img{
   width:100%;height:100%;
-  object-fit:cover;
-  transition:transform .4s ease,filter .25s ease;
-  display:block;
+  object-fit:cover;display:block;
+  cursor:zoom-in;
+  transition:transform .5s ease;
 }
-.gal-item:hover img{transform:scale(1.06);filter:brightness(1.08)}
-/* Asymmetric layout - some items span more */
-.gal-item.tall{grid-row:span 2}
-.gal-item.wide{grid-column:span 2}
-/* Photo caption overlay */
-.gal-cap{
-  position:absolute;
-  bottom:0;left:0;right:0;
-  background:linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-  padding:36px 18px 16px;
-  color:var(--cream);
-  font-size:13px;font-weight:500;
-  opacity:0;transition:opacity .25s ease;
-  pointer-events:none;
+.gal-item:hover img{transform:scale(1.05)}
+.gal-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  z-index:3;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--paper);color:var(--ink);
+  border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(0,0,0,0.12);
+  transition:background .2s,color .2s,opacity .2s;
 }
-.gal-item:hover .gal-cap{opacity:1}
-.gal-cap-type{
-  display:inline-block;
-  font-family:'Inter',sans-serif;
-  font-size:10px;font-weight:700;
-  text-transform:uppercase;letter-spacing:0.12em;
-  color:var(--amber-bright);
-  margin-bottom:4px;
+.gal-nav:hover{background:var(--amber);color:var(--ink);border-color:var(--amber)}
+.gal-nav svg{width:18px;height:18px}
+.gal-nav-prev{left:-14px}
+.gal-nav-next{right:-14px}
+.gal-empty{
+  text-align:center;color:var(--muted);
+  font-style:italic;font-size:15px;padding:28px 0;
 }
-/* Placeholder content */
-.gal-ph{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  color:rgba(250,246,238,0.25);
-  text-align:center;padding:20px;
+@media(max-width:768px){
+  .gal-nav{display:none}
+  .gal-viewport{gap:12px}
+  .gal-item{width:clamp(190px, 62vw, 250px)}
 }
-.gal-ph svg{width:36px;height:36px;margin-bottom:10px;opacity:0.6}
-.gal-ph-label{
-  font-family:'Fraunces',serif;font-style:italic;
-  font-size:14px;line-height:1.4;
+.gal-note{
+  margin-top:24px;text-align:center;
+  font-size:14px;color:var(--muted);font-style:italic;
 }
-.gal-ph-sub{
-  font-family:'Inter',sans-serif;font-style:normal;
-  font-size:11px;margin-top:6px;
-  color:rgba(250,246,238,0.18);
-}
+
 /* ---------- Visionneuse plein écran ---------- */
 .lb{
   position:fixed;inset:0;z-index:2000;
@@ -976,14 +972,6 @@ section{padding:110px 0}
   margin-top:32px;text-align:center;
   font-size:14px;color:var(--muted);font-style:italic;
 }
-@media(max-width:920px){
-  .gal-grid{grid-template-columns:repeat(3, 1fr);grid-auto-rows:180px}
-}
-@media(max-width:620px){
-  .gal-grid{grid-template-columns:repeat(2, 1fr);grid-auto-rows:160px;gap:10px}
-  .gal-item.wide{grid-column:span 2}
-}
-
 /* Reveal */
 :focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 @media(prefers-reduced-motion:no-preference){
@@ -1054,9 +1042,11 @@ section{padding:110px 0}
       <div class="hero-art" aria-hidden="true">
         <div class="hero-frame">
           <div class="hero-photo">
-            <div class="hero-photo-ph">
-              Photo d'intervention
-              <small>À remplacer · Format vertical 4:5 recommandé</small>
+            <img src="equipe.jpeg" alt="L'équipe Allô ça pique" class="hero-photo-img"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div class="hero-photo-ph" style="display:none">
+              Photo de l'équipe
+              <small>Fichier attendu : equipe.jpeg</small>
             </div>
             <div class="hero-photo-tag">Notre équipe</div>
           </div>
@@ -1375,53 +1365,41 @@ section{padding:110px 0}
       <h2>Exemples d'<em>interventions</em></h2>
       <p>Photos prises sur le terrain au cours de nos interventions.</p>
     </div>
-    <div class="gal-grid rv">
-      <div class="gal-item tall">
-        <img src="photo1.jpeg" alt="Intervention Allô ça pique" loading="lazy"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="gal-ph" style="display:none">
-          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <div class="gal-ph-label">Photo 1</div>
-          <div class="gal-ph-sub">Format vertical · 800×1100px</div>
-        </div>
+    <div class="gal-carousel rv">
+      <button class="gal-nav gal-nav-prev" aria-label="Photos précédentes">
+        <svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="gal-viewport" id="galViewport">
+        <figure class="gal-item">
+          <img src="photo1.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+        </figure>
+        <figure class="gal-item">
+          <img src="photo2.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+        </figure>
+        <figure class="gal-item">
+          <img src="photo3.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+        </figure>
+        <figure class="gal-item">
+          <img src="photo4.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+        </figure>
+        <figure class="gal-item">
+          <img src="photo5.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+        </figure>
+        <figure class="gal-item">
+          <img src="photo6.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+        </figure>
+        <figure class="gal-item">
+          <img src="photo7.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+        </figure>
+        <figure class="gal-item">
+          <img src="photo8.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+        </figure>
       </div>
-      <div class="gal-item tall">
-        <img src="photo2.jpeg" alt="Intervention Allô ça pique" loading="lazy"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="gal-ph" style="display:none">
-          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <div class="gal-ph-label">Photo 2</div>
-          <div class="gal-ph-sub">Format vertical · 800×1100px</div>
-        </div>
-      </div>
-      <div class="gal-item wide">
-        <img src="photo3.jpeg" alt="Intervention Allô ça pique" loading="lazy"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="gal-ph" style="display:none">
-          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <div class="gal-ph-label">Photo 3</div>
-          <div class="gal-ph-sub">Format paysage · 1200×800px</div>
-        </div>
-      </div>
-      <div class="gal-item">
-        <img src="photo4.jpeg" alt="Intervention Allô ça pique" loading="lazy"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="gal-ph" style="display:none">
-          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <div class="gal-ph-label">Photo 4</div>
-          <div class="gal-ph-sub">Format carré · 800×800px</div>
-        </div>
-      </div>
-      <div class="gal-item">
-        <img src="photo5.jpeg" alt="Intervention Allô ça pique" loading="lazy"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="gal-ph" style="display:none">
-          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <div class="gal-ph-label">Photo 5</div>
-          <div class="gal-ph-sub">Format carré · 800×800px</div>
-        </div>
-      </div>
-        </div>
+      <button class="gal-nav gal-nav-next" aria-label="Photos suivantes">
+        <svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+    <p class="gal-empty" id="galEmpty" hidden>Les photos d'interventions seront publiées prochainement.</p>
     <p class="gal-note">Photos publiées avec l'accord des clients concernés.</p>
   </div>
 </section>
@@ -1983,6 +1961,107 @@ if (routePanel) {
 }
 
 
+
+/* ---------- Carrousel de la galerie ---------- */
+(function () {
+  const vp = document.getElementById('galViewport');
+  if (!vp) return;
+  const carousel = vp.closest('.gal-carousel');
+  const empty    = document.getElementById('galEmpty');
+  const prevBtn  = carousel.querySelector('.gal-nav-prev');
+  const nextBtn  = carousel.querySelector('.gal-nav-next');
+
+  // 1. Ne conserver que les photos réellement disponibles
+  function loaded(img) {
+    return new Promise(res => {
+      if (img.complete) return res(img.naturalWidth > 0);
+      img.addEventListener('load',  () => res(true),  {once:true});
+      img.addEventListener('error', () => res(false), {once:true});
+    });
+  }
+
+  Promise.all(Array.from(vp.children).map(async fig => {
+    const ok = await loaded(fig.querySelector('img'));
+    if (!ok) fig.remove();
+    return ok;
+  })).then(setup);
+
+  function setup() {
+    let items = Array.from(vp.children);
+
+    if (!items.length) {
+      carousel.hidden = true;
+      if (empty) empty.hidden = false;
+      return;
+    }
+
+    // 2. Ordre aléatoire, différent à chaque visite
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      vp.appendChild(items[j]);
+      items = Array.from(vp.children);
+    }
+    items = Array.from(vp.children);
+
+    // 3. Duplication pour un défilement sans fin
+    const originals = items.length;
+    if (originals > 1) {
+      items.forEach(fig => {
+        const clone = fig.cloneNode(true);
+        clone.dataset.clone = '1';
+        clone.setAttribute('aria-hidden', 'true');
+        vp.appendChild(clone);
+      });
+    }
+
+    const stepOf = () => {
+      const first = vp.querySelector('.gal-item');
+      if (!first) return 240;
+      const gap = parseFloat(getComputedStyle(vp).gap) || 16;
+      return first.getBoundingClientRect().width + gap;
+    };
+
+    // Boucle silencieuse quand on dépasse la première série
+    function normalize() {
+      const half = stepOf() * originals;
+      if (half <= 0) return;
+      if (vp.scrollLeft >= half) vp.scrollLeft -= half;
+      else if (vp.scrollLeft < 0) vp.scrollLeft += half;
+    }
+    vp.addEventListener('scroll', normalize, {passive:true});
+
+    function slide(dir) {
+      vp.scrollBy({ left: dir * stepOf(), behavior: 'smooth' });
+    }
+    prevBtn && prevBtn.addEventListener('click', () => { slide(-1); hold(); });
+    nextBtn && nextBtn.addEventListener('click', () => { slide(1);  hold(); });
+
+    // 4. Défilement automatique, suspendu dès que l'on interagit
+    let timer = null, paused = false;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function start() {
+      if (reduce || originals < 2 || timer) return;
+      timer = setInterval(() => { if (!paused) slide(1); }, 3800);
+    }
+    function hold() {
+      paused = true;
+      clearTimeout(hold._t);
+      hold._t = setTimeout(() => { paused = false; }, 7000);
+    }
+
+    ['pointerenter','focusin'].forEach(ev =>
+      carousel.addEventListener(ev, () => { paused = true; }));
+    ['pointerleave','focusout'].forEach(ev =>
+      carousel.addEventListener(ev, () => { paused = false; }));
+    ['touchstart','wheel'].forEach(ev =>
+      vp.addEventListener(ev, hold, {passive:true}));
+
+    document.addEventListener('visibilitychange', () => { paused = document.hidden; });
+    start();
+  }
+})();
+
 /* ---------- Visionneuse plein écran de la galerie ---------- */
 (function () {
   const lb    = document.getElementById('lightbox');
@@ -1996,8 +2075,8 @@ if (routePanel) {
   // Ne retient que les photos réellement chargées (les emplacements
   // vides masqués par onerror sont ignorés)
   function available() {
-    return Array.from(document.querySelectorAll('.gal-item img'))
-      .filter(img => img.style.display !== 'none' && img.complete && img.naturalWidth > 0);
+    return Array.from(document.querySelectorAll('.gal-item:not([data-clone]) img'))
+      .filter(img => img.complete && img.naturalWidth > 0);
   }
 
   let list = [], index = 0, zoomed = false;
@@ -2042,8 +2121,13 @@ if (routePanel) {
     render();
   }
 
-  document.querySelectorAll('.gal-item img').forEach(img => {
-    img.addEventListener('click', () => open(img));
+  document.addEventListener('click', e => {
+    const img = e.target.closest('.gal-item img');
+    if (!img) return;
+    list = available();
+    const src = img.currentSrc || img.src;
+    const match = list.find(i => (i.currentSrc || i.src) === src) || list[0];
+    open(match);
   });
 
   btnClose.addEventListener('click', close);
