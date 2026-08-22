@@ -101,14 +101,6 @@ h1,h2,h3,h4{
   letter-spacing:-0.015em;
   color:var(--ink);
 }
-.eyebrow{
-  font-family:'Inter',sans-serif;
-  font-size:12px;font-weight:600;
-  text-transform:uppercase;
-  letter-spacing:0.16em;
-  color:var(--amber);
-  display:inline-block;
-}
 
 /* LAYOUT */
 .wrap{max-width:1400px;margin:0 auto;padding:0 40px}
@@ -312,8 +304,19 @@ section{padding:110px 0}
   border-radius:var(--r-lg);
   overflow:hidden;
   z-index:1;
-  box-shadow:0 20px 40px rgba(0,0,0,0.12);
+  /* Ombre plus profonde et liseré : détachent la photo du fond crème,
+     dont la luminosité est proche de celle des combinaisons blanches */
+  box-shadow:
+    0 2px 6px rgba(26,31,46,0.08),
+    0 14px 28px rgba(26,31,46,0.16),
+    0 28px 60px rgba(26,31,46,0.14);
   display:flex;align-items:center;justify-content:center;
+}
+.hero-photo::after{
+  content:"";position:absolute;inset:0;
+  border-radius:var(--r-lg);
+  box-shadow:inset 0 0 0 1px rgba(26,31,46,0.14);
+  pointer-events:none;z-index:2;
 }
 .hero-photo-img{width:100%;height:100%;object-fit:cover;display:block}
 .hero-photo-ph{
@@ -355,8 +358,7 @@ section{padding:110px 0}
    SECTION HEADS
 ════════════════════════════════════════ */
 .s-head{margin-bottom:64px;max-width:740px}
-.s-head .eyebrow{margin-bottom:16px}
-.s-head h2{
+.s-head .s-head h2{
   font-size:clamp(36px,4.2vw,54px);
   margin-bottom:18px;
   font-weight:500;
@@ -566,8 +568,7 @@ section{padding:110px 0}
 .zone .s-head h2{color:var(--cream)}
 .zone .s-head h2 em{color:var(--amber-bright)}
 .zone .s-head p{color:rgba(250,246,238,0.65)}
-.zone .eyebrow{color:var(--amber-bright)}
-.zone-g{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.zone .zone-g{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
 .cities{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
 .city{
   display:flex;align-items:center;gap:12px;
@@ -1061,7 +1062,7 @@ section{padding:110px 0}
       <div class="hero-art" aria-hidden="true">
         <div class="hero-frame">
           <div class="hero-photo">
-            <img src="equipe.jpeg" alt="L'équipe Allô ça pique" class="hero-photo-img"
+            <img src="equipe.jpeg" alt="L'équipe Allô ça pique" class="hero-photo-img" fetchpriority="high" decoding="async"
                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
             <div class="hero-photo-ph" style="display:none">
               Photo de l'équipe
@@ -1079,7 +1080,6 @@ section{padding:110px 0}
 <section class="services" id="services">
   <div class="wrap">
     <div class="s-head rv">
-      <div class="eyebrow">Nos services</div>
       <h2>Services <em>proposés</em></h2>
     </div>
     <div class="svc-grid rv">
@@ -1203,7 +1203,6 @@ section{padding:110px 0}
 <section class="pricing" id="tarifs">
   <div class="wrap">
     <div class="s-head rv">
-      <div class="eyebrow">Tarifs</div>
       <h2>Grille <em>tarifaire</em></h2>
     </div>
     <div class="ptbl-wrap rv">
@@ -1322,7 +1321,6 @@ section{padding:110px 0}
 <section class="zone" id="zone">
   <div class="wrap">
     <div class="s-head rv">
-      <div class="eyebrow">Où intervenons-nous ?</div>
       <h2>Zone <em>d'intervention</em></h2>
       <p>Basés à Bettens, au cœur du Gros-de-Vaud, nous couvrons l'ensemble du canton, de Lausanne à Aigle, de Morges à Yverdon. Les frais de déplacement sont calculés depuis Bettens. <strong>Interventions dans les autres cantons sur devis.</strong></p>
     </div>
@@ -1380,7 +1378,6 @@ section{padding:110px 0}
 <section class="gallery" id="galerie">
   <div class="wrap">
     <div class="s-head rv">
-      <div class="eyebrow">Nos interventions</div>
       <h2>Exemples d'<em>interventions</em></h2>
       <p>Photos prises sur le terrain au cours de nos interventions.</p>
     </div>
@@ -1390,28 +1387,28 @@ section{padding:110px 0}
       </button>
       <div class="gal-viewport" id="galViewport">
         <figure class="gal-item">
-          <img src="photo1.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" src="photo1.jpeg" alt="Intervention Allô ça pique" loading="lazy">
         </figure>
         <figure class="gal-item">
-          <img src="photo2.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" src="photo2.jpeg" alt="Intervention Allô ça pique" loading="lazy">
         </figure>
         <figure class="gal-item">
-          <img src="photo3.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" src="photo3.jpeg" alt="Intervention Allô ça pique" loading="lazy">
         </figure>
         <figure class="gal-item">
-          <img src="photo4.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" src="photo4.jpeg" alt="Intervention Allô ça pique" loading="lazy">
         </figure>
         <figure class="gal-item">
-          <img src="photo5.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" src="photo5.jpeg" alt="Intervention Allô ça pique" loading="lazy">
         </figure>
         <figure class="gal-item">
-          <img src="photo6.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" src="photo6.jpeg" alt="Intervention Allô ça pique" loading="lazy">
         </figure>
         <figure class="gal-item">
-          <img src="photo7.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" src="photo7.jpeg" alt="Intervention Allô ça pique" loading="lazy">
         </figure>
         <figure class="gal-item">
-          <img src="photo8.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" src="photo8.jpeg" alt="Intervention Allô ça pique" loading="lazy">
         </figure>
       </div>
       <button class="gal-nav gal-nav-next" aria-label="Photos suivantes">
@@ -1438,7 +1435,6 @@ section{padding:110px 0}
         </div>
       </div>
       <div class="rv">
-        <div class="eyebrow" style="margin-bottom:16px">À propos</div>
         <h2>L'<em>entreprise</em></h2>
         <p>Allô ça pique est une Sàrl familiale vaudoise basée à Bettens, près de Lausanne. Nous intervenons sur l'ensemble du canton de Vaud pour la destruction de nids et la récupération d'essaims.</p>
         <p>Également apiculteurs, nous récupérons les essaims d'abeilles vivants pour leur donner une seconde vie au rucher plutôt que de les détruire.</p>
@@ -1459,7 +1455,6 @@ section{padding:110px 0}
   <div class="wrap">
     <div class="con-g">
       <div class="con-l rv">
-        <div class="eyebrow" style="margin-bottom:14px">Contact</div>
         <h2>Nous <em>contacter</em></h2>
         <p class="con-lead">En haute saison (guêpes et frelons), nous répondons au téléphone 7 jours sur 7. Les demandes envoyées via le formulaire sont traitées dans la journée.</p>
         <div class="cbs">
@@ -1992,17 +1987,26 @@ if (routePanel) {
   const prevBtn  = carousel.querySelector('.gal-nav-prev');
   const nextBtn  = carousel.querySelector('.gal-nav-next');
 
-  function loaded(img) {
+  // Attente bornée : on n'immobilise jamais le carrousel plus de 2,5 s
+  function loaded(img, ms) {
     return new Promise(res => {
       if (img.complete) return res(img.naturalWidth > 0);
-      img.addEventListener('load',  () => res(true),  {once:true});
-      img.addEventListener('error', () => res(false), {once:true});
+      let done = false;
+      const finish = v => { if (!done) { done = true; res(v); } };
+      img.addEventListener('load',  () => finish(true),  {once:true});
+      img.addEventListener('error', () => finish(false), {once:true});
+      setTimeout(() => finish(null), ms);   // null = encore en cours
     });
   }
 
   Promise.all(Array.from(vp.children).map(async fig => {
-    const ok = await loaded(fig.querySelector('img'));
-    if (!ok) fig.remove();
+    const img = fig.querySelector('img');
+    const ok = await loaded(img, 2500);
+    if (ok === false) fig.remove();
+    else if (ok === null) {
+      // Toujours en chargement : on la garde, et on la retire si elle échoue
+      img.addEventListener('error', () => fig.remove(), {once:true});
+    }
   })).then(setup);
 
   function setup() {
