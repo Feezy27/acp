@@ -90,6 +90,8 @@ body{
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
 img{display:block;max-width:100%}
+svg,video,iframe,table{max-width:100%}
+h1,h2,h3,h4,p,li,td,th,figcaption{overflow-wrap:break-word}
 
 /* TYPOGRAPHY */
 h1,h2,h3,h4{
@@ -195,6 +197,14 @@ section{padding:110px 0}
   .brand-favicon{height:54px}
   .brand-mobile-text{height:50px}
   .hdr-in{padding:10px 18px}
+}
+@media(max-width:400px){
+  .brand-favicon{height:44px}
+  .brand-mobile-text{height:38px}
+  .hdr-in{padding:10px 14px;gap:8px}
+  .hdr-actions{gap:8px}
+  .cta-call,.mb-tog{width:38px;height:38px}
+  .wrap{padding:0 18px}
 }
 
 /* ════════════════════════════════════════
@@ -365,7 +375,7 @@ section{padding:110px 0}
 .services{background:var(--paper);padding-top:72px;padding-bottom:56px}
 .services .s-head{margin-bottom:40px}
 .svc-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));
   gap:20px;
 }
 .svc{
@@ -418,7 +428,7 @@ section{padding:110px 0}
 ════════════════════════════════════════ */
 .why{background:var(--cream-2)}
 .why-g{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));
   gap:24px;
 }
 .wn{
@@ -523,24 +533,30 @@ section{padding:110px 0}
 .ptbl-extra .t-name{font-size:18px;margin-bottom:0}
 .ptbl-extra .t-price{font-size:22px}
 @media(max-width:680px){
-  /* Les deux tableaux gardent 2 colonnes : libellé à gauche, tarif à droite */
-  .ptbl,.ptbl thead,.ptbl tbody,.ptbl tr,.ptbl td{display:block;width:100%}
-  .ptbl thead{display:none}
-  .ptbl-wrap{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-lg);padding:4px 0}
-  .ptbl tbody tr{
-    display:flex !important;
-    align-items:center;justify-content:space-between;gap:14px;
-    background:transparent;border:none;
-    border-bottom:1px solid var(--line);
-    padding:14px 18px;margin-bottom:0;
+  /* Deux colonnes : le libellé occupe la place restante, le tarif garde la sienne */
+  .ptbl-wrap{
+    background:var(--cream);border:1px solid var(--line);
+    border-radius:var(--r-lg);padding:4px 0;overflow:hidden;
   }
-  .ptbl tbody tr:last-child{border-bottom:none}
-  .ptbl tbody tr:hover{background:transparent}
-  .ptbl td{padding:0;border:none;text-align:left !important}
-  .ptbl td:nth-child(2){text-align:right !important;flex-shrink:0}
+  .ptbl,.ptbl tbody{display:block;width:100%}
+  .ptbl thead{display:none}
+  .ptbl tr{
+    display:flex;
+    align-items:center;justify-content:space-between;
+    gap:14px;
+    padding:14px 18px;
+    border-bottom:1px solid var(--line);
+    background:transparent;
+  }
+  .ptbl tr:last-child{border-bottom:none}
+  .ptbl tr:hover{background:transparent}
+  .ptbl td{display:block;padding:0;border:none;width:auto}
+  .ptbl td:first-child{flex:1 1 auto;min-width:0;text-align:left}
+  .ptbl td:last-child{flex:0 0 auto;text-align:right;white-space:nowrap}
   .ptbl td::before{content:none !important}
-  .t-price{font-size:21px}
-  .t-name{font-size:15px}
+  .t-name{font-size:15px;line-height:1.35;display:block;overflow-wrap:break-word}
+  .t-price{font-size:20px;white-space:nowrap}
+  .t-price small{font-size:12px}
 }
 
 /* ════════════════════════════════════════
@@ -707,6 +723,7 @@ section{padding:110px 0}
 .btn-ink:hover{background:var(--amber);transform:translateY(-1px)}
 .btn-ink svg{width:14px;height:14px}
 @media(max-width:860px){.zone-g{grid-template-columns:1fr;gap:40px}}
+@media(max-width:520px){.cities{grid-template-columns:1fr}}
 
 /* ════════════════════════════════════════
    ABOUT
@@ -1972,7 +1989,6 @@ if (routePanel) {
   const prevBtn  = carousel.querySelector('.gal-nav-prev');
   const nextBtn  = carousel.querySelector('.gal-nav-next');
 
-  // 1. Ne conserver que les photos réellement disponibles
   function loaded(img) {
     return new Promise(res => {
       if (img.complete) return res(img.naturalWidth > 0);
@@ -1984,7 +2000,6 @@ if (routePanel) {
   Promise.all(Array.from(vp.children).map(async fig => {
     const ok = await loaded(fig.querySelector('img'));
     if (!ok) fig.remove();
-    return ok;
   })).then(setup);
 
   function setup() {
@@ -1996,47 +2011,62 @@ if (routePanel) {
       return;
     }
 
-    // 2. Ordre aléatoire, différent à chaque visite
+    // 1. Ordre aléatoire, renouvelé à chaque visite
     for (let i = items.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      vp.appendChild(items[j]);
+      vp.appendChild(items[Math.floor(Math.random() * (i + 1))]);
       items = Array.from(vp.children);
     }
-    items = Array.from(vp.children);
+    const originals = Array.from(vp.children);
+    const nOrig = originals.length;
 
-    // 3. Duplication pour un défilement sans fin
-    const originals = items.length;
-    if (originals > 1) {
-      items.forEach(fig => {
-        const clone = fig.cloneNode(true);
-        clone.dataset.clone = '1';
-        clone.setAttribute('aria-hidden', 'true');
-        vp.appendChild(clone);
-      });
-    }
-
-    const stepOf = () => {
+    function stepOf() {
       const first = vp.querySelector('.gal-item');
       if (!first) return 240;
       const gap = parseFloat(getComputedStyle(vp).gap) || 16;
       return first.getBoundingClientRect().width + gap;
-    };
+    }
 
-    // Boucle silencieuse, appliquée seulement quand le défilement est terminé
-    // (l'ajuster pendant l'animation l'interromprait)
+    // 2. Motif répété assez large pour que la boucle soit possible.
+    //    Il faut qu'un motif dépasse la largeur visible, sinon rien ne défile.
+    const step  = stepOf();
+    const perSet = Math.max(1, Math.ceil(vp.clientWidth / (nOrig * step)));
+    const unit   = nOrig * perSet;      // photos par motif
+    const REPS   = 3;                   // trois motifs : un avant, un visible, un après
+
+    function addSet() {
+      originals.forEach(fig => {
+        const cl = fig.cloneNode(true);
+        cl.dataset.clone = '1';
+        cl.setAttribute('aria-hidden', 'true');
+        vp.appendChild(cl);
+      });
+    }
+    for (let i = 1; i < perSet * REPS; i++) addSet();
+
+    const loopW = () => unit * stepOf();
+
+    // Démarrage au début du deuxième motif : on peut aller à gauche comme à droite
+    function center() {
+      vp.style.scrollBehavior = 'auto';
+      vp.scrollLeft = loopW();
+      vp.style.scrollBehavior = '';
+    }
+    center();
+
+    // 3. Recalage invisible, uniquement une fois le mouvement terminé
     let settle = null;
     function normalize() {
-      const half = stepOf() * originals;
-      if (half <= 0) return;
+      const w = loopW();
+      if (w <= 0) return;
       const prev = vp.style.scrollBehavior;
       vp.style.scrollBehavior = 'auto';
-      if (vp.scrollLeft >= half) vp.scrollLeft -= half;
-      else if (vp.scrollLeft < 1) vp.scrollLeft += half;
+      if (vp.scrollLeft < w - 1)          vp.scrollLeft += w;
+      else if (vp.scrollLeft >= 2 * w)    vp.scrollLeft -= w;
       vp.style.scrollBehavior = prev;
     }
     vp.addEventListener('scroll', () => {
       clearTimeout(settle);
-      settle = setTimeout(normalize, 140);
+      settle = setTimeout(normalize, 150);
     }, {passive:true});
 
     function slide(dir) {
@@ -2045,22 +2075,20 @@ if (routePanel) {
     prevBtn && prevBtn.addEventListener('click', () => { slide(-1); hold(); });
     nextBtn && nextBtn.addEventListener('click', () => { slide(1);  hold(); });
 
-    // 4. Défilement automatique, suspendu dès que l'on interagit
+    // 4. Défilement automatique
     let timer = null, paused = false;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function start() {
-      if (reduce || originals < 2 || timer) return;
-      timer = setInterval(() => { if (!paused) slide(1); }, 3800);
-    }
     function hold() {
       paused = true;
       clearTimeout(hold._t);
       hold._t = setTimeout(() => { paused = false; }, 4000);
     }
 
-    // Survol souris uniquement : sur écran tactile, pointerenter reste actif
-    // indéfiniment et gelait le défilement après le premier contact.
+    if (!reduce && nOrig > 1) {
+      timer = setInterval(() => { if (!paused) slide(1); }, 3800);
+    }
+
     carousel.addEventListener('mouseenter', () => { paused = true; });
     carousel.addEventListener('mouseleave', () => { paused = false; });
     carousel.addEventListener('focusin',  () => { paused = true; });
@@ -2068,10 +2096,13 @@ if (routePanel) {
     ['touchstart','wheel'].forEach(ev =>
       vp.addEventListener(ev, hold, {passive:true}));
 
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) paused = true; else paused = false;
+    document.addEventListener('visibilitychange', () => { paused = document.hidden; });
+
+    let rz = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(rz);
+      rz = setTimeout(center, 200);
     });
-    start();
   }
 })();
 
