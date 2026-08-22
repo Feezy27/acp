@@ -936,7 +936,8 @@ section{padding:110px 0}
   cursor:zoom-in;
   user-select:none;-webkit-user-drag:none;
 }
-.lb-img.zoomed{cursor:zoom-out}
+.lb-img.zoomed{cursor:grab;touch-action:none}
+.lb-img.zoomed:active{cursor:grabbing}
 .lb-btn{
   position:absolute;z-index:2;
   width:48px;height:48px;
@@ -2021,14 +2022,22 @@ if (routePanel) {
       return first.getBoundingClientRect().width + gap;
     };
 
-    // Boucle silencieuse quand on dépasse la première série
+    // Boucle silencieuse, appliquée seulement quand le défilement est terminé
+    // (l'ajuster pendant l'animation l'interromprait)
+    let settle = null;
     function normalize() {
       const half = stepOf() * originals;
       if (half <= 0) return;
+      const prev = vp.style.scrollBehavior;
+      vp.style.scrollBehavior = 'auto';
       if (vp.scrollLeft >= half) vp.scrollLeft -= half;
-      else if (vp.scrollLeft < 0) vp.scrollLeft += half;
+      else if (vp.scrollLeft < 1) vp.scrollLeft += half;
+      vp.style.scrollBehavior = prev;
     }
-    vp.addEventListener('scroll', normalize, {passive:true});
+    vp.addEventListener('scroll', () => {
+      clearTimeout(settle);
+      settle = setTimeout(normalize, 140);
+    }, {passive:true});
 
     function slide(dir) {
       vp.scrollBy({ left: dir * stepOf(), behavior: 'smooth' });
@@ -2047,17 +2056,21 @@ if (routePanel) {
     function hold() {
       paused = true;
       clearTimeout(hold._t);
-      hold._t = setTimeout(() => { paused = false; }, 7000);
+      hold._t = setTimeout(() => { paused = false; }, 4000);
     }
 
-    ['pointerenter','focusin'].forEach(ev =>
-      carousel.addEventListener(ev, () => { paused = true; }));
-    ['pointerleave','focusout'].forEach(ev =>
-      carousel.addEventListener(ev, () => { paused = false; }));
+    // Survol souris uniquement : sur écran tactile, pointerenter reste actif
+    // indéfiniment et gelait le défilement après le premier contact.
+    carousel.addEventListener('mouseenter', () => { paused = true; });
+    carousel.addEventListener('mouseleave', () => { paused = false; });
+    carousel.addEventListener('focusin',  () => { paused = true; });
+    carousel.addEventListener('focusout', () => { paused = false; });
     ['touchstart','wheel'].forEach(ev =>
       vp.addEventListener(ev, hold, {passive:true}));
 
-    document.addEventListener('visibilitychange', () => { paused = document.hidden; });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) paused = true; else paused = false;
+    });
     start();
   }
 })();
@@ -2080,16 +2093,35 @@ if (routePanel) {
   }
 
   let list = [], index = 0, zoomed = false;
+  const ZOOM = 2.4;
+  let tx = 0, ty = 0;                 // décalage courant de l'image
+  let dragging = false, moved = false, sx = 0, sy = 0, ox = 0, oy = 0;
+
+  function apply(animate) {
+    lbImg.style.transition = animate ? 'transform .3s cubic-bezier(.22,.61,.36,1)' : 'none';
+    lbImg.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + (zoomed ? ZOOM : 1) + ')';
+  }
+
+  // Empêche de faire sortir la photo du cadre
+  function clamp() {
+    const stage = lb.querySelector('.lb-stage');
+    const maxX = Math.max(0, (lbImg.offsetWidth  * ZOOM - stage.clientWidth)  / 2);
+    const maxY = Math.max(0, (lbImg.offsetHeight * ZOOM - stage.clientHeight) / 2);
+    tx = Math.min(maxX, Math.max(-maxX, tx));
+    ty = Math.min(maxY, Math.max(-maxY, ty));
+  }
 
   function setZoom(on) {
     zoomed = on;
+    tx = 0; ty = 0;
     lbImg.classList.toggle('zoomed', on);
-    lbImg.style.transform = on ? 'scale(2)' : 'scale(1)';
+    apply(true);
   }
 
   function render() {
     const img = list[index];
     if (!img) return;
+    dragging = false; moved = false;
     setZoom(false);
     lbImg.src = img.currentSrc || img.src;
     lbImg.alt = img.alt || '';
@@ -2135,7 +2167,38 @@ if (routePanel) {
   btnNext.addEventListener('click', e => { e.stopPropagation(); step(1); });
 
   // Clic sur l'image : zoom / dézoom
-  lbImg.addEventListener('click', e => { e.stopPropagation(); setZoom(!zoomed); });
+  lbImg.addEventListener('click', e => {
+    e.stopPropagation();
+    if (moved) { moved = false; return; }   // c'était un déplacement, pas un clic
+    setZoom(!zoomed);
+  });
+
+  // Déplacement dans la photo zoomée, à la souris comme au doigt
+  lbImg.addEventListener('pointerdown', e => {
+    if (!zoomed) return;
+    e.preventDefault();
+    dragging = true; moved = false;
+    sx = e.clientX; sy = e.clientY; ox = tx; oy = ty;
+    lbImg.setPointerCapture(e.pointerId);
+    lbImg.style.cursor = 'grabbing';
+  });
+
+  lbImg.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) moved = true;
+    tx = ox + dx; ty = oy + dy;
+    clamp();
+    apply(false);
+  });
+
+  ['pointerup','pointercancel'].forEach(ev =>
+    lbImg.addEventListener(ev, e => {
+      if (!dragging) return;
+      dragging = false;
+      lbImg.style.cursor = '';
+      try { lbImg.releasePointerCapture(e.pointerId); } catch (_) {}
+    }));
   // Clic sur le fond : fermeture
   lb.addEventListener('click', close);
 
