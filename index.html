@@ -459,27 +459,6 @@ section{padding:110px 0}
    PRICING
 ════════════════════════════════════════ */
 .pricing{background:var(--paper);padding-top:56px}
-.pri-crit{
-  display:grid;grid-template-columns:repeat(3, 1fr);gap:18px;
-  margin-bottom:36px;
-}
-.crit-box{
-  background:var(--cream);border-radius:var(--r);
-  padding:22px 26px;
-  border-left:3px solid var(--amber);
-}
-.crit-box.alt{border-left-color:var(--ink-soft)}
-.crit-box.special{border-left-color:#B5651D}
-.crit-label{
-  font-family:'Inter',sans-serif;font-size:12px;font-weight:700;
-  text-transform:uppercase;letter-spacing:0.12em;
-  color:var(--amber);margin-bottom:8px;
-}
-.crit-box.alt .crit-label{color:var(--ink)}
-.crit-box.special .crit-label{color:#B5651D}
-.crit-box p{font-size:15px;color:var(--text);line-height:1.6}
-.crit-box strong{color:var(--ink);font-weight:600}
-@media(max-width:860px){.pri-crit{grid-template-columns:1fr}}
 
 .ptbl-wrap{
   background:var(--cream);border-radius:var(--r-lg);
@@ -503,8 +482,8 @@ section{padding:110px 0}
 @media(max-width:980px) and (min-width:681px){
   .ptbl thead th,.ptbl td{padding:16px 14px}
   .ptbl th{font-size:11px;letter-spacing:0.08em}
-  .t-price{font-size:22px}
-  .t-name{font-size:18px}
+  .ptbl .t-price,.ptbl-extra .t-price{font-size:22px}
+  .ptbl .t-name,.ptbl-extra .t-name{font-size:18px}
   .t-desc{font-size:12px}
 }
 .t-name{
@@ -556,8 +535,8 @@ section{padding:110px 0}
   .ptbl td:first-child{flex:1 1 auto;min-width:0;text-align:left}
   .ptbl td:last-child{flex:0 0 auto;text-align:right;white-space:nowrap}
   .ptbl td::before{content:none !important}
-  .t-name{font-size:15px;line-height:1.35;display:block;overflow-wrap:break-word}
-  .t-price{font-size:20px;white-space:nowrap}
+  .ptbl .t-name,.ptbl-extra .t-name{font-size:15px;line-height:1.35;display:block;overflow-wrap:break-word}
+  .ptbl .t-price,.ptbl-extra .t-price{font-size:20px;white-space:nowrap}
   .t-price small{font-size:12px}
 }
 
@@ -568,7 +547,7 @@ section{padding:110px 0}
 .zone .s-head h2{color:var(--cream)}
 .zone .s-head h2 em{color:var(--amber-bright)}
 .zone .s-head p{color:rgba(250,246,238,0.65)}
-.zone .zone-g{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.zone-g{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
 .cities{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
 .city{
   display:flex;align-items:center;gap:12px;
@@ -1063,10 +1042,10 @@ section{padding:110px 0}
         <div class="hero-frame">
           <div class="hero-photo">
             <img src="equipe.jpeg" alt="L'équipe Allô ça pique" class="hero-photo-img" fetchpriority="high" decoding="async"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                 onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src=/\.jpeg$/i.test(this.src)?this.src.replace(/\.jpeg$/i,'.jpg'):this.src.replace(/\.jpg$/i,'.jpeg');}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
             <div class="hero-photo-ph" style="display:none">
               Photo de l'équipe
-              <small>Fichier attendu : equipe.jpeg</small>
+              <small>Fichier attendu : equipe.jpeg ou equipe.jpg</small>
             </div>
             <div class="hero-photo-tag">Notre équipe</div>
           </div>
@@ -1427,10 +1406,10 @@ section{padding:110px 0}
       <div class="rv">
         <div class="about-img">
           <img src="entreprise.jpeg" alt="Allô ça pique en intervention" class="about-img-photo" loading="lazy"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+               onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src=/\.jpeg$/i.test(this.src)?this.src.replace(/\.jpeg$/i,'.jpg'):this.src.replace(/\.jpg$/i,'.jpeg');}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
           <div class="about-img-ph" style="display:none">
             Photo de l'entreprise
-            <small>Fichier attendu : entreprise.jpeg</small>
+            <small>Fichier attendu : entreprise.jpeg ou entreprise.jpg</small>
           </div>
         </div>
       </div>
@@ -2001,10 +1980,22 @@ if (routePanel) {
     });
   }
 
+  // Accepte indifféremment .jpeg ou .jpg
+  async function resolve(src) {
+    const alts = [src];
+    if (/\.jpeg$/i.test(src))     alts.push(src.replace(/\.jpeg$/i, '.jpg'));
+    else if (/\.jpg$/i.test(src)) alts.push(src.replace(/\.jpg$/i, '.jpeg'));
+    for (const url of alts) {
+      if (await exists(url, 8000)) return url;
+    }
+    return null;
+  }
+
   Promise.all(Array.from(vp.children).map(async fig => {
     const img = fig.querySelector('img');
-    const ok = await exists(img.getAttribute('src'), 8000);
-    if (!ok) fig.remove();
+    const url = await resolve(img.getAttribute('src'));
+    if (!url) fig.remove();
+    else if (url !== img.getAttribute('src')) img.src = url;
   })).then(setup);
 
   // Filet de sécurité : si une photo échoue plus tard, on retire
