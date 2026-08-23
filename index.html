@@ -1387,28 +1387,28 @@ section{padding:110px 0}
       </button>
       <div class="gal-viewport" id="galViewport">
         <figure class="gal-item">
-          <img decoding="async" src="photo1.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" fetchpriority="low" src="photo1.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" src="photo2.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" fetchpriority="low" src="photo2.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" src="photo3.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" fetchpriority="low" src="photo3.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" src="photo4.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" fetchpriority="low" src="photo4.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" src="photo5.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" fetchpriority="low" src="photo5.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" src="photo6.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" fetchpriority="low" src="photo6.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" src="photo7.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" fetchpriority="low" src="photo7.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" src="photo8.jpeg" alt="Intervention Allô ça pique" loading="lazy">
+          <img decoding="async" fetchpriority="low" src="photo8.jpeg" alt="Intervention Allô ça pique">
         </figure>
       </div>
       <button class="gal-nav gal-nav-next" aria-label="Photos suivantes">
@@ -1987,27 +1987,33 @@ if (routePanel) {
   const prevBtn  = carousel.querySelector('.gal-nav-prev');
   const nextBtn  = carousel.querySelector('.gal-nav-next');
 
-  // Attente bornée : on n'immobilise jamais le carrousel plus de 2,5 s
-  function loaded(img, ms) {
+  // Vérification préalable de l'existence de chaque photo.
+  // Rien n'est dupliqué tant qu'on ne sait pas lesquelles sont réellement en ligne.
+  function exists(src, ms) {
     return new Promise(res => {
-      if (img.complete) return res(img.naturalWidth > 0);
+      const probe = new Image();
       let done = false;
       const finish = v => { if (!done) { done = true; res(v); } };
-      img.addEventListener('load',  () => finish(true),  {once:true});
-      img.addEventListener('error', () => finish(false), {once:true});
-      setTimeout(() => finish(null), ms);   // null = encore en cours
+      probe.onload  = () => finish(probe.naturalWidth > 0);
+      probe.onerror = () => finish(false);
+      probe.src = src;
+      setTimeout(() => finish(false), ms);
     });
   }
 
   Promise.all(Array.from(vp.children).map(async fig => {
     const img = fig.querySelector('img');
-    const ok = await loaded(img, 2500);
-    if (ok === false) fig.remove();
-    else if (ok === null) {
-      // Toujours en chargement : on la garde, et on la retire si elle échoue
-      img.addEventListener('error', () => fig.remove(), {once:true});
-    }
+    const ok = await exists(img.getAttribute('src'), 8000);
+    if (!ok) fig.remove();
   })).then(setup);
+
+  // Filet de sécurité : si une photo échoue plus tard, on retire
+  // l'original comme toutes ses copies
+  function dropSrc(src) {
+    vp.querySelectorAll('.gal-item img').forEach(im => {
+      if (im.getAttribute('src') === src) im.closest('.gal-item').remove();
+    });
+  }
 
   function setup() {
     let items = Array.from(vp.children);
@@ -2104,6 +2110,10 @@ if (routePanel) {
       vp.addEventListener(ev, hold, {passive:true}));
 
     document.addEventListener('visibilitychange', () => { paused = document.hidden; });
+
+    vp.querySelectorAll('.gal-item img').forEach(im => {
+      im.addEventListener('error', () => dropSrc(im.getAttribute('src')), {once:true});
+    });
 
     let rz = null;
     window.addEventListener('resize', () => {
