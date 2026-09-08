@@ -132,7 +132,7 @@ section{padding:110px 0}
 .brand-mobile-text{display:none}
 .nav{
   display:flex;align-items:center;
-  flex:1;justify-content:space-evenly;
+  flex:1;justify-content:center;gap:38px;
   margin:0 40px;
   max-width:820px;
 }
@@ -153,7 +153,7 @@ section{padding:110px 0}
 /* Séparateurs verticaux entre les entrées du menu (ordinateur uniquement) */
 .nav>*{position:relative}
 .nav>*:not(:first-child)::before{
-  content:"";position:absolute;left:-2px;top:50%;
+  content:"";position:absolute;left:-19px;top:50%;
   transform:translateY(-50%);
   width:1px;height:16px;
   background:var(--line-strong);
@@ -1096,7 +1096,7 @@ section{padding:110px 0}
 <!-- HEADER -->
 <header class="hdr">
   <div class="hdr-in">
-    <a href="#" class="brand" aria-label="Allô ça pique">
+    <a href="index.html" class="brand" aria-label="Allô ça pique — retour à l'accueil">
       <img class="brand-logo" src="logo.png" alt="Allô ça pique">
       <img class="brand-favicon" src="favicon.png" alt="" aria-hidden="true">
       <img class="brand-mobile-text" src="header.png" alt="Allô ça pique" aria-hidden="true">
