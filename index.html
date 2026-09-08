@@ -150,6 +150,14 @@ section{padding:110px 0}
 }
 .nav a:hover{color:var(--amber)}
 .nav a:hover::after{transform:scaleX(1)}
+/* Séparateurs verticaux entre les entrées du menu (ordinateur uniquement) */
+.nav>*{position:relative}
+.nav>*:not(:first-child)::before{
+  content:"";position:absolute;left:-2px;top:50%;
+  transform:translateY(-50%);
+  width:1px;height:16px;
+  background:var(--line-strong);
+}
 /* Menu déroulant "Nos nuisibles" */
 .nav-drop{position:relative}
 .nav-drop-btn{
@@ -205,6 +213,7 @@ section{padding:110px 0}
   .nav-drop.open .nav-drop-menu{max-height:400px;margin:6px 0 4px}
   .nav-drop-btn{width:100%;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line)}
   .nav-drop-btn::after{display:none}
+  .nav>*::before{content:none}
 }
 .cta-call{
   display:inline-flex;align-items:center;gap:10px;
