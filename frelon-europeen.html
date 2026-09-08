@@ -1107,10 +1107,14 @@ section{padding:110px 0}
 .pg-text p:last-child{margin-bottom:0}
 .pg-text ul{margin:18px 0;padding:0;list-style:none}
 .pg-text li{
-  display:flex;align-items:flex-start;gap:10px;
+  display:flex;align-items:baseline;gap:12px;
   font-size:15px;color:var(--text);line-height:1.6;margin-bottom:10px;
 }
-.pg-text li svg{width:18px;height:18px;color:var(--amber);flex-shrink:0;margin-top:2px}
+.pg-text li::before{
+  content:"";width:5px;height:5px;border-radius:50%;
+  background:var(--amber);flex-shrink:0;
+  transform:translateY(-2px);
+}
 
 .pg-photo{
   position:relative;
@@ -1219,13 +1223,13 @@ section{padding:110px 0}
             <span>Guêpes</span>
             <small>Fiche pratique</small>
           </a>
-          <a href="#" class="nav-drop-soon" role="menuitem" aria-disabled="true">
+          <a href="chenilles-processionnaires.html" role="menuitem">
             <span>Chenilles processionnaires</span>
-            <small>Page à venir</small>
+            <small>Fiche pratique</small>
           </a>
-          <a href="#" class="nav-drop-soon" role="menuitem" aria-disabled="true">
+          <a href="essaims-abeilles.html" role="menuitem">
             <span>Essaims d'abeilles</span>
-            <small>Page à venir</small>
+            <small>Fiche pratique</small>
           </a>
         </div>
       </div>
@@ -1272,9 +1276,9 @@ section{padding:110px 0}
           <p>Le frelon européen est nettement plus grand qu'une guêpe, avec un thorax brun-roux et un abdomen marqué de jaune et de brun. Sa taille impressionne souvent au premier regard, mais il reste en général peu agressif tant qu'on ne s'approche pas de son nid.</p>
           <p>Il chasse surtout au crépuscule et peut être attiré par la lumière en soirée, ce qui explique qu'on le croise parfois près d'une fenêtre ouverte le soir, loin de son nid.</p>
           <ul>
-            <li><svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Thorax brun-roux, abdomen jaune et brun</li>
-            <li><svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Nettement plus grand qu'une guêpe commune</li>
-            <li><svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Actif surtout en fin de journée et le soir</li>
+            <li>Thorax brun-roux, abdomen jaune et brun</li>
+            <li>Nettement plus grand qu'une guêpe commune</li>
+            <li>Actif surtout en fin de journée et le soir</li>
           </ul>
           <div class="pg-callout">
             <p>Un doute sur l'identification ? Envoyez-nous une photo prise à distance raisonnable via notre <a href="index.html#contact" style="color:var(--ink);text-decoration:underline">formulaire de contact</a>, nous vous répondons rapidement.</p>
@@ -1286,9 +1290,9 @@ section{padding:110px 0}
           <p>Le frelon européen préfère les cavités protégées : un grenier, une souche creuse, un tronc d'arbre, un abri de jardin ou parfois un coffre de volet roulant. Contrairement au frelon asiatique, il s'installe rarement à l'air libre en cime d'arbre.</p>
           <p>Le nid, en forme de sphère ou d'ovale, prend une couleur brun clair caractéristique et peut atteindre une taille conséquente en fin de saison, généralement entre juillet et septembre.</p>
           <ul>
-            <li><svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Cavités protégées : grenier, souche, abri de jardin</li>
-            <li><svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Rarement à l'air libre, contrairement au frelon asiatique</li>
-            <li><svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Taille maximale atteinte entre juillet et septembre</li>
+            <li>Cavités protégées : grenier, souche, abri de jardin</li>
+            <li>Rarement à l'air libre, contrairement au frelon asiatique</li>
+            <li>Taille maximale atteinte entre juillet et septembre</li>
           </ul>
         </div>
 
@@ -1441,8 +1445,8 @@ section{padding:110px 0}
           <li><a href="frelon-asiatique.html">Frelon asiatique</a></li>
           <li><a href="frelon-europeen.html">Frelon européen</a></li>
           <li><a href="guepes.html">Guêpes</a></li>
-          <li><a href="index.html#services">Chenilles processionnaires</a></li>
-          <li><a href="index.html#services">Essaims d'abeilles</a></li>
+          <li><a href="chenilles-processionnaires.html">Chenilles processionnaires</a></li>
+          <li><a href="essaims-abeilles.html">Essaims d'abeilles</a></li>
         </ul>
       </div>
       <div class="fc-col">

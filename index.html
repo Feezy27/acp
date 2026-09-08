@@ -501,6 +501,35 @@ section{padding:110px 0}
 .svc-more svg{width:14px;height:14px}
 .svc:not(.featured) .svc-more{color:var(--amber)}
 
+/* Mini menu déroulant sur la carte "Guêpes & frelons européens" */
+.svc-drop{position:relative;margin-top:14px}
+.svc-drop .svc-more{margin-top:0}
+.svc-more-btn{
+  background:none;border:none;padding:0;cursor:pointer;font-family:inherit;
+}
+.svc-more-btn svg:last-child{transition:transform .2s}
+.svc-more-btn[aria-expanded="true"] svg:last-child{transform:rotate(180deg)}
+.svc-drop-menu{
+  position:absolute;top:calc(100% + 10px);left:0;
+  min-width:180px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:10px;
+  box-shadow:0 14px 32px rgba(26,31,46,0.14);
+  padding:6px;
+  opacity:0;pointer-events:none;
+  transform:translateY(-6px);
+  transition:opacity .18s ease,transform .18s ease;
+  z-index:20;
+}
+.svc-drop.open .svc-drop-menu{opacity:1;pointer-events:auto;transform:translateY(0)}
+.svc-drop-menu a{
+  display:block;padding:9px 12px;border-radius:7px;
+  font-size:14px;font-weight:600;color:var(--ink);
+  transition:background .15s;
+}
+.svc-drop-menu a:hover{background:var(--cream)}
+
 /* ════════════════════════════════════════
    WHY US (calm, professional)
 ════════════════════════════════════════ */
@@ -1121,13 +1150,13 @@ section{padding:110px 0}
             <span>Guêpes</span>
             <small>Fiche pratique</small>
           </a>
-          <a href="#" class="nav-drop-soon" role="menuitem" aria-disabled="true">
+          <a href="chenilles-processionnaires.html" role="menuitem">
             <span>Chenilles processionnaires</span>
-            <small>Page à venir</small>
+            <small>Fiche pratique</small>
           </a>
-          <a href="#" class="nav-drop-soon" role="menuitem" aria-disabled="true">
+          <a href="essaims-abeilles.html" role="menuitem">
             <span>Essaims d'abeilles</span>
-            <small>Page à venir</small>
+            <small>Fiche pratique</small>
           </a>
         </div>
       </div>
@@ -1272,6 +1301,16 @@ section{padding:110px 0}
         </div>
         <h3>Guêpes & frelons européens</h3>
         <p class="svc-desc">Tous types de nids, quel que soit leur emplacement. Traitement au pyrèthre végétal.</p>
+        <div class="svc-drop" id="svcDrop">
+          <button type="button" class="svc-more svc-more-btn" id="svcDropBtn" aria-expanded="false" aria-haspopup="true">
+            En savoir plus
+            <svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="svc-drop-menu" role="menu">
+            <a href="guepes.html" role="menuitem">Guêpes</a>
+            <a href="frelon-europeen.html" role="menuitem">Frelon européen</a>
+          </div>
+        </div>
       </article>
       <article class="svc">
         <div class="svc-ico">
@@ -1286,6 +1325,9 @@ section{padding:110px 0}
         </div>
         <h3>Chenilles processionnaires</h3>
         <p class="svc-desc">Échenillage et pose d'écopièges pour pins infestés. Espèce urticante, traitée en hiver.</p>
+        <a href="chenilles-processionnaires.html" class="svc-more">En savoir plus
+          <svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </article>
       <article class="svc">
         <div class="svc-ico">
@@ -1315,6 +1357,9 @@ section{padding:110px 0}
         </div>
         <h3>Essaims d'abeilles</h3>
         <p class="svc-desc">Récupération des abeilles vivantes. Gratuit, sauf en cas d'accès complexe.</p>
+        <a href="essaims-abeilles.html" class="svc-more">En savoir plus
+          <svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </article>
     </div>
   </div>
@@ -1692,8 +1737,8 @@ section{padding:110px 0}
           <li><a href="frelon-asiatique.html">Frelon asiatique</a></li>
           <li><a href="frelon-europeen.html">Frelon européen</a></li>
           <li><a href="guepes.html">Guêpes</a></li>
-          <li><a href="#services">Chenilles processionnaires</a></li>
-          <li><a href="#services">Essaims d'abeilles</a></li>
+          <li><a href="chenilles-processionnaires.html">Chenilles processionnaires</a></li>
+          <li><a href="essaims-abeilles.html">Essaims d'abeilles</a></li>
         </ul>
       </div>
       <div class="fc-col">
@@ -1733,6 +1778,31 @@ section{padding:110px 0}
   const drop = document.getElementById('navDrop');
   if (!drop) return;
   const btn = document.getElementById('navDropBtn');
+
+  function close() {
+    drop.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+  function toggle(e) {
+    e.stopPropagation();
+    const open = drop.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  }
+
+  btn.addEventListener('click', toggle);
+  document.addEventListener('click', e => {
+    if (!drop.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') close();
+  });
+})();
+
+/* ---------- Mini menu déroulant sur la carte "Guêpes & frelons européens" ---------- */
+(function () {
+  const drop = document.getElementById('svcDrop');
+  if (!drop) return;
+  const btn = document.getElementById('svcDropBtn');
 
   function close() {
     drop.classList.remove('open');

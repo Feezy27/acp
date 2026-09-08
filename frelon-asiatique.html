@@ -1107,10 +1107,14 @@ section{padding:110px 0}
 .pg-text p:last-child{margin-bottom:0}
 .pg-text ul{margin:18px 0;padding:0;list-style:none}
 .pg-text li{
-  display:flex;align-items:flex-start;gap:10px;
+  display:flex;align-items:baseline;gap:12px;
   font-size:15px;color:var(--text);line-height:1.6;margin-bottom:10px;
 }
-.pg-text li svg{width:18px;height:18px;color:var(--amber);flex-shrink:0;margin-top:2px}
+.pg-text li::before{
+  content:"";width:5px;height:5px;border-radius:50%;
+  background:var(--amber);flex-shrink:0;
+  transform:translateY(-2px);
+}
 
 .pg-photo{
   position:relative;
@@ -1219,13 +1223,13 @@ section{padding:110px 0}
             <span>Guêpes</span>
             <small>Fiche pratique</small>
           </a>
-          <a href="#" class="nav-drop-soon" role="menuitem" aria-disabled="true">
+          <a href="chenilles-processionnaires.html" role="menuitem">
             <span>Chenilles processionnaires</span>
-            <small>Page à venir</small>
+            <small>Fiche pratique</small>
           </a>
-          <a href="#" class="nav-drop-soon" role="menuitem" aria-disabled="true">
+          <a href="essaims-abeilles.html" role="menuitem">
             <span>Essaims d'abeilles</span>
-            <small>Page à venir</small>
+            <small>Fiche pratique</small>
           </a>
         </div>
       </div>
@@ -1272,9 +1276,9 @@ section{padding:110px 0}
           <p>Le frelon asiatique se distingue du frelon européen par une silhouette globalement plus sombre. Le thorax est entièrement brun-noir, et l'abdomen présente des bandes orange, plus étroites que chez son cousin européen. L'extrémité de ses pattes est jaune vif comme trempée dans la peinture.</p>
           <p>Autre repère fiable et visible à distance, sa façon de voler. Il est aussi capable de rester en vol stationnaire devant une ruche ou une fleur, un comportement qui le distingue nettement du frelon européen.</p>
           <ul>
-            <li><svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Thorax brun-noir et abdomen orange, sans les marques jaunes du frelon européen</li>
-            <li><svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Extrémité des pattes jaune vif, bien visible en vol</li>
-            <li><svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Légèrement plus petit que le frelon européen malgré une allure massive</li>
+            <li>Thorax brun-noir et abdomen orange, sans les marques jaunes du frelon européen</li>
+            <li>Extrémité des pattes jaune vif, bien visible en vol</li>
+            <li>Légèrement plus petit que le frelon européen malgré une allure massive</li>
           </ul>
           <div class="pg-callout">
             <p>Un doute sur l'identification ? Envoyez-nous une photo prise à distance raisonnable via notre <a href="index.html#contact" style="color:var(--ink);text-decoration:underline">formulaire de contact</a>, nous vous répondons rapidement.</p>
@@ -1286,9 +1290,9 @@ section{padding:110px 0}
           <p>Le nid primaire, construit au printemps, est petit et se cache facilement sous un avant-toit, dans un abri de jardin ou une haie dense. Passé l'été, la colonie déménage généralement vers un nid secondaire, beaucoup plus volumineux (parfois plus de 80 cm de diamètre) et le plus souvent installé à la cime des arbres, à plus de dix mètres de hauteur.</p>
           <p>De forme arrondie ou ovale, avec une texture qui rappelle le papier mâché, ce nid secondaire est particulièrement difficile à repérer une fois le feuillage installé. C'est souvent à l'automne qu'on les remarque, lorsque les feuilles tombent et cessent de les camoufler.</p>
           <ul>
-            <li><svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Nid primaire au printemps : petit, souvent bas et discret</li>
-            <li><svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Nid secondaire en été : volumineux, généralement en hauteur dans les arbres</li>
-            <li><svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Une seule entrée visible, sur le côté du nid</li>
+            <li>Nid primaire au printemps : petit, souvent bas et discret</li>
+            <li>Nid secondaire en été : volumineux, généralement en hauteur dans les arbres</li>
+            <li>Une seule entrée visible, sur le côté du nid</li>
           </ul>
         </div>
 
@@ -1441,8 +1445,8 @@ section{padding:110px 0}
           <li><a href="frelon-asiatique.html">Frelon asiatique</a></li>
           <li><a href="frelon-europeen.html">Frelon européen</a></li>
           <li><a href="guepes.html">Guêpes</a></li>
-          <li><a href="index.html#services">Chenilles processionnaires</a></li>
-          <li><a href="index.html#services">Essaims d'abeilles</a></li>
+          <li><a href="chenilles-processionnaires.html">Chenilles processionnaires</a></li>
+          <li><a href="essaims-abeilles.html">Essaims d'abeilles</a></li>
         </ul>
       </div>
       <div class="fc-col">
