@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta name="google-site-verification" content="oodHPPxTZqMC60WmQfp_jFPNp5Er8Y6zLH9HXI2lsm8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Allô ça pique — Destruction de nids de guêpes, frelons et chenilles | Canton de Vaud</title>
 <meta name="description" content="Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques) et chenilles processionnaires du pin. Récupération d'essaims d'abeilles. Intervention 24-48h, garantie 10 jours, devis gratuit.">
@@ -53,6 +54,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <link rel="shortcut icon" href="favicon.png">
+<link rel="preload" as="image" href="equipe.jpeg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -424,6 +426,15 @@ section{padding:110px 0}
 }
 .svc-from.free{background:rgba(43,168,74,0.12);color:var(--ok)}
 .svc-desc{font-size:15px;color:var(--muted);line-height:1.65}
+.svc-more{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:14px;font-size:13px;font-weight:700;
+  color:var(--amber-bright);
+  transition:gap .15s;
+}
+.svc-more:hover{gap:10px}
+.svc-more svg{width:14px;height:14px}
+.svc:not(.featured) .svc-more{color:var(--amber)}
 
 /* ════════════════════════════════════════
    WHY US (calm, professional)
@@ -907,6 +918,42 @@ section{padding:110px 0}
   font-size:14px;color:var(--muted);font-style:italic;
 }
 
+/* ---------- Choix du numéro sur ordinateur ---------- */
+.call-pop{
+  position:absolute;z-index:300;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:12px;
+  box-shadow:0 18px 40px rgba(26,31,46,0.18);
+  padding:10px;
+  min-width:250px;
+  opacity:0;transform:translateY(-6px);
+  pointer-events:none;
+  transition:opacity .18s ease,transform .18s ease;
+}
+.call-pop.open{opacity:1;transform:translateY(0);pointer-events:auto}
+.call-pop-title{
+  font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:0.14em;color:var(--muted);
+  padding:6px 10px 8px;
+}
+.call-pop-num{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;
+  padding:11px 12px;border-radius:8px;
+  font-family:'Fraunces',serif;font-size:19px;font-weight:600;
+  color:var(--ink);text-align:left;
+  transition:background .15s;
+}
+.call-pop-num:hover{background:var(--cream)}
+.call-pop-num span{
+  font-family:'Inter',sans-serif;font-size:11px;font-weight:600;
+  color:var(--muted);text-transform:uppercase;letter-spacing:.1em;
+  white-space:nowrap;
+}
+.call-pop-num.copied span{color:var(--ok)}
+@media(max-width:520px){.call-pop{min-width:0;left:12px!important;right:12px!important;width:auto}}
+
 /* ---------- Visionneuse plein écran ---------- */
 .lb{
   position:fixed;inset:0;z-index:2000;
@@ -1021,7 +1068,6 @@ section{padding:110px 0}
             <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.08 1h3a2 2 0 0 1 2 1.72l.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45l2.81.7A2 2 0 0 1 21 16.92z"/></svg>
             Nous appeler
           </a>
-          <a href="#contact" class="btn-ghost">Demander un devis</a>
         </div>
         <div class="hero-trust">
           <div class="trust-i">
@@ -1041,7 +1087,7 @@ section{padding:110px 0}
       <div class="hero-art" aria-hidden="true">
         <div class="hero-frame">
           <div class="hero-photo">
-            <img src="equipe.jpeg" alt="L'équipe Allô ça pique" class="hero-photo-img" fetchpriority="high" decoding="async"
+            <img src="equipe.jpeg" alt="L'équipe Allô ça pique" class="hero-photo-img" width="1000" height="1250" fetchpriority="high" decoding="sync"
                  onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src=/\.jpeg$/i.test(this.src)?this.src.replace(/\.jpeg$/i,'.jpg'):this.src.replace(/\.jpg$/i,'.jpeg');}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
             <div class="hero-photo-ph" style="display:none">
               Photo de l'équipe
@@ -1096,6 +1142,9 @@ section{padding:110px 0}
         </div>
         <h3>Frelon asiatique</h3>
         <p class="svc-desc">Espèce invasive arrivée récemment en Suisse, elle menace les colonies d'abeilles et fait l'objet d'un signalement officiel. Sa destruction limite sa propagation.</p>
+        <a href="frelon-asiatique.html" class="svc-more">En savoir plus
+          <svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </article>
       <article class="svc">
         <div class="svc-ico">
@@ -1224,6 +1273,7 @@ section{padding:110px 0}
         </tbody>
       </table>
     </div>
+    <p class="p-note rv">Le tarif dépend uniquement des conditions d'accès au nid, quelle que soit l'espèce. Si la sécurité impose une nacelle ou l'intervention d'un tiers (couvreur, cordiste), un devis complémentaire est établi avant toute intervention.</p>
     <div class="ptbl-wrap ptbl-extra-wrap rv">
       <table class="ptbl ptbl-extra">
         <thead>
@@ -1256,7 +1306,7 @@ section{padding:110px 0}
         </tbody>
       </table>
     </div>
-    <p class="p-note">Distances calculées depuis Bettens (VD). Le tarif dépend uniquement des conditions d'accès au nid, quelle que soit l'espèce. Si la sécurité impose une nacelle ou l'intervention d'un tiers (couvreur, cordiste), un devis complémentaire est établi avant toute intervention.</p>
+    <p class="p-note">Distances calculées depuis Bettens (VD).</p>
   </div>
 </section>
 
@@ -1366,40 +1416,40 @@ section{padding:110px 0}
       </button>
       <div class="gal-viewport" id="galViewport">
         <figure class="gal-item">
-          <img decoding="async" fetchpriority="low" src="photo1.jpeg" alt="Intervention Allô ça pique">
+          <img decoding="async" loading="lazy" fetchpriority="low" src="photo1.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" fetchpriority="low" src="photo2.jpeg" alt="Intervention Allô ça pique">
+          <img decoding="async" loading="lazy" fetchpriority="low" src="photo2.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" fetchpriority="low" src="photo3.jpeg" alt="Intervention Allô ça pique">
+          <img decoding="async" loading="lazy" fetchpriority="low" src="photo3.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" fetchpriority="low" src="photo4.jpeg" alt="Intervention Allô ça pique">
+          <img decoding="async" loading="lazy" fetchpriority="low" src="photo4.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" fetchpriority="low" src="photo5.jpeg" alt="Intervention Allô ça pique">
+          <img decoding="async" loading="lazy" fetchpriority="low" src="photo5.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" fetchpriority="low" src="photo6.jpeg" alt="Intervention Allô ça pique">
+          <img decoding="async" loading="lazy" fetchpriority="low" src="photo6.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" fetchpriority="low" src="photo7.jpeg" alt="Intervention Allô ça pique">
+          <img decoding="async" loading="lazy" fetchpriority="low" src="photo7.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" fetchpriority="low" src="photo8.jpeg" alt="Intervention Allô ça pique">
+          <img decoding="async" loading="lazy" fetchpriority="low" src="photo8.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" fetchpriority="low" src="photo9.jpeg" alt="Intervention Allô ça pique">
+          <img decoding="async" loading="lazy" fetchpriority="low" src="photo9.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" fetchpriority="low" src="photo10.jpeg" alt="Intervention Allô ça pique">
+          <img decoding="async" loading="lazy" fetchpriority="low" src="photo10.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" fetchpriority="low" src="photo11.jpeg" alt="Intervention Allô ça pique">
+          <img decoding="async" loading="lazy" fetchpriority="low" src="photo11.jpeg" alt="Intervention Allô ça pique">
         </figure>
         <figure class="gal-item">
-          <img decoding="async" fetchpriority="low" src="photo12.jpeg" alt="Intervention Allô ça pique">
+          <img decoding="async" loading="lazy" fetchpriority="low" src="photo12.jpeg" alt="Intervention Allô ça pique">
         </figure>
       </div>
       <button class="gal-nav gal-nav-next" aria-label="Photos suivantes">
@@ -1576,6 +1626,12 @@ section{padding:110px 0}
     </div>
   </div>
 </footer>
+
+<div class="call-pop" id="callPop" role="dialog" aria-label="Nos numéros de téléphone">
+  <div class="call-pop-title">Nos numéros</div>
+  <button type="button" class="call-pop-num" data-num="+41 79 235 39 72">+41 79 235 39 72 <span>Copier</span></button>
+  <button type="button" class="call-pop-num" data-num="+41 76 828 59 66">+41 76 828 59 66 <span>Copier</span></button>
+</div>
 
 <script>
 const mbTog = document.getElementById('mbTog');
@@ -1969,6 +2025,75 @@ if (routePanel) {
 
 
 
+
+/* ---------- Sur ordinateur, afficher les numéros plutôt que de lancer
+     une application d'appel (Skype, Teams…). Sur mobile, appel direct. ---------- */
+(function () {
+  const pop = document.getElementById('callPop');
+  if (!pop) return;
+
+  // Un vrai téléphone : pointeur grossier et pas de survol
+  const isPhone = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  if (isPhone) return;   // on laisse le comportement natif
+
+  let anchorEl = null;
+
+  function place(el) {
+    const r = el.getBoundingClientRect();
+    pop.style.top = (window.scrollY + r.bottom + 10) + 'px';
+    const left = window.scrollX + r.right - pop.offsetWidth;
+    pop.style.left = Math.max(12, left) + 'px';
+  }
+
+  function open(el) {
+    anchorEl = el;
+    pop.classList.add('open');
+    place(el);
+    pop.querySelectorAll('.call-pop-num').forEach(b => {
+      b.classList.remove('copied');
+      b.querySelector('span').textContent = 'Copier';
+    });
+  }
+  function close() { pop.classList.remove('open'); anchorEl = null; }
+
+  // Intercepte les gros boutons d'appel, pas les coordonnées de la page contact
+  document.querySelectorAll('a.cta-call[href^="tel:"], a.btn-primary[href^="tel:"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      if (pop.classList.contains('open') && anchorEl === a) close();
+      else open(a);
+    });
+  });
+
+  pop.querySelectorAll('.call-pop-num').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const num = btn.dataset.num;
+      const label = btn.querySelector('span');
+      try {
+        await navigator.clipboard.writeText(num);
+        btn.classList.add('copied');
+        label.textContent = 'Copié';
+      } catch (err) {
+        // Navigateur sans presse-papiers : on sélectionne le texte
+        const range = document.createRange();
+        range.selectNodeContents(btn.firstChild);
+        const sel = getSelection();
+        sel.removeAllRanges(); sel.addRange(range);
+        label.textContent = 'Ctrl+C';
+      }
+    });
+  });
+
+  document.addEventListener('click', e => {
+    if (!pop.classList.contains('open')) return;
+    if (pop.contains(e.target) || (anchorEl && anchorEl.contains(e.target))) return;
+    close();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  window.addEventListener('resize', () => { if (anchorEl) place(anchorEl); });
+  window.addEventListener('scroll', () => { if (anchorEl) place(anchorEl); }, {passive:true});
+})();
+
 /* ---------- Carrousel de la galerie ---------- */
 (function () {
   const vp = document.getElementById('galViewport');
@@ -2003,12 +2128,33 @@ if (routePanel) {
     return null;
   }
 
-  Promise.all(Array.from(vp.children).map(async fig => {
-    const img = fig.querySelector('img');
-    const url = await resolve(img.getAttribute('src'));
-    if (!url) fig.remove();
-    else if (url !== img.getAttribute('src')) img.src = url;
-  })).then(setup);
+  let booted = false;
+  function boot() {
+    if (booted) return;      // une seule construction, quel que soit le déclencheur
+    booted = true;
+    Promise.all(Array.from(vp.children).map(async fig => {
+      const img = fig.querySelector('img');
+      const url = await resolve(img.getAttribute('src'));
+      if (!url) fig.remove();
+      else if (url !== img.getAttribute('src')) img.src = url;
+    })).then(setup);
+  }
+
+  // La galerie ne se construit qu'à son approche : la photo d'accueil
+  // dispose ainsi de toute la bande passante au chargement de la page.
+  const section = document.getElementById('galerie') || vp;
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries, obs) => {
+      if (entries.some(e => e.isIntersecting)) { obs.disconnect(); boot(); }
+    }, { rootMargin: '900px 0px' });
+    io.observe(section);
+    // Filet : si la galerie n'est jamais atteinte, on construit après le chargement
+    window.addEventListener('load', () => setTimeout(() => {
+      io.disconnect(); boot();
+    }, 3000));
+  } else {
+    window.addEventListener('load', boot);
+  }
 
   // Filet de sécurité : si une photo échoue plus tard, on retire
   // l'original comme toutes ses copies
@@ -2283,6 +2429,7 @@ if ('IntersectionObserver' in window) {
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
 }
 </script>
+
 
 </body>
 </html>
