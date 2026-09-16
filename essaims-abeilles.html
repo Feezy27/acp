@@ -1150,15 +1150,6 @@ section{padding:110px 0}
   font-size:17px;color:rgba(250,246,238,0.55);display:block;margin-bottom:6px;
 }
 .pg-photo-ph small{font-size:12px;color:rgba(250,246,238,0.28)}
-.pg-photo-tag{
-  position:absolute;bottom:18px;left:18px;
-  background:var(--cream);color:var(--ink);
-  padding:8px 16px;border-radius:999px;
-  font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;
-  display:flex;align-items:center;gap:8px;
-}
-.pg-photo-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber)}
-
 .pg-callout{
   background:var(--amber-light);
   border-left:3px solid var(--amber);
@@ -1187,9 +1178,9 @@ section{padding:110px 0}
 
 @media(max-width:920px){
   .pg-split{grid-template-columns:1fr;gap:36px}
-  .pg-split-media{position:static;flex-direction:row;flex-wrap:wrap;gap:16px}
+  .pg-split-media{position:static;flex-direction:row;flex-wrap:wrap;gap:16px;order:-1}
   .pg-photo{max-width:420px;margin:0 auto;width:100%}
-  .pg-photo-split{flex:1 1 200px;aspect-ratio:4/5}
+  .pg-photo-split{flex:1 1 200px;aspect-ratio:1/1}
   .pg-block{margin-bottom:32px;padding-bottom:32px}
 }
 @media(max-width:560px){
@@ -1336,7 +1327,6 @@ function imgFallback(img) {
             <b>Photo d'une abeille vue de près</b>
             <small>Fichier attendu : essaim-detail.jpeg</small>
           </div>
-          <span class="pg-photo-tag">Vue rapprochée</span>
         </div>
         <div class="pg-photo pg-photo-split">
           <img src="essaim-grappe.jpeg" alt="Essaim d'abeilles en grappe" onerror="imgFallback(this)">
@@ -1345,7 +1335,6 @@ function imgFallback(img) {
             <b>Photo d'un essaim d'abeilles</b>
             <small>Fichier attendu : essaim-grappe.jpeg</small>
           </div>
-          <span class="pg-photo-tag">Essaim typique</span>
         </div>
       </div>
     </div>
@@ -1445,6 +1434,13 @@ const nav = document.getElementById('nav');
 mbTog.addEventListener('click', () => {
   const open = nav.classList.toggle('open');
   mbTog.setAttribute('aria-expanded', open);
+});
+// Ferme le menu principal (mobile) au clic en dehors
+document.addEventListener('click', e => {
+  if (!nav.classList.contains('open')) return;
+  if (nav.contains(e.target) || mbTog.contains(e.target)) return;
+  nav.classList.remove('open');
+  mbTog.setAttribute('aria-expanded', 'false');
 });
 document.querySelectorAll('.nav a').forEach(a => {
   a.addEventListener('click', () => {

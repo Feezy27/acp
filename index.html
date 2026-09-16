@@ -1849,6 +1849,13 @@ mbTog.addEventListener('click', () => {
   const open = nav.classList.toggle('open');
   mbTog.setAttribute('aria-expanded', open);
 });
+// Ferme le menu principal (mobile) au clic en dehors
+document.addEventListener('click', e => {
+  if (!nav.classList.contains('open')) return;
+  if (nav.contains(e.target) || mbTog.contains(e.target)) return;
+  nav.classList.remove('open');
+  mbTog.setAttribute('aria-expanded', 'false');
+});
 document.querySelectorAll('.nav a').forEach(a => {
   a.addEventListener('click', () => {
     nav.classList.remove('open');
