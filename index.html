@@ -1210,7 +1210,7 @@ section{padding:110px 0}
         <div class="hero-frame">
           <div class="hero-photo">
             <img src="equipe.jpeg" alt="L'équipe Allô ça pique" class="hero-photo-img" width="1000" height="1250" fetchpriority="high" decoding="sync"
-                 onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src=/\.jpeg$/i.test(this.src)?this.src.replace(/\.jpeg$/i,'.jpg'):this.src.replace(/\.jpg$/i,'.jpeg');}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+                 onerror="imgFallback(this)">
             <div class="hero-photo-ph" style="display:none">
               Photo de l'équipe
               <small>Fichier attendu : equipe.jpeg ou equipe.jpg</small>
@@ -1606,7 +1606,7 @@ section{padding:110px 0}
       <div class="rv">
         <div class="about-img">
           <img src="entreprise.jpeg" alt="Allô ça pique en intervention" class="about-img-photo" loading="lazy"
-               onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src=/\.jpeg$/i.test(this.src)?this.src.replace(/\.jpeg$/i,'.jpg'):this.src.replace(/\.jpg$/i,'.jpeg');}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+               onerror="imgFallback(this)">
           <div class="about-img-ph" style="display:none">
             Photo de l'entreprise
             <small>Fichier attendu : entreprise.jpeg ou entreprise.jpg</small>
@@ -1773,6 +1773,26 @@ section{padding:110px 0}
 </div>
 
 <script>
+/* Repli d'extension pour les photos : essaie plusieurs variantes de casse
+   avant d'afficher le remplacement. Utile car les hébergeurs sont sensibles
+   à la casse (.jpg et .JPG sont deux fichiers différents). */
+function imgFallback(img) {
+  var candidates = ['jpeg', 'jpg', 'JPG', 'JPEG', 'png', 'PNG'];
+  var tried = (img.dataset.tried || '').split(',').filter(Boolean);
+  var current = img.src.split('.').pop().split('?')[0];
+  if (!tried.includes(current)) tried.push(current);
+  var base = img.src.replace(/\.[^./?]+(\?.*)?$/, '');
+  var next = candidates.find(function (e) { return !tried.includes(e); });
+  if (next) {
+    img.dataset.tried = tried.join(',');
+    img.src = base + '.' + next;
+  } else {
+    img.style.display = 'none';
+    if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
+  }
+}
+
+
 /* ---------- Menu déroulant "Nos nuisibles" ---------- */
 (function () {
   const drop = document.getElementById('navDrop');
@@ -2308,9 +2328,10 @@ if (routePanel) {
 
   // Accepte indifféremment .jpeg ou .jpg
   async function resolve(src) {
-    const alts = [src];
-    if (/\.jpeg$/i.test(src))     alts.push(src.replace(/\.jpeg$/i, '.jpg'));
-    else if (/\.jpg$/i.test(src)) alts.push(src.replace(/\.jpg$/i, '.jpeg'));
+    const base = src.replace(/\.[^./?]+$/, '');
+    const current = src.split('.').pop();
+    const candidates = ['jpeg', 'jpg', 'JPG', 'JPEG', 'png', 'PNG'];
+    const alts = [src, ...candidates.filter(e => e !== current).map(e => base + '.' + e)];
     for (const url of alts) {
       if (await exists(url, 8000)) return url;
     }

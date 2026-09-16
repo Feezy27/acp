@@ -1310,7 +1310,7 @@ section{padding:110px 0}
 
       <div class="pg-split-media">
         <div class="pg-photo pg-photo-split">
-          <img src="frelon-asiatique-detail.jpeg" alt="Frelon asiatique vu de près" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src=/\.jpeg$/i.test(this.src)?this.src.replace(/\.jpeg$/i,'.jpg'):this.src.replace(/\.jpg$/i,'.jpeg');}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+          <img src="frelon-asiatique-detail.jpeg" alt="Frelon asiatique vu de près" onerror="imgFallback(this)">
           <div class="pg-photo-ph" style="display:none">
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             <b>Photo d'un frelon vu de près</b>
@@ -1319,7 +1319,7 @@ section{padding:110px 0}
           <span class="pg-photo-tag">Vue rapprochée</span>
         </div>
         <div class="pg-photo pg-photo-split">
-          <img src="frelon-asiatique-nid.jpeg" alt="Nid de frelon asiatique" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src=/\.jpeg$/i.test(this.src)?this.src.replace(/\.jpeg$/i,'.jpg'):this.src.replace(/\.jpg$/i,'.jpeg');}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+          <img src="frelon-asiatique-nid.jpeg" alt="Nid de frelon asiatique" onerror="imgFallback(this)">
           <div class="pg-photo-ph" style="display:none">
             <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             <b>Photo d'un nid de frelon asiatique</b>
@@ -1479,6 +1479,26 @@ section{padding:110px 0}
 </footer>
 
 <script>
+/* Repli d'extension pour les photos : essaie plusieurs variantes de casse
+   avant d'afficher le remplacement. Utile car les hébergeurs sont sensibles
+   à la casse (.jpg et .JPG sont deux fichiers différents). */
+function imgFallback(img) {
+  var candidates = ['jpeg', 'jpg', 'JPG', 'JPEG', 'png', 'PNG'];
+  var tried = (img.dataset.tried || '').split(',').filter(Boolean);
+  var current = img.src.split('.').pop().split('?')[0];
+  if (!tried.includes(current)) tried.push(current);
+  var base = img.src.replace(/\.[^./?]+(\?.*)?$/, '');
+  var next = candidates.find(function (e) { return !tried.includes(e); });
+  if (next) {
+    img.dataset.tried = tried.join(',');
+    img.src = base + '.' + next;
+  } else {
+    img.style.display = 'none';
+    if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
+  }
+}
+
+
 /* ---------- Menu déroulant "Nos nuisibles" ---------- */
 (function () {
   const drop = document.getElementById('navDrop');
