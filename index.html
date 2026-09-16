@@ -1119,6 +1119,27 @@ section{padding:110px 0}
   .rv.in{opacity:1;transform:translateY(0)}
 }
 </style>
+<script>
+/* Repli d'extension pour les photos : essaie plusieurs variantes de casse
+   avant d'afficher le remplacement. Utile car les hébergeurs sont sensibles
+   à la casse (.jpg et .JPG sont deux fichiers différents). Placé dans le
+   <head> pour être disponible avant qu'une image ne puisse échouer. */
+function imgFallback(img) {
+  var candidates = ['jpeg', 'jpg', 'JPG', 'JPEG', 'png', 'PNG'];
+  var tried = (img.dataset.tried || '').split(',').filter(Boolean);
+  var current = img.src.split('.').pop().split('?')[0];
+  if (!tried.includes(current)) tried.push(current);
+  var base = img.src.replace(/\.[^./?]+(\?.*)?$/, '');
+  var next = candidates.find(function (e) { return !tried.includes(e); });
+  if (next) {
+    img.dataset.tried = tried.join(',');
+    img.src = base + '.' + next;
+  } else {
+    img.style.display = 'none';
+    if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
+  }
+}
+</script>
 </head>
 <body>
 
@@ -1161,7 +1182,6 @@ section{padding:110px 0}
         </div>
       </div>
       <a href="#tarifs">Tarifs</a>
-      <a href="#pourquoi">Pourquoi nous</a>
       <a href="#zone">Zone</a>
       <a href="#galerie">Galerie</a>
       <a href="#contact">Contact</a>
@@ -1773,26 +1793,6 @@ section{padding:110px 0}
 </div>
 
 <script>
-/* Repli d'extension pour les photos : essaie plusieurs variantes de casse
-   avant d'afficher le remplacement. Utile car les hébergeurs sont sensibles
-   à la casse (.jpg et .JPG sont deux fichiers différents). */
-function imgFallback(img) {
-  var candidates = ['jpeg', 'jpg', 'JPG', 'JPEG', 'png', 'PNG'];
-  var tried = (img.dataset.tried || '').split(',').filter(Boolean);
-  var current = img.src.split('.').pop().split('?')[0];
-  if (!tried.includes(current)) tried.push(current);
-  var base = img.src.replace(/\.[^./?]+(\?.*)?$/, '');
-  var next = candidates.find(function (e) { return !tried.includes(e); });
-  if (next) {
-    img.dataset.tried = tried.join(',');
-    img.src = base + '.' + next;
-  } else {
-    img.style.display = 'none';
-    if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
-  }
-}
-
-
 /* ---------- Menu déroulant "Nos nuisibles" ---------- */
 (function () {
   const drop = document.getElementById('navDrop');

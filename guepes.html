@@ -1197,6 +1197,27 @@ section{padding:110px 0}
   .pg-photo-split{max-width:420px;margin:0 auto;width:100%}
 }
 </style>
+<script>
+/* Repli d'extension pour les photos : essaie plusieurs variantes de casse
+   avant d'afficher le remplacement. Utile car les hébergeurs sont sensibles
+   à la casse (.jpg et .JPG sont deux fichiers différents). Placé dans le
+   <head> pour être disponible avant qu'une image ne puisse échouer. */
+function imgFallback(img) {
+  var candidates = ['jpeg', 'jpg', 'JPG', 'JPEG', 'png', 'PNG'];
+  var tried = (img.dataset.tried || '').split(',').filter(Boolean);
+  var current = img.src.split('.').pop().split('?')[0];
+  if (!tried.includes(current)) tried.push(current);
+  var base = img.src.replace(/\.[^./?]+(\?.*)?$/, '');
+  var next = candidates.find(function (e) { return !tried.includes(e); });
+  if (next) {
+    img.dataset.tried = tried.join(',');
+    img.src = base + '.' + next;
+  } else {
+    img.style.display = 'none';
+    if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
+  }
+}
+</script>
 </head>
 <body>
 
@@ -1238,7 +1259,6 @@ section{padding:110px 0}
         </div>
       </div>
       <a href="index.html#tarifs">Tarifs</a>
-      <a href="index.html#pourquoi">Pourquoi nous</a>
       <a href="index.html#zone">Zone</a>
       <a href="index.html#galerie">Galerie</a>
       <a href="index.html#contact">Contact</a>
@@ -1333,92 +1353,8 @@ section{padding:110px 0}
   </div>
 </section>
 
-<!-- TARIFS -->
-<section class="pricing">
-  <div class="wrap">
-    <div class="s-head rv">
-      <h2>Grille <em>tarifaire</em></h2>
-    </div>
-
-    <div class="ptbl-wrap rv">
-      <table class="ptbl">
-        <thead>
-          <tr>
-            <th>Type d'intervention</th>
-            <th>Tarif</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="t-name">Nid de fondation, de la taille d'une balle de golf</span></td>
-            <td><span class="t-price">100<small>CHF</small></span></td>
-          </tr>
-          <tr>
-            <td><span class="t-name">Nid accessible à hauteur d'homme</span></td>
-            <td><span class="t-price">190<small>CHF</small></span></td>
-          </tr>
-          <tr>
-            <td><span class="t-name">Nid traité à la perche, jusqu'à 15 m</span></td>
-            <td><span class="t-price">250<small>CHF</small></span></td>
-          </tr>
-          <tr>
-            <td><span class="t-name">Nid en hauteur, au-delà de 15 m</span></td>
-            <td><span class="t-price">350<small>CHF</small></span></td>
-          </tr>
-          <tr>
-            <td><span class="t-name">Nid nécessitant une progression sur toiture</span></td>
-            <td><span class="t-price devis">Sur devis</span></td>
-          </tr>
-          <tr>
-            <td><span class="t-name">Chenilles processionnaires du pin</span></td>
-            <td><span class="t-price devis">Sur devis</span></td>
-          </tr>
-          <tr>
-            <td><span class="t-name">Essaims d'abeilles</span></td>
-            <td><span class="t-price free">Gratuit</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="p-note rv">Le tarif dépend uniquement des conditions d'accès au nid, quelle que soit l'espèce. Si la sécurité impose une nacelle ou l'intervention d'un tiers (couvreur, cordiste), un devis complémentaire est établi avant toute intervention.</p>
-    <div class="ptbl-wrap ptbl-extra-wrap rv">
-      <table class="ptbl ptbl-extra">
-        <thead>
-          <tr>
-            <th>Prestations complémentaires</th>
-            <th>Tarif</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="t-name">Enlèvement du nid après traitement</span></td>
-            <td><span class="t-price">120<small>CHF</small></span></td>
-          </tr>
-          <tr>
-            <td><span class="t-name">Second passage si le nid est encore actif à 10 jours</span></td>
-            <td><span class="t-price free">Inclus</span></td>
-          </tr>
-          <tr>
-            <td><span class="t-name">Déplacement jusqu'à 20 km</span></td>
-            <td><span class="t-price free">Inclus</span></td>
-          </tr>
-          <tr>
-            <td><span class="t-name">Déplacement de 20 à 50 km</span></td>
-            <td><span class="t-price">50<small>CHF</small></span></td>
-          </tr>
-          <tr>
-            <td><span class="t-name">Déplacement au-delà de 50 km</span></td>
-            <td><span class="t-price">100<small>CHF</small></span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="p-note">Distances calculées depuis Bettens (VD).</p>
-  </div>
-</section>
-
 <!-- CTA -->
-<section class="pg-body" style="padding-top:0">
+<section class="pg-body">
   <div class="wrap">
     <div class="pg-cta">
       <h2>Un nid de guêpes <em>chez vous ?</em></h2>
@@ -1479,26 +1415,6 @@ section{padding:110px 0}
 </footer>
 
 <script>
-/* Repli d'extension pour les photos : essaie plusieurs variantes de casse
-   avant d'afficher le remplacement. Utile car les hébergeurs sont sensibles
-   à la casse (.jpg et .JPG sont deux fichiers différents). */
-function imgFallback(img) {
-  var candidates = ['jpeg', 'jpg', 'JPG', 'JPEG', 'png', 'PNG'];
-  var tried = (img.dataset.tried || '').split(',').filter(Boolean);
-  var current = img.src.split('.').pop().split('?')[0];
-  if (!tried.includes(current)) tried.push(current);
-  var base = img.src.replace(/\.[^./?]+(\?.*)?$/, '');
-  var next = candidates.find(function (e) { return !tried.includes(e); });
-  if (next) {
-    img.dataset.tried = tried.join(',');
-    img.src = base + '.' + next;
-  } else {
-    img.style.display = 'none';
-    if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
-  }
-}
-
-
 /* ---------- Menu déroulant "Nos nuisibles" ---------- */
 (function () {
   const drop = document.getElementById('navDrop');
