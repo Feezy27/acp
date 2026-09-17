@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mentions légales — Allô ça pique</title>
+<title>Mentions légales | Allô ça pique</title>
 <meta name="robots" content="noindex, follow">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
@@ -56,7 +56,17 @@ h2{
   font-family:'Fraunces',Georgia,serif;font-weight:600;
   font-size:20px;margin-bottom:14px;
 }
+h3{
+  font-family:'Inter',system-ui,sans-serif;font-weight:600;
+  font-size:15px;color:var(--ink);
+  margin:22px 0 6px;
+}
 p{margin-bottom:12px;color:var(--muted)}
+section ul{margin:0 0 12px 20px;color:var(--muted)}
+section li{margin-bottom:4px}
+section li::marker{color:var(--ink)}
+.maj{font-size:13px;margin:22px 0 0}
+section{scroll-margin-top:24px}
 p strong{color:var(--ink);font-weight:600}
 .todo{
   background:#FDF1D7;border-left:3px solid var(--amber);
@@ -105,15 +115,45 @@ footer{
 
   <section>
     <h2>Hébergement</h2>
-    <p>Ce site est hébergé par GitHub Pages (GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis).</p>
+    <p>Ce site est hébergé par <strong>Infomaniak Network SA</strong></p>
+    <p>Rue Eugène-Marziano 25, 1227 Les Acacias (GE), Suisse</p>
   </section>
 
-  <section>
+  <section id="donnees">
     <h2>Protection des données</h2>
-    <p>Ce site ne dépose aucun cookie et n'utilise aucun outil de suivi ou d'analyse d'audience.</p>
-    <p>Les données transmises via le formulaire de contact (nom, téléphone, email, localité, description de la demande) sont utilisées exclusivement pour traiter votre demande et n'y sont ni revendues, ni transmises à des tiers à des fins commerciales.</p>
-    <p>Les polices de caractères sont chargées depuis Google Fonts ; votre adresse IP est alors transmise aux serveurs de Google conformément à leur politique de confidentialité.</p>
-    <p>Conformément à la Loi fédérale sur la protection des données (LPD), vous pouvez demander l'accès, la rectification ou la suppression de vos données en écrivant à <a href="mailto:contact@allocapique.ch">contact@allocapique.ch</a>.</p>
+    <p>Allô ça pique Sàrl est responsable des données traitées sur ce site. Pour toute question à ce sujet : <a href="mailto:contact@allocapique.ch">contact@allocapique.ch</a>.</p>
+
+    <h3>Cookies et statistiques</h3>
+    <p>Le site lui-même ne dépose aucun cookie et n'utilise aucun outil de suivi ni de mesure d'audience. Seule la carte d'itinéraire du calculateur de distance, lorsqu'elle s'affiche, peut entraîner le dépôt de cookies par Google (voir plus bas).</p>
+
+    <h3>Hébergement</h3>
+    <p>Comme tout hébergeur, Infomaniak (Suisse) peut enregistrer des journaux techniques de connexion (adresse IP, date et heure, page consultée). Ils servent à la sécurité et au bon fonctionnement du site.</p>
+
+    <h3>Formulaire de contact</h3>
+    <p>Les données saisies (nom, téléphone, e-mail, localité, type d'intervention, description) servent uniquement à traiter votre demande. Elles ne sont ni vendues ni cédées à des tiers.</p>
+    <p>L'envoi passe par le service Formspree (Formspree, Inc., États-Unis), qui nous transmet votre message par e-mail.</p>
+    <p>Vos données sont conservées le temps nécessaire au traitement de votre demande et, si une intervention a lieu, pendant la durée imposée par nos obligations comptables.</p>
+
+    <h3>Calculateur de distance</h3>
+    <p>Si vous utilisez le calculateur de la section Zone, l'adresse saisie est transmise à des services de cartographie pour la localiser et calculer l'itinéraire depuis Bettens :</p>
+    <ul>
+      <li>Photon (komoot GmbH, Allemagne)</li>
+      <li>Nominatim (Fondation OpenStreetMap, Royaume-Uni)</li>
+      <li>OSRM et Valhalla, serveurs exploités par l'association FOSSGIS (Allemagne)</li>
+      <li>Google Maps pour l'affichage de la carte (Google, États-Unis)</li>
+    </ul>
+    <p>Ces services ne sont sollicités que si vous lancez un calcul. Allô ça pique ne conserve pas les adresses saisies. Les distances sont calculées à partir des données © contributeurs OpenStreetMap.</p>
+
+    <h3>Polices de caractères</h3>
+    <p>Les polices sont chargées depuis Google Fonts (Google, États-Unis). Votre adresse IP est alors transmise aux serveurs de Google.</p>
+
+    <h3>Communication à l'étranger</h3>
+    <p>Certains de ces prestataires sont établis hors de Suisse. L'Allemagne et le Royaume-Uni figurent parmi les États dont le niveau de protection des données est reconnu comme adéquat par le Conseil fédéral. Pour les prestataires établis aux États-Unis, la transmission se limite à ce qui est nécessaire au fonctionnement du site et au traitement de votre demande.</p>
+
+    <h3>Vos droits</h3>
+    <p>Conformément à la loi fédérale sur la protection des données (LPD), vous pouvez demander l'accès à vos données, leur rectification ou leur suppression en écrivant à <a href="mailto:contact@allocapique.ch">contact@allocapique.ch</a>.</p>
+
+    <p class="maj">Dernière mise à jour : septembre 2026</p>
   </section>
 
   <section>
