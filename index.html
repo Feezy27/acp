@@ -880,6 +880,12 @@ section{padding:110px 0}
   font-size:15.5px;color:var(--muted);line-height:1.7;
   padding:0 4px 26px;
 }
+.faq-img{
+  max-width:880px;width:100%;height:auto;
+  border-radius:var(--r);
+  margin:0 4px 26px;
+  box-shadow:none;
+}
 
 /* ════════════════════════════════════════
    ABOUT
@@ -1699,6 +1705,10 @@ function imgFallback(img) {
           <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </summary>
         <p>L'abeille a un corps dodu et poilu, de couleur brun doré, et meurt après avoir piqué une seule fois. La guêpe n'a presque pas de poils, avec des rayures jaune et noir bien marquées et une taille très fine. Le frelon européen ressemble à une grosse guêpe rousse. Le frelon asiatique est plus sombre, avec un thorax brun noir, une tête orange et l'extrémité des pattes jaune.</p>
+        <picture>
+          <source media="(max-width: 768px)" srcset="faq-especes-mobile.jpg">
+          <img src="faq-especes.jpg" alt="Comparaison visuelle entre une guêpe commune, une abeille, un frelon européen et un frelon asiatique" class="faq-img" width="1200" height="800" loading="lazy" decoding="async">
+        </picture>
       </details>
       <details class="faq-item">
         <summary>Faut-il toujours détruire un nid de guêpes ou de frelons, et peut-on le faire soi-même&nbsp;?
