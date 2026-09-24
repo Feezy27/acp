@@ -137,7 +137,7 @@ section{padding:110px 0}
   width:1px;height:16px;
   background:var(--line-strong);
 }
-/* Menu déroulant "Nos nuisibles" */
+/* Menu déroulant "Insectes" */
 .nav-drop{position:relative}
 .nav-drop-btn{
   display:inline-flex;align-items:center;gap:6px;
@@ -1231,7 +1231,7 @@ function imgFallback(img) {
       <a href="index.html#services">Services</a>
       <div class="nav-drop" id="navDrop">
         <button type="button" class="nav-drop-btn" id="navDropBtn" aria-expanded="false" aria-haspopup="true">
-          Nos nuisibles
+          Insectes
           <svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="nav-drop-menu" role="menu">
@@ -1260,6 +1260,7 @@ function imgFallback(img) {
       <a href="index.html#tarifs">Tarifs</a>
       <a href="index.html#zone">Zone</a>
       <a href="index.html#galerie">Galerie</a>
+      <a href="index.html#faq">FAQ</a>
       <a href="index.html#contact">Contact</a>
     </nav>
     <div class="hdr-actions">
@@ -1323,7 +1324,9 @@ function imgFallback(img) {
           <h2>Un nid <em>souvent en hauteur,</em> parfois discret</h2>
           <p>Le nid primaire, construit au printemps, est petit et se cache facilement sous un avant-toit, dans un abri de jardin ou une haie dense. Passé l'été, la colonie déménage généralement vers un nid secondaire, beaucoup plus volumineux (parfois plus de 80 cm de diamètre) et le plus souvent installé à la cime des arbres, à plus de dix mètres de hauteur.</p>
           <p>De forme arrondie ou ovale, avec une texture qui rappelle le papier mâché, ce nid secondaire est particulièrement difficile à repérer une fois le feuillage installé. C'est souvent à l'automne qu'on les remarque, lorsque les feuilles tombent et cessent de les camoufler.</p>
-          <p>Plus le nid est repéré tôt, plus l'intervention reste simple : un nid de fondation à peine visible se traite à partir de 100 CHF, un nid primaire accessible autour de 190 CHF. Un nid secondaire, en hauteur dans un arbre, demande un traitement à la perche entre 250 et 350 CHF, ou un devis si une progression sur toiture est nécessaire. <a href="index.html#tarifs" style="color:var(--ink);text-decoration:underline">Voir la grille tarifaire →</a></p>
+          <div class="pg-callout">
+            <p><strong>Tarif indicatif :</strong> à partir de 100 CHF pour un nid de fondation à peine visible, environ 190 CHF pour un nid primaire accessible, entre 250 et 350 CHF pour un nid secondaire en hauteur traité à la perche (sur devis si une progression sur toiture est nécessaire). <a href="index.html#tarifs" style="color:var(--ink);text-decoration:underline">Voir la grille tarifaire →</a></p>
+          </div>
           <ul>
             <li>Nid primaire au printemps : petit, souvent bas et discret</li>
             <li>Nid secondaire en été : volumineux, généralement en hauteur dans les arbres</li>
@@ -1435,7 +1438,7 @@ function imgFallback(img) {
 </footer>
 
 <script>
-/* ---------- Menu déroulant "Nos nuisibles" ---------- */
+/* ---------- Menu déroulant "Insectes" ---------- */
 (function () {
   const drop = document.getElementById('navDrop');
   if (!drop) return;
