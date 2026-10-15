@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="google-site-verification" content="oodHPPxTZqMC60WmQfp_jFPNp5Er8Y6zLH9HXI2lsm8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Allô ça pique : destruction de nids de guêpes, frelons et chenilles | Canton de Vaud</title>
-<meta name="description" content="Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons (européens et asiatiques) et chenilles processionnaires du pin. Récupération d'essaims d'abeilles. Intervention 24-48h, garantie 10 jours, devis gratuit.">
+<title>Allô ça pique : nids de guêpes et frelons, canton de Vaud</title>
+<meta name="description" content="Entreprise familiale vaudoise : destruction de nids de guêpes, frelons et chenilles processionnaires. Intervention 24-48h, devis gratuit.">
 <meta name="robots" content="index, follow">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="canonical" href="https://allocapique.ch/">
@@ -14,11 +14,17 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_CH">
 <meta property="og:url" content="https://allocapique.ch/">
-<meta property="og:title" content="Allô ça pique : destruction de nids de guêpes et frelons | Vaud">
+<meta property="og:title" content="Allô ça pique : nids de guêpes et frelons, canton de Vaud">
 <meta property="og:description" content="Entreprise familiale vaudoise. Guêpes, frelons, chenilles processionnaires. Intervention 24-48h, garantie 10 jours, tarifs transparents.">
-<meta property="og:image" content="https://allocapique.ch/logo.png">
+<meta property="og:image" content="https://allocapique.ch/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Intervention à l’échelle sous un avant-toit, Allô ça pique, destruction de nids de guêpes et frelons dans le canton de Vaud">
 <meta property="og:site_name" content="Allô ça pique">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Allô ça pique : nids de guêpes et frelons, canton de Vaud">
+<meta name="twitter:description" content="Entreprise familiale vaudoise : destruction de nids de guêpes, frelons et chenilles processionnaires. Intervention 24-48h, devis gratuit.">
+<meta name="twitter:image" content="https://allocapique.ch/og-image.jpg">
 <!-- Données structurées pour Google (référencement local) -->
 <script type="application/ld+json">
 {
@@ -28,7 +34,7 @@
   "legalName": "Allô ça pique Sàrl",
   "url": "https://allocapique.ch",
   "logo": "https://allocapique.ch/logo.png",
-  "image": "https://allocapique.ch/logo.png",
+  "image": "https://allocapique.ch/og-image.jpg",
   "email": "contact@allocapique.ch",
   "description": "Destruction de nids de guêpes, frelons européens et asiatiques et de chenilles processionnaires du pin. Récupération d'essaims d'abeilles.",
   "areaServed": {
@@ -44,7 +50,14 @@
     "addressCountry": "CH"
   },
   "geo": { "@type": "GeoCoordinates", "latitude": 46.6293039, "longitude": 6.5787691 },
-  "telephone": "+41792353972",
+  "telephone": ["+41792353972", "+41768285966"],
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "opens": "08:00",
+    "closes": "20:00"
+  },
+  "sameAs": ["https://maps.app.goo.gl/H6nYcZyGhfFNS91z9"],
   "priceRange": "100-350 CHF",
   "knowsAbout": ["Frelon asiatique", "Frelon européen", "Guêpes", "Chenilles processionnaires du pin", "Essaims d'abeilles"]
 }
@@ -718,6 +731,17 @@ section{padding:110px 0}
   transition:color .15s;
 }
 .city:hover::after,.city.active::after{color:var(--amber-bright)}
+.cities-extra[hidden]{display:none}
+.cities-toggle{
+  display:flex;align-items:center;gap:8px;
+  margin-top:10px;padding:10px 0 0;
+  background:none;border:none;
+  font-family:'Inter',sans-serif;font-size:14px;font-weight:600;
+  color:var(--amber-bright);cursor:pointer;
+}
+.cities-toggle:hover{color:var(--cream)}
+.cities-toggle-chevron{width:15px;height:15px;transition:transform .2s ease}
+.cities-toggle[aria-expanded="true"] .cities-toggle-chevron{transform:rotate(180deg)}
 /* City search */
 .city-search{
   display:flex;gap:10px;margin-bottom:22px;
@@ -1225,9 +1249,9 @@ function imgFallback(img) {
 <header class="hdr">
   <div class="hdr-in">
     <a href="index.html" class="brand" aria-label="Allô ça pique, retour à l'accueil">
-      <img class="brand-logo" src="logo.png" alt="Allô ça pique">
-      <img class="brand-favicon" src="favicon.png" alt="" aria-hidden="true">
-      <img class="brand-mobile-text" src="header.png" alt="Allô ça pique" aria-hidden="true">
+      <img class="brand-logo" src="logo.png?v=3" alt="Allô ça pique" width="341" height="300">
+      <img class="brand-favicon" src="favicon.png" alt="" aria-hidden="true" width="192" height="192">
+      <img class="brand-mobile-text" src="header.png" alt="Allô ça pique" aria-hidden="true" width="499" height="180">
     </a>
     <nav class="nav" id="nav">
       <a href="#services">Services</a>
@@ -1308,8 +1332,11 @@ function imgFallback(img) {
       <div class="hero-art" aria-hidden="true">
         <div class="hero-frame">
           <div class="hero-photo">
-            <img src="equipe.jpeg" alt="L'équipe Allô ça pique" class="hero-photo-img" width="800" height="1067" fetchpriority="high" decoding="async"
-                 onerror="imgFallback(this)">
+            <picture>
+              <source type="image/webp" srcset="equipe.webp">
+              <img src="equipe.jpeg" alt="L'équipe Allô ça pique" class="hero-photo-img" width="800" height="1067" fetchpriority="high" decoding="async"
+                   onerror="imgFallback(this)">
+            </picture>
             <div class="hero-photo-ph" style="display:none">
               Photo de l'équipe
               <small>Fichier attendu : equipe.jpeg ou equipe.jpg</small>
@@ -1533,11 +1560,11 @@ function imgFallback(img) {
             <td><span class="t-price free">Inclus</span></td>
           </tr>
           <tr>
-            <td><span class="t-name">Déplacement de 20 à 50 km</span></td>
+            <td><span class="t-name">Déplacement de 20 à 40 km</span></td>
             <td><span class="t-price">50<small>CHF</small></span></td>
           </tr>
           <tr>
-            <td><span class="t-name">Déplacement au-delà de 50 km</span></td>
+            <td><span class="t-name">Déplacement au-delà de 40 km</span></td>
             <td><span class="t-price">100<small>CHF</small></span></td>
           </tr>
         </tbody>
@@ -1606,6 +1633,8 @@ function imgFallback(img) {
         <button class="city" data-city="Orbe" data-km="15">Orbe</button>
         <button class="city" data-city="Morges" data-km="20">Morges</button>
         <button class="city" data-city="Yverdon-les-Bains" data-km="22">Yverdon-les-Bains</button>
+      </div>
+      <div class="cities cities-extra" id="citiesExtra" hidden>
         <button class="city" data-city="Moudon" data-km="23">Moudon</button>
         <button class="city" data-city="Pully" data-km="23">Pully</button>
         <button class="city" data-city="Vallorbe" data-km="31">Vallorbe</button>
@@ -1616,6 +1645,10 @@ function imgFallback(img) {
         <button class="city" data-city="Nyon" data-km="49">Nyon</button>
         <button class="city" data-city="Aigle" data-km="57">Aigle</button>
       </div>
+      <button type="button" class="cities-toggle" id="citiesToggle" aria-expanded="false" aria-controls="citiesExtra">
+        <span id="citiesToggleLabel">Voir plus de communes</span>
+        <svg class="cities-toggle-chevron" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
       <div class="route-panel" id="routePanel" hidden>
         <div class="route-head">
           <div class="route-info">
@@ -1625,7 +1658,7 @@ function imgFallback(img) {
           <button class="route-close" id="routeClose" aria-label="Fermer la carte">✕</button>
         </div>
         <div class="route-map"><iframe id="routeFrame" title="Itinéraire depuis Bettens" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
-        <p class="route-note">Distance routière calculée depuis Bettens (VD), à titre indicatif. Frais de déplacement : inclus jusqu'à 20 km, 50 CHF au-delà de 20 km, 100 CHF au-delà de 50 km.</p>
+        <p class="route-note">Distance routière calculée depuis Bettens (VD), à titre indicatif. Frais de déplacement : inclus jusqu'à 20 km, 50 CHF au-delà de 20 km, 100 CHF au-delà de 40 km.</p>
       </div>
       </div>
       <aside class="zone-card rv">
@@ -1637,6 +1670,7 @@ function imgFallback(img) {
         </a>
       </aside>
     </div>
+    <p class="gal-note">Interventions récentes : Villars-Tiercelin, Pomy, Romanel-sur-Lausanne, Villars-Burquin, Blonay, Sugnens, Épalinges, Le Muids, Cheseaux-Noréaz, Jouxtens-Mézery, Le Mont-sur-Lausanne, Lonay, Dommartin.</p>
   </div>
 </section>
 
@@ -1706,7 +1740,9 @@ function imgFallback(img) {
         </summary>
         <p>L'abeille a un corps dodu et poilu, de couleur brun doré, et meurt après avoir piqué une seule fois. La guêpe n'a presque pas de poils, avec des rayures jaune et noir bien marquées et une taille très fine. Le frelon européen ressemble à une grosse guêpe rousse. Le frelon asiatique est plus sombre, avec un thorax brun noir, une tête orange et l'extrémité des pattes jaune.</p>
         <picture>
+          <source media="(max-width: 768px)" type="image/webp" srcset="faq-especes-mobile.webp">
           <source media="(max-width: 768px)" srcset="faq-especes-mobile.jpg">
+          <source type="image/webp" srcset="faq-especes.webp">
           <img src="faq-especes.jpg" alt="Comparaison visuelle entre une guêpe commune, une abeille, un frelon européen et un frelon asiatique" class="faq-img" width="1678" height="756" loading="lazy" decoding="async">
         </picture>
       </details>
@@ -1793,7 +1829,7 @@ function imgFallback(img) {
             <div>
               <div class="cb-lbl">Téléphone</div>
               <div class="cb-val">+41 79 235 39 72</div>
-              <div class="cb-sub">7j/7 en haute saison (guêpes & frelons)</div>
+              <div class="cb-sub">Lun. au ven., 8h à 20h. Joignable le week-end pour les urgences</div>
             </div>
           </a>
           <a href="tel:+41768285966" class="cb">
@@ -1879,7 +1915,7 @@ function imgFallback(img) {
   <div class="wrap">
     <div class="ftr-g">
       <div class="fb">
-        <img src="logo-clair.png?v=2" alt="Allô ça pique">
+        <img src="logo-clair.png?v=3" alt="Allô ça pique" width="300" height="300" loading="lazy">
         <p>Entreprise familiale vaudoise spécialisée dans la destruction de nids de guêpes, frelons et chenilles processionnaires. Récupération d'essaims d'abeilles. Intervention 24-48h, garantie 10 jours.</p>
       </div>
       <div class="fc-col">
@@ -2018,6 +2054,13 @@ if (cForm) {
       return;
     }
 
+    // Filet de sécurité : certains gestionnaires de mots de passe ou extensions
+    // remplissent parfois les champs cachés d'une page, y compris le champ
+    // piège anti-spam ci-dessus. On le vide systématiquement avant l'envoi
+    // pour qu'un message légitime ne soit jamais classé comme spam à tort.
+    const gotcha = cForm.querySelector('input[name="_gotcha"]');
+    if (gotcha) gotcha.value = '';
+
     const btn = cForm.querySelector('.fsub');
     const btnHTML = btn.innerHTML;
     btn.disabled = true;
@@ -2045,6 +2088,19 @@ if (cForm) {
 
     btn.disabled = false;
     btn.innerHTML = btnHTML;
+  });
+}
+
+// Zone : afficher / replier les communes supplémentaires
+const citiesToggle = document.getElementById('citiesToggle');
+const citiesExtra = document.getElementById('citiesExtra');
+const citiesToggleLabel = document.getElementById('citiesToggleLabel');
+if (citiesToggle && citiesExtra && citiesToggleLabel) {
+  citiesToggle.addEventListener('click', () => {
+    const isOpen = !citiesExtra.hidden;
+    citiesExtra.hidden = isOpen;
+    citiesToggle.setAttribute('aria-expanded', String(!isOpen));
+    citiesToggleLabel.textContent = isOpen ? 'Voir plus de communes' : 'Voir moins';
   });
 }
 
@@ -2085,7 +2141,7 @@ if (routePanel) {
   }
 
   function feeFor(km) {
-    if (km > 50) return { label: 'Frais de déplacement : 100 CHF', free: false };
+    if (km > 40) return { label: 'Frais de déplacement : 100 CHF', free: false };
     if (km > 20) return { label: 'Frais de déplacement : 50 CHF',  free: false };
     return { label: 'Déplacement inclus', free: true };
   }
