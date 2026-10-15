@@ -910,6 +910,25 @@ section{padding:110px 0}
   margin:0 4px 26px;
   box-shadow:none;
 }
+.faq-esp{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:28px 24px;
+  list-style:none;margin:0 4px 26px;padding:0;
+}
+.faq-esp li{text-align:left}
+.faq-esp img{display:block;width:100%;height:auto;margin:0 auto 14px}
+.faq-esp h3{
+  font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:19px;
+  color:var(--ink);margin:0 0 10px;text-align:center;
+}
+.faq-esp ul{list-style:disc;margin:0;padding-left:18px;font-size:15px;line-height:1.55;color:var(--muted)}
+.faq-esp ul li{margin:0 0 5px}
+.faq-esp ul li::marker{color:var(--ink)}
+@media(max-width:768px){
+  .faq-esp{grid-template-columns:repeat(2,1fr);gap:32px 18px}
+  .faq-esp img{max-width:210px}
+  .faq-esp h3{font-size:17px}
+  .faq-esp ul{font-size:14.5px}
+}
 
 /* ════════════════════════════════════════
    ABOUT
@@ -1739,12 +1758,48 @@ function imgFallback(img) {
           <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </summary>
         <p>L'abeille a un corps dodu et poilu, de couleur brun doré, et meurt après avoir piqué une seule fois. La guêpe n'a presque pas de poils, avec des rayures jaune et noir bien marquées et une taille très fine. Le frelon européen ressemble à une grosse guêpe rousse. Le frelon asiatique est plus sombre, avec un thorax brun noir, une tête orange et l'extrémité des pattes jaune.</p>
-        <picture>
-          <source media="(max-width: 768px)" type="image/webp" srcset="faq-especes-mobile.webp">
-          <source media="(max-width: 768px)" srcset="faq-especes-mobile.jpg">
-          <source type="image/webp" srcset="faq-especes.webp">
-          <img src="faq-especes.jpg" alt="Comparaison visuelle entre une guêpe commune, une abeille, un frelon européen et un frelon asiatique" class="faq-img" width="1678" height="756" loading="lazy" decoding="async">
-        </picture>
+        <ul class="faq-esp">
+          <li>
+            <img src="insecte-guepe.jpg" alt="Guêpe commune vue de dessus : corps jaune et noir très fin" width="308" height="479" loading="lazy" decoding="async">
+            <h3>Guêpe commune</h3>
+            <ul>
+              <li>Rayures jaunes et noires bien nettes</li>
+              <li>Taille fine (taille effilée)</li>
+              <li>Corps lisse</li>
+              <li>Peu de poils</li>
+            </ul>
+          </li>
+          <li>
+            <img src="insecte-abeille.jpg" alt="Abeille vue de dessus : corps trapu, doré-brun et velu" width="308" height="479" loading="lazy" decoding="async">
+            <h3>Abeille</h3>
+            <ul>
+              <li>Corps velu / poilu</li>
+              <li>Couleur doré-brun et rayures brun foncé</li>
+              <li>Forme plus trapue</li>
+              <li>Pattes velues (paniers à pollen)</li>
+            </ul>
+          </li>
+          <li>
+            <img src="insecte-frelon-europeen.jpg" alt="Frelon européen vu de dessus : thorax et tête rougeâtres, abdomen jaune et noir" width="308" height="479" loading="lazy" decoding="async">
+            <h3>Frelon européen</h3>
+            <ul>
+              <li>Thorax et tête rougeâtres-bruns</li>
+              <li>Abdomen jaune avec des taches et des bandes noires</li>
+              <li>Grande taille</li>
+              <li>Peu de poils (moins que l'abeille)</li>
+            </ul>
+          </li>
+          <li>
+            <img src="insecte-frelon-asiatique.jpg" alt="Frelon asiatique vu de dessus : corps noir avec une bande orange" width="308" height="479" loading="lazy" decoding="async">
+            <h3>Frelon asiatique</h3>
+            <ul>
+              <li>Thorax entièrement noir</li>
+              <li>Abdomen noir avec une seule bande orange-jaune</li>
+              <li>Extrémités des pattes jaunes</li>
+              <li>Peu de poils</li>
+            </ul>
+          </li>
+        </ul>
       </details>
       <details class="faq-item">
         <summary>Faut-il toujours détruire un nid de guêpes ou de frelons, et peut-on le faire soi-même&nbsp;?
